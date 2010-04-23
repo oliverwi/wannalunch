@@ -20,5 +20,5 @@ class Lunch {
   
   User creator
   
-  static hasMany = [participants:User]
+  static hasMany = [participants:User, comments:Comment]
 }
