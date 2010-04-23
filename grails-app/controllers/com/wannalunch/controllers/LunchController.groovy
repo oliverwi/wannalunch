@@ -20,10 +20,10 @@ class LunchController {
   }
 
   def join = {
-    User oliver = User.find("from User where name like :name", [name: "Oliver%"])
+    User timur = User.find("from User where name like :name", [name: "Timur%"])
     def lunch = Lunch.get(params.id)
 
-    lunch.addToParticipants(oliver)
+    lunch.addToParticipants(timur)
     if (lunch.save()) {
       redirect action: "show", id: lunch.id
     } else {

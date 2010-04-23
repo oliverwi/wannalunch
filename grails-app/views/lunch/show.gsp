@@ -3,7 +3,7 @@
 <h4>${lunch.creator.name}'s lunch</h4>
 <div class="contactdetails">
   <div class="contactpicture">
-    <img src=""/>
+    <img src="${resource(dir: 'img', file: lunch.creator.username + '.jpg')}"/>
   </div>
   <div class="contactbuttons">
     <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
@@ -30,7 +30,7 @@
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
   <div class="postcommentbox">
-    <img src="img/comments1.png"/>
+    <img src="${resource(dir: 'img', file: 'oliverwi.jpg')}"/>
     <g:form action="comment" method="post">
 	    <div class="textareawrapper">
 	      <textarea name="text"></textarea>
@@ -40,9 +40,9 @@
     </g:form>
   </div>
 
-  <g:each var="comment" in="${lunch.comments}">
+  <g:each var="comment" in="${lunch.sortedComments}">
     <div class="comment">
-		   <img src="img/comments2.png"/>
+		   <img src="${resource(dir: 'img', file: comment.author.username + '.jpg')}"/>
 		   <p><span class="bold">${comment.author.name}</span> <span class="small">${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}</span></p>
 		   ${comment.text}
     </div>
@@ -53,7 +53,7 @@
   <h3>Wanna!</h3>
   <g:each var="participant" in="${lunch.participants}">
     <div>
-      <img src="img/wanna.png"/><br/>${participant.name}
+      <img src="${resource(dir: 'img', file: participant.username + '.jpg')}"/><br/>${participant.name}
     </div>
   </g:each>
 </div>
