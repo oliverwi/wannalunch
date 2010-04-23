@@ -24,7 +24,7 @@
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <button id="lucky" class="bluebutton ignore">I feel lucky!</button>
+          <a id="lucky" class="bluebutton ignore">I feel lucky!</a>
         </td>
         <td class="luckytext bold" style="display: table-cell;">
           It's your lucky day! You just got 10% of discount in all the special lunches.
@@ -37,7 +37,7 @@
   <div class="buttonsrow">
     <input class="bigbluebutton" type="submit" value="Create lunch!"></input>
     <a>
-      <button class="biggreybutton">Browse lunches</button>
+      <a class="biggreybutton">Browse lunches</a>
     </a>
   </div>
 
