@@ -14,12 +14,14 @@
 <div class="content">
 <g:form class="createlunch" action="save" method="post">
 
+  <g:renderErrors bean="${lunch}" as="list"/>
+
   <g:textField name="topic" value="${lunch.topic}" class="topic bold clear" value="What's your lunch topic?"/>
   <g:textArea name="description" value="${lunch.description}" class="description clear">All other cool things you want to discuss.</g:textArea>
   <g:textField name="date" value="${lunch.date}" class="datetime clear" />
   <g:textField name="time" value="${lunch.time}" class="datetime clear" />
   <g:textField name="location" value="${lunch.location}" class="location clear" value="Let's meet @"/>
-  
+
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
       <tr>
@@ -33,7 +35,7 @@
       </tr>
     </table>
   </div>
-  
+
   <div class="buttonsrow">
     <input class="bigbluebutton" type="submit" value="Create lunch!"></input>
     <a>

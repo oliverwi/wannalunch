@@ -17,15 +17,15 @@
     ${lunch.description}
   </p>
   <p class="grey bold author">Liis Peetermann</p>
-  
+
   <div class="eventdetails bold">
-    <p>On ${lunch.date} at ${lunch.time}</p>
+    <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
     @ ${lunch.location}
     <a class="contentlink" href="">See special offers</a>
   </div>
-  
+
   <a href=""><button class="bigbluebutton">Lunch!</button></a>
-  
+
   <a href="${createLink(action: 'show', params: [id: nextId])}">
     <button class="biggreybutton">Next</button>
   </a>
