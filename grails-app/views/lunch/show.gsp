@@ -25,11 +25,7 @@
     <a class="contentlink" href="">See special offers</a>
   </div>
 
-  <a href=""><button class="bigbluebutton">Lunch!</button></a>
-
-  <a href="${createLink(action: 'join', params: [id: lunch.id])}" class="bigbluebutton">
-    Lunch!
-  </a>
+  <a href="${createLink(action: 'join', params: [id: lunch.id])}" class="bigbluebutton">Lunch!</a>
 
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
