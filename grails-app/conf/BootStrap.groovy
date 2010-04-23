@@ -13,7 +13,7 @@ class BootStrap {
     lunch1.createDateTime = new LocalDateTime().minusHours(1)
     lunch1.date = new LocalDate()
     lunch1.time = new LocalTime()
-    lunch1.place = "Vapiano"
+    lunch1.location = "Vapiano"
     	
     Lunch lunch2 = new Lunch()
     lunch2.topic = "Topic 2"
@@ -21,7 +21,7 @@ class BootStrap {
     lunch2.createDateTime = new LocalDateTime()
     lunch2.date = new LocalDate()
     lunch2.time = new LocalTime()
-    lunch2.place = "Vapiano"
+    lunch2.location = "Vapiano"
     
     lunch1.save()
     lunch2.save()
