@@ -1,6 +1,6 @@
 <meta name="layout" content="main" />
 
-<h4>Liis Peetermann's lunch</h4>
+<h4>${lunch.creator.name}'s lunch</h4>
 <div class="contactdetails">
   <div class="contactpicture">
     <img src=""/>
@@ -16,7 +16,8 @@
   <p class="grey">
     ${lunch.description}
   </p>
-  <p class="grey bold author">Liis Peetermann</p>
+
+  <p class="grey bold author">${lunch.creator.name}</p>
 
   <div class="eventdetails bold">
     <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
@@ -26,16 +27,18 @@
 
   <a href=""><button class="bigbluebutton">Lunch!</button></a>
 
-  <a href="${createLink(action: 'show', params: [id: nextId])}">
-    <button class="biggreybutton">Next</button>
+  <a href="${createLink(action: 'join', params: [id: lunch.id])}" class="bigbluebutton">
+    Lunch!
   </a>
+
+  <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
   <div class="postcommentbox">
     <img src="img/comments1.png"/>
     <div class="textareawrapper">
       <textarea></textarea>
     </div>
-    <p><button class="greybutton">Comment</button></p>
+    <p><a class="greybutton">Comment</a></p>
   </div>
 
   <div class="comment">
@@ -53,10 +56,9 @@
 
 <div class="participants grey">
   <h3>Wanna!</h3>
-  <div>
-    <img src="img/wanna.png"/><br/>Sushi Cat
-  </div>
-  <div>
-    <img src="img/wanna.png"/><br/>Mari Kuusk
-  </div>
+  <g:each var="participant" in="${lunch.participants}">
+    <div>
+      <img src="img/wanna.png"/><br/>${participant.name}
+    </div>
+  </g:each>
 </div>

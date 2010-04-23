@@ -85,7 +85,9 @@ h5 {
 .bigbluebutton,
 .biggreybutton,
 .orangebutton {
+	display: inline-block;
   height: 30px;
+  line-height: 30px;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
   border: none;
@@ -94,11 +96,20 @@ h5 {
   color: #FFF;
   font-weight: bold;
   vertical-align: middle;
-  padding: 0 6px;
+  padding: 0 9px;
   margin-right: 1px;
   font-family: Helvetica, Arial, sans-serif;
   cursor: pointer;
   cursor: hand;
+  behavior: hyperlink;
+}
+
+.bluebutton:hover,
+.greybutton:hover,
+.bigbluebutton:hover,
+.biggreybutton:hover,
+.orangebutton:hover {
+	text-decoration: none;
 }
 
 .orangebutton {
@@ -109,8 +120,9 @@ h5 {
 .bigbluebutton,
 .biggreybutton {
   height: 50px;
+  line-height: 50px;
   font-size: 1.3em;
-  padding: 0 20px;
+  padding: 0 23px;
   Font-family: Helvetica, Arial, sans-serif;
 }
 

@@ -18,12 +18,8 @@
           <a href="http://www.facebook.com/wannalunch">
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
-          <a href="${createLink(controller: 'lunch', action: 'show')}">
-            <button class="bluebutton">Browse lunches</button>
-          </a>
-          <a href="${createLink(controller: 'lunch', action: 'create')}">
-            <button class="orangebutton">Create</button>
-          </a>
+          <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
+          <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
           <br/>
           <span><a href="">log in with twitter</a></span>
         </div>
