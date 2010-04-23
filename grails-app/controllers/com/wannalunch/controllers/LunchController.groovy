@@ -1,6 +1,7 @@
 package com.wannalunch.controllers
 
 import com.wannalunch.domain.Lunch
+import com.wannalunch.domain.User
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime
@@ -14,6 +15,18 @@ class LunchController {
     def lunch = Lunch.get(id)
 
     [lunch: lunch, nextId: getNextLunchId(lunch)]
+  }
+
+  def join = {
+    User oliver = User.find("from User where name like :name", [name: "Oliver%"])
+    def lunch = Lunch.get(params.id)
+
+    lunch.addToParticipants(oliver)
+    if (lunch.save()) {
+      redirect action: "show", id: lunch.id
+    } else {
+      throw new RuntimeException("Oops!")
+    }
   }
 
   def create = {

@@ -17,4 +17,8 @@ class Lunch {
   LocalTime time
   
   String location
+  
+  User creator
+  
+  static hasMany = [participants:User]
 }
