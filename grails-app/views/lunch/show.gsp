@@ -31,23 +31,22 @@
 
   <div class="postcommentbox">
     <img src="img/comments1.png"/>
-    <div class="textareawrapper">
-      <textarea></textarea>
+    <g:form action="comment" method="post">
+	    <div class="textareawrapper">
+	      <textarea name="text"></textarea>
+	    </div>
+	    <input type="hidden" name="lunch" value="${lunch.id}" />
+	    <p><input class="greybutton" type="submit" value="Comment" /></p>
+    </g:form>
+  </div>
+
+  <g:each var="comment" in="${lunch.comments}">
+    <div class="comment">
+		   <img src="img/comments2.png"/>
+		   <p><span class="bold">${comment.author.name}</span> <span class="small">${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}</span></p>
+		   ${comment.text}
     </div>
-    <p><a class="greybutton">Comment</a></p>
-  </div>
-
-  <div class="comment">
-    <img src="img/comments2.png"/>
-    <p><span class="bold">J&uuml;ri Kask</span> <span class="small">Today</span></p>
-    i'm really interested, but for me it's better to meet on friday... Still interested?
-  </div>
-
-  <div class="comment">
-    <img src="img/comments2.png"/>
-    <p><span class="bold">J&uuml;ri Kask</span> <span class="small">Today</span></p>
-    I have a friend who knows much about this subject. Maybe she could join us?
-  </div>
+  </g:each>
 </div>
 
 <div class="participants grey">
