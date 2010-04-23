@@ -16,5 +16,5 @@ class Lunch {
   
   LocalTime time
   
-  String place
+  String location
 }

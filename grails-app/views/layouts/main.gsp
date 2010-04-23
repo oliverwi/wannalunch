@@ -1,16 +1,42 @@
 <html>
-    <head>
-        <title><g:layoutTitle default="Grails" /></title>
-        <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
-        <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
-        <g:layoutHead />
-        <g:javascript library="application" />
-    </head>
-    <body>
-        <div id="spinner" class="spinner" style="display:none;">
-            <img src="${resource(dir:'images',file:'spinner.gif')}" alt="Spinner" />
+  <head>
+    <title><g:layoutTitle default="wannalunch?" /></title>
+    <link rel="stylesheet" href="${resource(dir:'css',file:'main.css')}" />
+    <link rel="shortcut icon" href="${resource(dir:'images', file:'favicon.ico')}" type="image/x-icon" />
+    <g:layoutHead />
+    <g:javascript library="application" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <img src="${resource(dir: 'img', file: 'logo.png')}" class="headerlogo"/>
+        <div class="headercontrols">
+          <a href="http://twitter.com/wannalunch">Follow us</a>
+          <a href="http://twitter.com/wannalunch">
+            <img src="${resource(dir: 'img', file: 'twitterbutton.png')}">
+          </a>
+          <a href="http://www.facebook.com/wannalunch">
+            <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
+          </a>
+          <a href="${createLink(controller: 'lunch', action: 'show')}">
+            <button class="bluebutton">Browse lunches</button>
+          </a>
+          <a href="${createLink(controller: 'lunch', action: 'create')}">
+            <button class="orangebutton">Create</button>
+          </a>
+          <br/>
+          <span><a href="">log in with twitter</a></span>
         </div>
-        <div id="grailsLogo" class="logo"><a href="http://grails.org"><img src="${resource(dir:'images',file:'grails_logo.png')}" alt="Grails" border="0" /></a></div>
+      </div>
+      
+      <div class="main">
         <g:layoutBody />
-    </body>
+        <div class="clearfix"></div>
+      </div>
+      
+      <div class="footer">
+        &copy; 2010 wannalunch - About - sayatme
+      </div>
+    </div>
+  </body>
 </html>
