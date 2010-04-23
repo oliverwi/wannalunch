@@ -267,6 +267,10 @@ h5 {
   margin: 10px 0 0 73px;
 }
 
+.postcommentbox img {
+	max-width: 60px;
+}
+
 .comment {
   margin: 30px 0 0 92px;
   width: auto;
@@ -275,6 +279,7 @@ h5 {
 .comment img {
   float: left;
   margin-right: 8px;
+  max-width: 60px;
 }
 
 .participants {

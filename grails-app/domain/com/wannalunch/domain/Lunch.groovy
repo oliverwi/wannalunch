@@ -4,6 +4,8 @@ import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 
+import com.wannalunch.util.CommentComparator;
+
 class Lunch {
   
   String topic
@@ -21,4 +23,8 @@ class Lunch {
   User creator
   
   static hasMany = [participants:User, comments:Comment]
+
+  def getSortedComments() {
+    comments.sort(new CommentComparator())
+  }
 }
