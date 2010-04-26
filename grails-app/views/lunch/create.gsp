@@ -18,9 +18,9 @@
 
   <g:textField name="topic" value="${lunch.topic}" class="topic bold clear" title="What's your lunch topic?"/>
   <g:textArea name="description" value="${lunch.description}" class="description clear" title="All other cool things you want to discuss" />
-  <g:textField name="date" value="${lunch.date}" class="datetime clear" />
-  <g:textField name="time" value="${lunch.time}" class="datetime clear" />
-  <g:textField name="location" value="${lunch.location}" class="location clear" title="Let's meet @"/>
+  <g:textField name="date" value="${lunch.date}" class="datetime clear" title="Pick a date" />
+  <g:textField name="time" value="${lunch.time}" class="datetime clear" title="Time" />
+  <g:textField name="location" value="${lunch.location}" class="location clear" title="Let's meet @ restaurant"/>
 
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
