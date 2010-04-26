@@ -68,6 +68,6 @@ log4j = {
 }
 
 twitter {
-  oauth.consumer_key = ''
-  oauth.consumer_secret = ''
+  oauth.consumer_key = 'aqris.com'
+  oauth.consumer_secret = 'Tv812l6+ARTplkWfsEJ6H91h'
 }
