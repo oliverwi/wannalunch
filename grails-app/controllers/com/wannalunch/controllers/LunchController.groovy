@@ -56,6 +56,7 @@ class LunchController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
+    lunch.creator = userService.user
     lunch.createDateTime = new LocalDateTime()
 
     if (lunch.save()) {
