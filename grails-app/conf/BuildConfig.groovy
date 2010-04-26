@@ -9,11 +9,11 @@ grails.project.dependency.resolution = {
         // excludes 'ehcache'
     }
     log "warn" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
-    repositories {        
+    repositories {
         grailsPlugins()
         grailsHome()
         mavenCentral()
-        
+
         // uncomment the below to enable remote dependency resolution
         // from public Maven repositories
         //mavenLocal()
@@ -27,6 +27,7 @@ grails.project.dependency.resolution = {
 
         // runtime 'mysql:mysql-connector-java:5.1.5'
     	compile 'joda-time:joda-time:1.6'
+    	compile 'net.homeip.yusuke:twitter4j:2.0.10'
     }
 
 }
