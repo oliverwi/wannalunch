@@ -1,8 +1,15 @@
 package com.wannalunch.domain
 
-class User {
+import java.io.Serializable
+
+class User implements Serializable {
 
   String name
-  
+
   String username
+
+  static mappings = {
+    username blank: false
+  }
+
 }

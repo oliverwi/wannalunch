@@ -10,6 +10,8 @@ class TwitterService {
 
   boolean transactional = false
 
+  def userService
+
   def consumerKey = ConfigurationHolder.config.twitter.oauth.consumerKey
   def consumerSecret = ConfigurationHolder.config.twitter.oauth.consumerSecret
 
@@ -29,6 +31,7 @@ class TwitterService {
     accessToken = client.getOAuthAccessToken(requestToken, oauthVerifierParam)
     log.debug "Attempting validate..."
     user = client.verifyCredentials()
+    userService.maybeCreateAccount(user)
     log.debug "Validate successful for ${user.screenName}"
   }
 

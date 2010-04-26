@@ -12,6 +12,8 @@ class LunchController {
 
   static defaultAction = "show"
 
+  def userService
+
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
@@ -20,28 +22,26 @@ class LunchController {
   }
 
   def join = {
-    User timur = User.find("from User where name like :name", [name: "Timur%"])
     def lunch = Lunch.get(params.id)
 
-    lunch.addToParticipants(timur)
+    lunch.addToParticipants(userService.user)
     if (lunch.save()) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException("Oops!")
     }
   }
-  
+
   def comment = {
-    User oliver = User.find("from User where name like :name", [name: "Oliver%"])
     def lunch = Lunch.get(Long.parseLong(params.lunch))
-    
+
     def comment = new Comment()
     comment.text = params.text
     comment.date = new LocalDate()
     comment.time = new LocalTime()
-    comment.author = oliver
+    comment.author = userService.user
     comment.lunch = lunch
-    
+
     if (comment.save()) {
       redirect action: "show", id: lunch.id
     } else {
