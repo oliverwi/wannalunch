@@ -49,6 +49,8 @@
 <div class="speciallunches grey bold">
 </div>
 
+<link rel="stylesheet" href="${resource(dir:'css/flick',file:'jquery-ui-1.8.custom.css')}" />
+<g:javascript src="jquery-ui-1.8.custom.min.js"/>
 <g:javascript src="inputTitle.js"/>
 <script type="text/javascript">
   $(document).ready(function() {
@@ -57,5 +59,11 @@
 
   $("#lucky").click(function() {
 	  $("#luckytext").css("visibility", "visible");
+  });
+</script>
+
+<script type="text/javascript">
+  $(function(){
+    $('#date').datepicker({ dateFormat: 'yy-mm-dd' });
   });
 </script>
