@@ -6,19 +6,19 @@ function prepareFieldsWithTitle() {
 function prepareElementsWithTitle(elements) {
   elements
     .each(function() {
-      copyTitleToVal($(this));
-    })
-    .focus(function() {
-      $(this).val("");
+      copyTitleToValueIfEmpty($(this));
     })
     .blur(function() {
-      text = jQuery.trim($(this).val());
-      if (text == "" || text == $(this).attr("title")) {
-        copyTitleToVal($(this));
-      }
+    	copyTitleToValueIfEmpty($(this));
+    })
+    .focus(function() {
+      $(this).val("").removeClass("fadeFieldColor");
     });
 }
 
-function copyTitleToVal(element) {
-  element.val(element.attr("title")).css("color", "#ccc");
+function copyTitleToValueIfEmpty(element) {
+  text = jQuery.trim(element.val());
+  if (text == "" || text == element.attr("title")) {
+    element.val(element.attr("title")).addClass("fadeFieldColor");
+  }
 }
