@@ -24,10 +24,10 @@
           <br/>
           <span>
             <twitter:isNotLoggedIn>
-              <a href="${createLink(controller: 'oauth', action: 'authorize')}">log in with twitter</a>
+              <a href="${twitter.loginLink()}">log in with twitter</a>
             </twitter:isNotLoggedIn>
             <twitter:isLoggedIn>
-              <a href="${createLink(controller: 'oauth', action: 'logout')}">log out <twitter:userInfo field="screenName"/></a>
+              <a href="${twitter.logoutLink()}">log out <twitter:userInfo field="screenName"/></a>
             </twitter:isLoggedIn>
           </span>
         </div>

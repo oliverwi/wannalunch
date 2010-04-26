@@ -8,12 +8,12 @@ class UserService {
 
   def user
 
-  def maybeCreateAccount(twitter4j.User twitterUser) {
+  def maybeCreateAccount(twitterUser) {
     def username = twitterUser.screenName
     user = User.findByUsername(username)
 
     if (!user) {
-      def name = twitterUser.getName()
+      def name = twitterUser.name
 //      def profileImageUrl = user.getProfileImageURL().toString()
       user = new User(username: username, name: name).save()
     }

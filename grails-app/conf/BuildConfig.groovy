@@ -31,3 +31,12 @@ grails.project.dependency.resolution = {
     }
 
 }
+
+grails.war.resources = { stagingDir ->
+  // Remove unnecessary classes in production
+  if (Environment.current == Environment.PRODUCTION) {
+    delete {
+      fileset dir: "$stagingDir/WEB-INF/classes/com/wannalunch/controllers", includes: "FakeauthController*.class"
+    }
+  }
+}

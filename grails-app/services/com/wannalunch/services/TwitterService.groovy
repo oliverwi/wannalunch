@@ -19,7 +19,7 @@ class TwitterService {
 
   def requestToken
   def accessToken
-  def user
+  def twitterUser
 
   def generateRequestToken(returnUrl) {
     log.debug "Generating request with return url of [${returnUrl}]"
@@ -30,13 +30,13 @@ class TwitterService {
   def validate(oauthVerifierParam) {
     accessToken = client.getOAuthAccessToken(requestToken, oauthVerifierParam)
     log.debug "Attempting validate..."
-    user = client.verifyCredentials()
-    userService.maybeCreateAccount(user)
+    twitterUser = client.verifyCredentials()
+    userService.maybeCreateAccount(twitterUser)
     log.debug "Validate successful for ${user.screenName}"
   }
 
   boolean isLoggedIn() {
-    requestToken != null
+    twitterUser != null
   }
 
 }
