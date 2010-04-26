@@ -21,24 +21,27 @@ class TwitterTagLib implements ApplicationContextAware {
   }
   
   def isLoggedIn = { attrs, body ->
-    if (twitterService.loggedIn) {
+    if (userService.isLoggedIn()) {
       out << body()
     }
   }
 
   def isNotLoggedIn = { attrs, body ->
-    if (!twitterService.loggedIn) {
+    if (!userService.isLoggedIn()) {
       out << body()
     }
   }
 
   def userInfo = { attrs ->
     def field = attrs.remove("field")
-    out << twitterService.twitterUser[field]
+    out << userService.user[field]
   }
 
   private def getTwitterService() {
     applicationContext.twitterService
   }
-
+  
+  private def getUserService() {
+    applicationContext.userService
+  }
 }

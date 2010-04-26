@@ -18,5 +18,9 @@ class UserService {
       user = new User(username: username, name: name).save()
     }
   }
+  
+  boolean isLoggedIn() {
+    return user != null
+  }
 
 }

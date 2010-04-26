@@ -34,9 +34,4 @@ class TwitterService {
     userService.maybeCreateAccount(twitterUser)
     log.debug "Validate successful for ${twitterUser.screenName}"
   }
-
-  boolean isLoggedIn() {
-    twitterUser != null
-  }
-
 }

@@ -1,15 +1,14 @@
 package com.wannalunch.controllers
 
+import com.wannalunch.domain.User;
+
 class FakeauthController {
   
   def userService
   
-  def twitterService
-  
   def authorize = {
-    def twitterUser = new FakeTwitterUser(name: "Oliver Wihler", screenName: "oliverwi")    
-    userService.maybeCreateAccount(twitterUser)
-    twitterService.twitterUser = twitterUser
+    def user = User.findByUsername("oliverwi")
+    userService.user = user
     
     redirect controller: 'lunch'
   }
@@ -19,9 +18,4 @@ class FakeauthController {
     
     redirect controller: 'lunch'
   }
-}
-
-class FakeTwitterUser {
-  String screenName  
-  String name
 }
