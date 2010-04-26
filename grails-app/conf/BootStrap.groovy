@@ -12,11 +12,11 @@ class BootStrap {
     User timur = new User()
     timur.name = "Timur Strekalov"
     timur.username = "timurstrekalov"
-    
+
     User oliver = new User()
-    oliver.name = "Oliver Whiler"
+    oliver.name = "Oliver Wihler"
     oliver.username = "oliverwi"
-    
+
     Lunch lunch1 = new Lunch()
     lunch1.creator = oliver
     lunch1.topic = "Topic 1"
@@ -25,7 +25,7 @@ class BootStrap {
     lunch1.date = new LocalDate().plusDays(1)
     lunch1.time = new LocalTime()
     lunch1.location = "Vapiano"
-    	
+
     Lunch lunch2 = new Lunch()
     lunch2.creator = oliver
     lunch2.topic = "Topic 2"
@@ -34,14 +34,14 @@ class BootStrap {
     lunch2.date = new LocalDate().plusDays(2)
     lunch2.time = new LocalTime()
     lunch2.location = "Vapiano"
-      
+
     Comment comment1 = new Comment()
     comment1.text = "I am interested"
     comment1.author = timur
     comment1.date = new LocalDate()
     comment1.time = new LocalTime()
     comment1.lunch = lunch1
-    
+
     timur.save()
     oliver.save()
     lunch1.save()
@@ -51,4 +51,4 @@ class BootStrap {
 
   def destroy = {
   }
-} 
+}

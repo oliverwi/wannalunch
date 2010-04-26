@@ -21,15 +21,22 @@
           <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
           <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
           <br/>
-          <span><a href="">log in with twitter</a></span>
+          <span>
+            <twitter:isNotLoggedIn>
+              <a href="${createLink(controller: 'oauth', action: 'authorize')}">log in with twitter</a>
+            </twitter:isNotLoggedIn>
+            <twitter:isLoggedIn>
+              <a href="${createLink(controller: 'oauth', action: 'logout')}">log out <twitter:userInfo field="screenName"/></a>
+            </twitter:isLoggedIn>
+          </span>
         </div>
       </div>
-      
+
       <div class="main">
         <g:layoutBody />
         <div class="clearfix"></div>
       </div>
-      
+
       <div class="footer">
         &copy; 2010 wannalunch - About - sayatme
       </div>

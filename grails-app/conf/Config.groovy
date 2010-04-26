@@ -68,6 +68,8 @@ log4j = {
 }
 
 twitter {
-  oauth.consumer_key = ''
-  oauth.consumer_secret = ''
+  oauth {
+    consumerKey = ''
+    consumerSecret = ''
+  }
 }

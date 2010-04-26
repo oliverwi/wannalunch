@@ -7,6 +7,7 @@
 	<classpathentry kind="src" path="grails-app/services"/>
 	<classpathentry kind="src" path="src/groovy"/>
 	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="grails-app/taglib"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="GROOVY_SUPPORT"/>
 	<classpathentry kind="con" path="com.springsource.sts.grails.core.CLASSPATH_CONTAINER"/>
