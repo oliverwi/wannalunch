@@ -3,7 +3,7 @@ package com.wannalunch.controllers
 import com.wannalunch.domain.User;
 
 class FakeauthController {
-  
+
   def userService
   
   def authorize = {
@@ -15,6 +15,7 @@ class FakeauthController {
   
   def logout = {
     session.invalidate()
+    userService.user = null
     
     redirect controller: 'lunch'
   }

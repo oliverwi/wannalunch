@@ -22,6 +22,11 @@ class LunchController {
   }
 
   def join = {
+    // TODO create annotation to check this :)
+    if (!checkIfLoggedIn()) {
+      return
+    }
+    
     def lunch = Lunch.get(params.id)
 
     lunch.addToParticipants(userService.user)
@@ -33,6 +38,8 @@ class LunchController {
   }
 
   def comment = {
+    checkIfLoggedIn()
+    
     def lunch = Lunch.get(Long.parseLong(params.lunch))
 
     def comment = new Comment()
@@ -50,10 +57,14 @@ class LunchController {
   }
 
   def create = {
+    checkIfLoggedIn()
+    
     [lunch: new Lunch()]
   }
 
   def save = {
+    checkIfLoggedIn()
+    
     def lunch = new Lunch()
     lunch.properties = params
     lunch.creator = userService.user
@@ -73,5 +84,13 @@ class LunchController {
   private def getNextLunchId(def currentLunch) {
     def nextLunch = Lunch.find("from Lunch l where l.createDateTime > :createDateTime", [createDateTime: currentLunch.createDateTime])
     def nextId = nextLunch ? nextLunch.id : firstLunchId
+  }
+  
+  private def checkIfLoggedIn() {
+    if (!userService.isLoggedIn()) {
+      redirect action: "show"
+      return false
+    }
+    return true
   }
 }

@@ -14,8 +14,8 @@ class UserService {
 
     if (!user) {
       def name = twitterUser.name
-//      def profileImageUrl = user.getProfileImageURL().toString()
-      user = new User(username: username, name: name).save()
+      def profileImageUrl = user.getProfileImageURL().toString()
+      user = new User(username: username, name: name, profileImageUrl: profileImageUrl).save()
     }
   }
   

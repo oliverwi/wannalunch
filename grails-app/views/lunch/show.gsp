@@ -3,7 +3,7 @@
 <h4>${lunch.creator.name}'s lunch</h4>
 <div class="contactdetails">
   <div class="contactpicture">
-    <img src="${resource(dir: 'img', file: lunch.creator.username + '.jpg')}"/>
+    <img src="${lunch.creator.profileImageUrl}"/>
   </div>
   <div class="contactbuttons">
     <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
@@ -31,7 +31,7 @@
 
   <div class="postcommentbox">
     <twitter:isLoggedIn>
-		   <img src="${resource(dir: 'img', file: 'oliverwi.jpg')}"/>
+		   <img src="${twitter.userInfo(field: 'profileImageUrl')}"/>
 		   <g:form action="comment" method="post">
 		    <div class="textareawrapper">
 		      <textarea name="text"></textarea>
@@ -47,7 +47,7 @@
 
   <g:each var="comment" in="${lunch.sortedComments}">
     <div class="comment">
-		   <img src="${resource(dir: 'img', file: comment.author.username + '.jpg')}"/>
+		   <img src="${comment.author.profileImageUrl}"/>
 		   <p><span class="bold">${comment.author.name}</span> <span class="small">${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}</span></p>
 		   ${comment.text}
     </div>
