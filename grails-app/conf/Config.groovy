@@ -49,6 +49,7 @@ environments {
 
   test {
     grails.serverURL = ""
+    twitter.authController = "fakeauth"
   }
 }
 
