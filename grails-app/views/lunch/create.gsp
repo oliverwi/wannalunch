@@ -12,7 +12,7 @@
 </div>
 
 <div class="content">
-<g:form class="createlunch" action="save" method="post">
+<g:form name="createlunchform" class="createlunch" action="save" method="post">
 
   <g:renderErrors bean="${lunch}" as="list"/>
 
@@ -26,7 +26,7 @@
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <a id="lucky" class="bluebutton">I feel lucky!</a>
+          <input type="button" id="lucky" class="bluebutton" value="I feel lucky!" />
         </td>
         <td id="luckytext" class="luckytext bold" style="display: table-cell; visibility: hidden;">
           It's your lucky day! You just got 10% of discount in all the special lunches.
@@ -37,9 +37,9 @@
   </div>
 
   <div class="buttonsrow">
-    <input class="bigbluebutton" type="submit" value="Create lunch!"></input>
-    <a>
-      <a class="biggreybutton">Browse lunches</a>
+    <input type="submit" class="bigbluebutton" value="Create lunch!"></input>
+    <a href="${createLink(controller: "lunch")}">
+      <input type="button" class="biggreybutton" value="Browse lunches" />
     </a>
   </div>
 
@@ -57,13 +57,11 @@
 	   prepareFieldsWithTitle();
   });
 
-  $("#lucky").click(function() {
-	  $("#luckytext").css("visibility", "visible");
+  $(function() {
+    $('#date').datepicker({ dateFormat: 'yy-mm-dd', showAnim: '' });
   });
-</script>
 
-<script type="text/javascript">
-  $(function(){
-    $('#date').datepicker({ dateFormat: 'yy-mm-dd' });
+  $("#lucky").click(function() {
+    $("#luckytext").css("visibility", "visible");
   });
 </script>
