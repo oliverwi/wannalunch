@@ -15,7 +15,7 @@ class OauthController {
   def processLogin = {
     log.debug "Processing Login Return from Twitter"
 
-    if (!twitterService.loggedIn) {
+    if (!twitterService.requestToken) {
       redirect action: 'authorize'
     } else {
       twitterService.validate(params.oauth_verifier)

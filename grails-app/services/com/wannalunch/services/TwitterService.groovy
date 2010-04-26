@@ -32,7 +32,7 @@ class TwitterService {
     log.debug "Attempting validate..."
     twitterUser = client.verifyCredentials()
     userService.maybeCreateAccount(twitterUser)
-    log.debug "Validate successful for ${user.screenName}"
+    log.debug "Validate successful for ${twitterUser.screenName}"
   }
 
   boolean isLoggedIn() {
