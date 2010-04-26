@@ -1,2 +1,3 @@
 bin
 target
+grails-app/conf/ProductionConfig.groovy
