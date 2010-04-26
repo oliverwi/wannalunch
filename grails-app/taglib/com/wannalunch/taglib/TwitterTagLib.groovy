@@ -34,7 +34,7 @@ class TwitterTagLib implements ApplicationContextAware {
 
   def userInfo = { attrs ->
     def field = attrs.remove("field")
-    out << twitterService.user[field]
+    out << twitterService.twitterUser[field]
   }
 
   private def getTwitterService() {
