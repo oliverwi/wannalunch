@@ -32,8 +32,6 @@ class LunchController {
   }
   
   def comment = {
-    println "commenting...."
-    
     User oliver = User.find("from User where name like :name", [name: "Oliver%"])
     def lunch = Lunch.get(Long.parseLong(params.lunch))
     
@@ -43,8 +41,6 @@ class LunchController {
     comment.time = new LocalTime()
     comment.author = oliver
     comment.lunch = lunch
-    
-    println comment.dump()
     
     if (comment.save()) {
       redirect action: "show", id: lunch.id

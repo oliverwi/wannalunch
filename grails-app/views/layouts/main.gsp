@@ -5,6 +5,7 @@
     <link rel="shortcut icon" href="${resource(dir:'images', file:'favicon.ico')}" type="image/x-icon" />
     <g:layoutHead />
     <g:javascript library="application" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
   </head>
   <body>
     <div class="wrapper">
