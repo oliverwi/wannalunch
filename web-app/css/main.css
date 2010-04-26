@@ -101,15 +101,7 @@ h5 {
   font-family: Helvetica, Arial, sans-serif;
   cursor: pointer;
   cursor: hand;
-  behavior: hyperlink;
-}
-
-.bluebutton:hover,
-.greybutton:hover,
-.bigbluebutton:hover,
-.biggreybutton:hover,
-.orangebutton:hover {
-	text-decoration: none;
+  text-decoration: none !important;
 }
 
 .orangebutton {

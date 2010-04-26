@@ -26,9 +26,9 @@
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <a id="lucky" class="bluebutton ignore">I feel lucky!</a>
+          <a id="lucky" class="bluebutton">I feel lucky!</a>
         </td>
-        <td class="luckytext bold" style="display: table-cell;">
+        <td id="luckytext" class="luckytext bold" style="display: table-cell; visibility: hidden;">
           It's your lucky day! You just got 10% of discount in all the special lunches.
           <span class="attention">Don't forget to tell your scret code: wannalunch.</span>
         </td>
@@ -53,5 +53,9 @@
 <script type="text/javascript">
   $(document).ready(function() {
 	   prepareFieldsWithTitle();
+  });
+
+  $("#lucky").click(function() {
+	  $("#luckytext").css("visibility", "visible");
   });
 </script>
