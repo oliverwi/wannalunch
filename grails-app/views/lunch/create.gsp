@@ -52,6 +52,6 @@
 <g:javascript src="inputTitle.js"/>
 <script type="text/javascript">
   $(document).ready(function() {
-	  prepareFieldsWithTitle();
+	   prepareFieldsWithTitle();
   });
 </script>
