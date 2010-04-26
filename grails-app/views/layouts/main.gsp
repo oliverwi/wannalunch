@@ -27,7 +27,11 @@
               <a href="${twitter.loginLink()}">log in with twitter</a>
             </twitter:isNotLoggedIn>
             <twitter:isLoggedIn>
-              <a href="${twitter.logoutLink()}">log out <twitter:userInfo field="username"/></a>
+              <twitter:userInfo field="username"/>
+              /
+              <a href="${createLink(controller: "profile")}">Profile</a>
+              /
+              <a href="${twitter.logoutLink()}">Logout</a>
             </twitter:isLoggedIn>
           </span>
         </div>
