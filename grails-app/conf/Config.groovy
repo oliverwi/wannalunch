@@ -38,7 +38,7 @@ grails.spring.bean.packages = []
 // set per-environment serverURL stem for creating absolute links
 environments {
   production {
-    grails.serverURL = "http://173.203.86.241:8080/wannalunch"
+    grails.serverURL = "http://www.wannalunch.com/"
     twitter.authController = "oauth"
   }
 
@@ -48,8 +48,8 @@ environments {
   }
 
   test {
-    grails.serverURL = ""
-    twitter.authController = "fakeauth"
+    grails.serverURL = "http://173.203.86.241:8080/wannalunch"
+    twitter.authController = "oauth"
   }
 }
 
