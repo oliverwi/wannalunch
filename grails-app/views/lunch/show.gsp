@@ -53,8 +53,8 @@
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
   <div class="postcommentbox">
-    <twitter:isLoggedIn>
-		   <img src="${twitter.userInfo(field: 'profileImageUrl')}"/>
+    <user:isLoggedIn>
+		   <img src="${user.userInfo(field: 'profileImageUrl')}"/>
 		   <g:form action="comment" method="post">
 		    <div class="textareawrapper">
 		      <textarea name="text"></textarea>
@@ -62,10 +62,10 @@
 		    <input type="hidden" name="lunch" value="${lunch.id}" />
 		    <p><input class="greybutton" type="submit" value="Comment" /></p>
 		   </g:form>
-    </twitter:isLoggedIn>
-    <twitter:isNotLoggedIn>
+    </user:isLoggedIn>
+    <user:isNotLoggedIn>
       You need to log in to add comments
-    </twitter:isNotLoggedIn>
+    </user:isNotLoggedIn>
   </div>
 
   <g:each var="comment" in="${lunch.sortedComments}">

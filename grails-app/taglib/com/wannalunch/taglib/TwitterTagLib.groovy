@@ -20,23 +20,6 @@ class TwitterTagLib implements ApplicationContextAware {
     out << "${config.grails.serverURL}/${config.twitter.authController}/logout"
   }
   
-  def isLoggedIn = { attrs, body ->
-    if (userService.isLoggedIn()) {
-      out << body()
-    }
-  }
-
-  def isNotLoggedIn = { attrs, body ->
-    if (!userService.isLoggedIn()) {
-      out << body()
-    }
-  }
-
-  def userInfo = { attrs ->
-    def field = attrs.remove("field")
-    out << userService.user[field]
-  }
-  
   def linkToProfile = { attrs ->
     def user = attrs.remove("user")
     out << "http://twitter.com/${user.username}"
@@ -44,9 +27,5 @@ class TwitterTagLib implements ApplicationContextAware {
 
   private def getTwitterService() {
     applicationContext.twitterService
-  }
-  
-  private def getUserService() {
-    applicationContext.userService
   }
 }

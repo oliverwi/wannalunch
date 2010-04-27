@@ -3,18 +3,18 @@
 <h3 class="pagetitle">Your profile</h3>
 <div class="contactdetails">
   <div class="contactpicture">
-    <img src="${twitter.userInfo(field: 'profileImageUrl')}"/>
+    <img src="${user.userInfo(field: 'profileImageUrl')}"/>
   </div>
 </div>
 
 <div class="content">
-  <h2>${twitter.userInfo(field: 'name')}</h2>
+  <h2>${user.userInfo(field: 'name')}</h2>
   <g:form name="profile" method="post" action="update">
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
           <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"></img>
-          <span class="grey bold"><twitter:userInfo field="username" /></span>
+          <span class="grey bold"><user:userInfo field="username" /></span>
         </td>
       </tr>
       <tr>
