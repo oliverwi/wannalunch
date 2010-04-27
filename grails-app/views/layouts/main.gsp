@@ -13,10 +13,10 @@
         <img src="${resource(dir: 'img', file: 'logo.png')}" class="headerlogo"/>
         <div class="headercontrols">
           <a href="http://twitter.com/wannalunch">Follow us</a>
-          <a href="http://twitter.com/wannalunch">
+          <a href="http://twitter.com/wannalunch" class="clearLink">
             <img src="${resource(dir: 'img', file: 'twitterbutton.png')}">
           </a>
-          <a href="http://www.facebook.com/wannalunch">
+          <a href="http://www.facebook.com/wannalunch" class="clearLink">
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
           <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
@@ -29,7 +29,7 @@
             <twitter:isLoggedIn>
               <twitter:userInfo field="username"/>
               /
-              <a href="${createLink(controller: "profile")}">Profile</a>
+              <a href="${createLink(controller: "profile", action: "edit")}">Profile</a>
               /
               <a href="${twitter.logoutLink()}">Logout</a>
             </twitter:isLoggedIn>

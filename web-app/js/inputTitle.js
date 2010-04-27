@@ -15,7 +15,7 @@ function prepareElementsWithTitle(elements) {
       copyTitleToValueIfEmpty($(this));
     })
     .focus(function() {
-      $(this).val("").removeClass("fadeFieldColor");
+      clearIfHasTitle($(this))
     });
 }
 
@@ -25,5 +25,11 @@ function copyTitleToValueIfEmpty(element) {
     element.val(element.attr("title")).addClass("fadeFieldColor");
   } else {
     element.removeClass("fadeFieldColor");
+  }
+}
+
+function clearIfHasTitle(element) {
+  if (element.val() == element.attr("title")) {
+    element.val("").removeClass("fadeFieldColor");
   }
 }

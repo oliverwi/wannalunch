@@ -18,16 +18,56 @@ class LunchController {
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
+    def user = userService.user
 
-    [lunch: lunch, nextId: getNextLunchId(lunch)]
+    [lunch: lunch,
+     nextId: getNextLunchId(lunch),
+     showLunchButton: userService.isLoggedIn() ? user.canApplyTo(lunch) : true,
+     showNotGoingButton: userService.isLoggedIn() && user.canBeRemovedFrom(lunch),
+     showDeleteButton: userService.isLoggedIn() && user.canDelete(lunch),
+     canAcceptApplicants: userService.isLoggedIn() && user.canAcceptApplicantsFor(lunch)]
   }
 
   @AuthRequired
-  def join = {
+  def apply = {
     def lunch = Lunch.get(params.id)
+    def user = userService.user
 
-    lunch.addToParticipants(userService.user)
-    if (lunch.save()) {
+    if (user.applyTo(lunch)) {
+      redirect action: "show", id: lunch.id
+    } else {
+      throw new RuntimeException("Oops!")
+    }
+  }
+
+  @AuthRequired
+  def leave = {
+    def lunch = Lunch.get(params.id)
+    def user = userService.user
+
+    if (user.cancelParticipation(lunch)) {
+      redirect action: "show", id: lunch.id
+    } else {
+      throw new RuntimeException("Oops!")
+    }
+  }
+
+  @AuthRequired
+  def delete = {
+    def lunch = Lunch.get(params.id)
+    def user = userService.user
+
+    lunch.delete(flush: true)
+    redirect action: "show"
+  }
+
+  @AuthRequired
+  def accept = {
+    def lunch = Lunch.get(params.id)
+    def creator = userService.user
+    def applicant = User.findByUsername(params.username)
+
+    if (creator.promoteToParticipant(applicant, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException("Oops!")
@@ -76,7 +116,7 @@ class LunchController {
   }
 
   private def getNextLunchId(def currentLunch) {
-    def nextLunch = Lunch.find("from Lunch l where l.createDateTime > :createDateTime", [createDateTime: currentLunch.createDateTime])
+    def nextLunch = Lunch.find("from Lunch l where l.id > :id", [id: currentLunch.id])
     def nextId = nextLunch ? nextLunch.id : firstLunchId
   }
 }

@@ -66,6 +66,8 @@ log4j = {
          'org.springframework',
          'org.hibernate',
          'net.sf.ehcache.hibernate'
-
+//  info   'org.hibernate'
+//  trace  'org.hibernate.SQL',
+//         'org.hibernate.type'
   warn   'org.mortbay.log'
 }

@@ -20,13 +20,13 @@
       <tr>
         <td>
           <img src="${resource(dir: 'img', file: 'fbbutton.png')}"></img>
-          <input class="profileinput clear" type="text" title="What's your profile link?" name="facebookProfile" />
+          <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="facebookProfile" value="${user.facebookProfile}" />
         </td>
       </tr>
       <tr>
         <td>
           <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"></img>
-          <input class="profileinput clear" type="text" title="What's your profile link?" name="linkedinProfile" />
+          <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="linkedInProfile" value="${user.linkedInProfile}" />
         </td>
       </tr>
       <tr>
@@ -38,15 +38,18 @@
       <tr>
         <td>
           <input type="submit" class="bigbluebutton" value="Update profile" />
+          <span class="attention small bold">
+            <g:if test="${flash.message}">
+              ${flash.message}
+            </g:if>
+          </span>
         </td>
       </tr>
     </table>
   </g:form>
   
   <h2>My upcoming lunches</h2>
-  <div class="upcominglunch">
-    
-  </div>
+  <g:render template="/templates/upcomingLunches" model="[lunches: upcomingLunches]" />
 </div>
 
 <g:javascript src="inputTitle.js"/>

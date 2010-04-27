@@ -6,8 +6,21 @@
     <img src="${lunch.creator.profileImageUrl}"/>
   </div>
   <div class="contactbuttons">
-    <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
-    <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
+    <a href="${twitter.linkToProfile(user: lunch.creator)}" class="clearLink">
+      <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
+    </a>
+    
+    <g:if test="${lunch.creator.facebookProfile}">
+      <a href="${lunch.creator.facebookProfile}" class="clearLink">
+        <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
+      </a>
+    </g:if>
+    
+    <g:if test="${lunch.creator.linkedInProfile}">
+      <a href="${lunch.creator.linkedInProfile}" class="clearLink">
+        <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}" class="contactbutton"/>
+      </a>
+    </g:if>
   </div>
 </div>
 
@@ -25,7 +38,17 @@
     <a class="contentlink" href="">See special offers</a>
   </div>
 
-  <a href="${createLink(action: 'join', params: [id: lunch.id])}" class="bigbluebutton">Lunch!</a>
+  <g:if test="${showDeleteButton}">
+    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Delete lunch</a>
+  </g:if>
+  
+  <g:if test="${showNotGoingButton}">
+    <a href="${createLink(action: 'leave', params: [id: lunch.id])}" class="bigbluebutton mainbutton">I'm not going</a>
+  </g:if>
+  
+  <g:if test="${showLunchButton}">
+    <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Lunch!</a>
+  </g:if>
 
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
@@ -48,17 +71,42 @@
   <g:each var="comment" in="${lunch.sortedComments}">
     <div class="comment">
 		   <img src="${comment.author.profileImageUrl}"/>
-		   <p><span class="bold">${comment.author.name}</span> <span class="small">${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}</span></p>
+		   <p>
+		     <span class="bold">
+		       <a href="${createLink(controller: "profile", action: "show", id: comment.author.username)}">
+		         ${comment.author.name}
+		       </a>
+		     </span>
+		     <span class="small">
+		       ${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}
+		     </span>
+		   </p>
 		   ${comment.text}
     </div>
   </g:each>
 </div>
 
 <div class="participants grey">
-  <h3>Wanna!</h3>
+  <h3>Accepted!</h3>
   <g:each var="participant" in="${lunch.participants}">
     <div>
-      <img src="${resource(dir: 'img', file: participant.username + '.jpg')}"/><br/>${participant.name}
+      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+    </div>
+  </g:each>
+</div>
+
+<div class="applicants grey">
+  <h3>Wanna!</h3>
+  <g:each var="applicant" in="${lunch.applicants}">
+    <div>
+      <g:if test="${canAcceptApplicants}">
+        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
+          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+        </a>
+      </g:if>
+      <g:else>
+        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+      </g:else>
     </div>
   </g:each>
 </div>
