@@ -47,7 +47,12 @@
   </g:if>
   
   <g:if test="${showLunchButton}">
-    <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Lunch!</a>
+    <u:isLoggedIn>
+      <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Lunch!</a>
+    </u:isLoggedIn>
+    <u:isNotLoggedIn>
+      <a href="#info" rel="facebox" class="bigbluebutton mainbutton">Lunch!</a>
+    </u:isNotLoggedIn>
   </g:if>
 
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>

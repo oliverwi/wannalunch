@@ -13,7 +13,7 @@
     <div class="wrapper">
       <div class="header">
         <img src="${resource(dir: 'img', file: 'logo.png')}" class="headerlogo"/>
-        <div class="headercontrols">          
+        <div class="headercontrols">
           <a href="http://twitter.com/wannalunch">Follow us</a>
           <a href="http://twitter.com/wannalunch" class="clearLink">
             <img src="${resource(dir: 'img', file: 'twitterbutton.png')}">
@@ -22,7 +22,13 @@
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
           <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
-          <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
+          
+          <u:isLoggedIn>
+            <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
+          </u:isLoggedIn>
+          <u:isNotLoggedIn>
+            <a href="#info" rel="facebox" class="orangebutton">Create</a>
+          </u:isNotLoggedIn>
           <br/>
           <span>
             <u:isNotLoggedIn>
