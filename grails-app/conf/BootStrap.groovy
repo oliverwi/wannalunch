@@ -37,6 +37,15 @@ class BootStrap {
     lunch2.time = new LocalTime()
     lunch2.location = "Vapiano"
 
+    Lunch lunch3 = new Lunch()
+    lunch3.creator = timur
+    lunch3.topic = "Let's talk about how awesome I am!"
+    lunch3.description = "Who could ever be interested in talking about another thing?"
+    lunch3.createDateTime = new LocalDateTime()
+    lunch3.date = new LocalDate().plusDays(3)
+    lunch3.time = new LocalTime()
+    lunch3.location = "Galerii kohvik"
+
     Comment comment1 = new Comment()
     comment1.text = "I am interested"
     comment1.author = timur
@@ -48,6 +57,7 @@ class BootStrap {
     oliver.save()
     lunch1.save()
     lunch2.save()
+    lunch3.save()
     comment1.save()
   }
 

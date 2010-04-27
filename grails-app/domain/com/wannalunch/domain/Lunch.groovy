@@ -27,4 +27,8 @@ class Lunch {
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
+  
+  static def findByParticipant(User user) {
+    executeQuery("select l from Lunch l left outer join l.participants p where l.creator = :user or p = :user", [user: user])
+  }
 }

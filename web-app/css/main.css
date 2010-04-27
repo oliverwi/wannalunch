@@ -47,6 +47,7 @@ h3 {
 .upcominglunch img {
   float: left;
   margin-right: 10px;
+  max-width: 60px;
 }
 
 h4 {

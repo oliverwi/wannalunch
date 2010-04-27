@@ -82,7 +82,7 @@ class LunchController {
   }
 
   private def getNextLunchId(def currentLunch) {
-    def nextLunch = Lunch.find("from Lunch l where l.createDateTime > :createDateTime", [createDateTime: currentLunch.createDateTime])
+    def nextLunch = Lunch.find("from Lunch l where l.id > :id", [id: currentLunch.id])
     def nextId = nextLunch ? nextLunch.id : firstLunchId
   }
   
