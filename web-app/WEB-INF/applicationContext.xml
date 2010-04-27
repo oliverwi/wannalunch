@@ -31,12 +31,12 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <property name="resources">
               <value>classpath*:**/grails-app/**/*.groovy</value>
         </property>
-    </bean>    
-    
+    </bean>
+
    <bean id="characterEncodingFilter"
       class="org.springframework.web.filter.CharacterEncodingFilter">
         <property name="encoding">
           <value>utf-8</value>
         </property>
-   </bean>    	
+   </bean>
 </beans>

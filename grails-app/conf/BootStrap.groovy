@@ -1,3 +1,6 @@
+import com.wannalunch.aop.AuthRequired;
+
+import org.codehaus.groovy.grails.commons.ApplicationHolder
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime

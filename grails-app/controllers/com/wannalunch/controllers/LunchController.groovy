@@ -1,5 +1,6 @@
 package com.wannalunch.controllers
 
+import com.wannalunch.aop.AuthRequired;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.User
@@ -18,7 +19,7 @@ class LunchController {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
     def user = userService.user
-    
+
     [lunch: lunch,
      nextId: getNextLunchId(lunch),
      showLunchButton: userService.isLoggedIn() ? user.canApplyTo(lunch) : true,
@@ -27,57 +28,45 @@ class LunchController {
      canAcceptApplicants: userService.isLoggedIn() && user.canAcceptApplicantsFor(lunch)]
   }
 
+  @AuthRequired
   def apply = {
-    if (!checkIfLoggedIn()) {
-      return
-    }
-    
     def lunch = Lunch.get(params.id)
     def user = userService.user
-    
+
     if (user.applyTo(lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException("Oops!")
     }
   }
-  
+
+  @AuthRequired
   def leave = {
-    if (!checkIfLoggedIn()) {
-      return 
-    }
-    
     def lunch = Lunch.get(params.id)
     def user = userService.user
-    
+
     if (user.cancelParticipation(lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException("Oops!")
     }
   }
-  
+
+  @AuthRequired
   def delete = {
-    if (!checkIfLoggedIn()) {
-      return
-    }
-    
     def lunch = Lunch.get(params.id)
     def user = userService.user
-    
+
     lunch.delete(flush: true)
     redirect action: "show"
   }
-  
+
+  @AuthRequired
   def accept = {
-    if (!checkIfLoggedIn()) {
-      return
-    }
-    
     def lunch = Lunch.get(params.id)
     def creator = userService.user
     def applicant = User.findByUsername(params.username)
-    
+
     if (creator.promoteToParticipant(applicant, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
@@ -85,9 +74,8 @@ class LunchController {
     }
   }
 
+  @AuthRequired
   def comment = {
-    checkIfLoggedIn()
-    
     def lunch = Lunch.get(Long.parseLong(params.lunch))
 
     def comment = new Comment()
@@ -104,15 +92,13 @@ class LunchController {
     }
   }
 
+  @AuthRequired
   def create = {
-    checkIfLoggedIn()
-    
     [lunch: new Lunch()]
   }
 
+  @AuthRequired
   def save = {
-    checkIfLoggedIn()
-    
     def lunch = new Lunch()
     lunch.properties = params
     lunch.creator = userService.user
@@ -132,13 +118,5 @@ class LunchController {
   private def getNextLunchId(def currentLunch) {
     def nextLunch = Lunch.find("from Lunch l where l.id > :id", [id: currentLunch.id])
     def nextId = nextLunch ? nextLunch.id : firstLunchId
-  }
-  
-  private def checkIfLoggedIn() {
-    if (!userService.isLoggedIn()) {
-      redirect action: "show"
-      return false
-    }
-    return true
   }
 }
