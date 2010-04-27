@@ -1,3 +1,4 @@
 bin
 target
 grails-app/conf/ProductionConfig.groovy
+.DS_Store
