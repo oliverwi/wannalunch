@@ -279,27 +279,34 @@ h5 {
   max-width: 60px;
 }
 
+.applicants,
 .participants {
   float: right;
+  clear: right;
   background: #EAEAEA;
   width: 110px;
-  margin: 0px;
+  margin: 0px 0px 30px 0px;
   text-align: center;
   -moz-border-radius: 4px 4px 4px 4px;
   -webkit-border-radius: 4px 4px 4px 4px;
 }
 
+.applicants div,
 .participants div {
   margin-bottom: 15px;
   font-weight: bold;
   font-size: 0.9em;
 }
 
+.applicants img,
+.participants img {
+  max-width: 60px;
+  max-height: 60px;
+}
 
-
-
-
-
+.applicants img {
+	opacity: 0.3;
+}
 
 .speciallunches {
   float: right;
@@ -394,12 +401,6 @@ h5 {
   font-size: 0.8em;
 }
 
-
-
-.participants img {
-  max-width: 60px;
-  max-height: 60px;
-}
 
 
 .partners {

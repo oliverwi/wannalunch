@@ -8,13 +8,15 @@ class ProfileController {
   def userService
   
   def show = {
-    User user = User.findByUsername(params.id)
-    [view: "show", user: user, upcomingLunches: Lunch.findByParticipant(user)]
+    def user = User.findByUsername(params.id)
+    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(user)
+    [view: "show", user: user, upcomingLunches: upcomingLunches]
   }
   
   def edit = {
-    User loggedInUser = userService.user
-    [view: "edit", user: loggedInUser, upcomingLunches: Lunch.findByParticipant(loggedInUser)]
+    def loggedInUser = userService.user
+    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(loggedInUser)
+    [view: "edit", user: loggedInUser, upcomingLunches: upcomingLunches]
   }
   
   def update = {

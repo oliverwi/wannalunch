@@ -38,7 +38,15 @@
     <a class="contentlink" href="">See special offers</a>
   </div>
 
-  <a href="${createLink(action: 'join', params: [id: lunch.id])}" class="bigbluebutton">Lunch!</a>
+  <g:if test="${isCreator}">
+    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton">Delete lunch</a>
+  </g:if>
+  <g:elseif test="${isAttending}">
+    <a href="${createLink(action: 'leave', params: [id: lunch.id])}" class="bigbluebutton">I'm not going</a>
+  </g:elseif>
+  <g:else>
+    <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton">Lunch!</a>
+  </g:else>
 
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
@@ -77,10 +85,26 @@
 </div>
 
 <div class="participants grey">
-  <h3>Wanna!</h3>
+  <h3>Accepted!</h3>
   <g:each var="participant" in="${lunch.participants}">
     <div>
-      <img src="${resource(dir: 'img', file: participant.username + '.jpg')}"/><br/>${participant.name}
+      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+    </div>
+  </g:each>
+</div>
+
+<div class="applicants grey">
+  <h3>Wanna!</h3>
+  <g:each var="applicant" in="${lunch.applicants}">
+    <div>
+      <g:if test="${isCreator}">
+        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
+          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+        </a>
+      </g:if>
+      <g:else>
+        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+      </g:else>
     </div>
   </g:each>
 </div>

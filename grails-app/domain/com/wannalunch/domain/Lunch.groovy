@@ -22,13 +22,15 @@ class Lunch {
   
   User creator
   
-  static hasMany = [participants:User, comments:Comment]
+  static hasMany = [participants:User, applicants: User, comments:Comment]
+
+  
 
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
   
-  static def findByParticipant(User user) {
+  static def findWhereCreatorOrParticipant(User user) {
     executeQuery("select l from Lunch l left outer join l.participants p where l.creator = :user or p = :user order by date, time", [user: user])
   }
 }

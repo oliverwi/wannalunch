@@ -27,6 +27,7 @@ class BootStrap {
     lunch1.date = new LocalDate().plusDays(1)
     lunch1.time = new LocalTime()
     lunch1.location = "Vapiano"
+    lunch1.addToApplicants(timur)
 
     Lunch lunch2 = new Lunch()
     lunch2.creator = oliver

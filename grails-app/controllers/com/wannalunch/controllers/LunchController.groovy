@@ -17,20 +17,64 @@ class LunchController {
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
-
-    [lunch: lunch, nextId: getNextLunchId(lunch)]
+    def isAttending = userService.isLoggedIn() && userService.user.isAttending(lunch)
+    def isCreator = userService.isLoggedIn() && userService.user.isCreatorOf(lunch)
+    
+    [lunch: lunch, nextId: getNextLunchId(lunch), isAttending: isAttending, isCreator: isCreator]
   }
 
-  def join = {
-    // TODO create annotation to check this :)
+  def apply = {
     if (!checkIfLoggedIn()) {
       return
     }
     
     def lunch = Lunch.get(params.id)
-
-    lunch.addToParticipants(userService.user)
-    if (lunch.save()) {
+    def user = userService.user
+    
+    if (user.applyTo(lunch)) {
+      redirect action: "show", id: lunch.id
+    } else {
+      throw new RuntimeException("Oops!")
+    }
+  }
+  
+  def leave = {
+    if (!checkIfLoggedIn()) {
+      return 
+    }
+    
+    def lunch = Lunch.get(params.id)
+    def user = userService.user
+    
+    if (user.cancelParticipation(lunch)) {
+      redirect action: "show", id: lunch.id
+    } else {
+      throw new RuntimeException("Oops!")
+    }
+  }
+  
+  def delete = {
+    if (!checkIfLoggedIn()) {
+      return
+    }
+    
+    def lunch = Lunch.get(params.id)
+    def user = userService.user
+    
+    lunch.delete(flush: true)
+    redirect action: "show"
+  }
+  
+  def accept = {
+    if (!checkIfLoggedIn()) {
+      return
+    }
+    
+    def lunch = Lunch.get(params.id)
+    def creator = userService.user
+    def applicant = User.findByUsername(params.username)
+    
+    if (creator.promoteToParticipant(applicant, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException("Oops!")
