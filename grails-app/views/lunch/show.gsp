@@ -6,7 +6,7 @@
     <img src="${lunch.creator.profileImageUrl}"/>
   </div>
   <div class="contactbuttons">
-    <a href="http://twitter.com/${lunch.creator.username}" class="clearLink">
+    <a href="${twitter.linkToProfile(user: lunch.creator)}" class="clearLink">
       <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
     </a>
     
@@ -61,7 +61,16 @@
   <g:each var="comment" in="${lunch.sortedComments}">
     <div class="comment">
 		   <img src="${comment.author.profileImageUrl}"/>
-		   <p><span class="bold">${comment.author.name}</span> <span class="small">${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}</span></p>
+		   <p>
+		     <span class="bold">
+		       <a href="${createLink(controller: "profile", action: "show", id: comment.author.username)}">
+		         ${comment.author.name}
+		       </a>
+		     </span>
+		     <span class="small">
+		       ${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}
+		     </span>
+		   </p>
 		   ${comment.text}
     </div>
   </g:each>

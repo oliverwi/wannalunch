@@ -7,9 +7,14 @@ class ProfileController {
   
   def userService
   
-  def index = {
+  def show = {
+    User user = User.findByUsername(params.id)
+    [view: "show", user: user, upcomingLunches: Lunch.findByParticipant(user)]
+  }
+  
+  def edit = {
     User loggedInUser = userService.user
-    [view: "index", user: loggedInUser, upcomingLunches: Lunch.findByParticipant(loggedInUser)]
+    [view: "edit", user: loggedInUser, upcomingLunches: Lunch.findByParticipant(loggedInUser)]
   }
   
   def update = {
@@ -20,7 +25,7 @@ class ProfileController {
     user.save()
     flash.message = "Profile updated!"
     
-    redirect action: "index"
+    redirect action: "edit"
   }
   
   private def getProfileLink(link) {
