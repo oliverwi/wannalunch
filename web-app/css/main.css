@@ -189,7 +189,7 @@ h5 {
 
 .contactpicture {
   width: 200px;
-  height: 200px;
+  margin-bottom: 2px;
 }
 
 .contactpicture img {
