@@ -1,5 +1,7 @@
 package com.wannalunch.controllers
 
+import com.wannalunch.aop.AuthRequired;
+
 import twitter4j.Twitter
 
 class OauthController {

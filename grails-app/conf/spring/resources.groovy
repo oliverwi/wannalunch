@@ -1,3 +1,5 @@
+import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
+
 beans = {
 
   userMessageSource(com.wannalunch.support.UserLocaleMessageSourceAccessor) {

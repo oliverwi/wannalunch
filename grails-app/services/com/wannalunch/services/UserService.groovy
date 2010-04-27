@@ -18,7 +18,7 @@ class UserService {
       user = new User(username: username, name: name, profileImageUrl: profileImageUrl).save()
     }
   }
-  
+
   boolean isLoggedIn() {
     return user != null
   }
