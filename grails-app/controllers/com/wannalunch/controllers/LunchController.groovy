@@ -17,10 +17,17 @@ class LunchController {
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
-    def isAttending = userService.isLoggedIn() && userService.user.isAttending(lunch)
-    def isCreator = userService.isLoggedIn() && userService.user.isCreatorOf(lunch)
+    def user = userService.user
     
-    [lunch: lunch, nextId: getNextLunchId(lunch), isAttending: isAttending, isCreator: isCreator]
+    def showDeleteButton = userService.isLoggedIn() && user.canDelete(lunch)
+    def showNotGoingButton = userService.isLoggedIn() && user.canBeRemovedFrom(lunch)
+    def showLunchButton = userService.isLoggedIn() ? user.canApplyTo(lunch) : true
+    
+    [lunch: lunch,
+     nextId: getNextLunchId(lunch),
+     showLunchButton: showLunchButton,
+     showNotGoingButton: showNotGoingButton,
+     showDeleteButton: showDeleteButton]
   }
 
   def apply = {

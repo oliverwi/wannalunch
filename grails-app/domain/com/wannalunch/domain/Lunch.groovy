@@ -24,8 +24,6 @@ class Lunch {
   
   static hasMany = [participants:User, applicants: User, comments:Comment]
 
-  
-
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }

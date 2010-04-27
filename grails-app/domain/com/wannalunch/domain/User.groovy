@@ -48,6 +48,18 @@ class User implements Serializable {
 	  return lunch.save()
 	}
 	
+	boolean canDelete(Lunch lunch) {
+	  isCreatorOf(lunch)
+	}
+	
+	boolean canBeRemovedFrom(Lunch lunch) {
+	  (isApplicantOf(lunch) || isParticipantOf(lunch)) && !isCreatorOf(lunch)
+	}
+	
+	boolean canApplyTo(Lunch lunch) {
+	  !isApplicantOf(lunch) && !isParticipantOf(lunch) && !isCreatorOf(lunch)
+	}
+	
 	boolean isCreatorOf(Lunch lunch) {
 	  lunch.creator == this
 	}
@@ -58,10 +70,6 @@ class User implements Serializable {
 	
 	boolean isParticipantOf(Lunch lunch) {
 	  lunch.participants.contains(this)
-	}
-	
-	boolean isAttending(Lunch lunch) {
-	  isCreatorOf(lunch) || isApplicantOf(lunch) || isParticipantOf(lunch)
 	}
 	
 	public boolean equals(Object o) {

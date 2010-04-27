@@ -38,15 +38,17 @@
     <a class="contentlink" href="">See special offers</a>
   </div>
 
-  <g:if test="${isCreator}">
-    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton">Delete lunch</a>
+  <g:if test="${showDeleteButton}">
+    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Delete lunch</a>
   </g:if>
-  <g:elseif test="${isAttending}">
-    <a href="${createLink(action: 'leave', params: [id: lunch.id])}" class="bigbluebutton">I'm not going</a>
-  </g:elseif>
-  <g:else>
-    <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton">Lunch!</a>
-  </g:else>
+  
+  <g:if test="${showNotGoingButton}">
+    <a href="${createLink(action: 'leave', params: [id: lunch.id])}" class="bigbluebutton mainbutton">I'm not going</a>
+  </g:if>
+  
+  <g:if test="${showLunchButton}">
+    <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Lunch!</a>
+  </g:if>
 
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
