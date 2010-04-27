@@ -24,6 +24,10 @@ a:hover {
   text-decoration: underline;
 }
 
+.clearLink {
+	text-decoration: none !important;
+}
+
 h1 {
   font-size: 2em;
   color: #6d6f72;

@@ -53,8 +53,8 @@ class BootStrap {
     comment1.time = new LocalTime()
     comment1.lunch = lunch1
 
-    timur.save()
-    oliver.save()
+    assert timur.save(), timur.errors
+    assert oliver.save(), oliver.errors
     lunch1.save()
     lunch2.save()
     lunch3.save()

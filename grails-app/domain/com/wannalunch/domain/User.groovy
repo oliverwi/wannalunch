@@ -9,8 +9,14 @@ class User implements Serializable {
   String username
   
   String profileImageUrl
+  
+  String facebookProfile
+  
+  String linkedInProfile
 
-  static mappings = {
+  static constraints = {
     username blank: false
+    facebookProfile nullable: true
+    linkedInProfile nullable: true
   }
 }

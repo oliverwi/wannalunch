@@ -9,6 +9,25 @@ class ProfileController {
   
   def index = {
     User loggedInUser = userService.user
-    [view: "index", upcomingLunches: Lunch.findByParticipant(loggedInUser)]
+    [view: "index", user: loggedInUser, upcomingLunches: Lunch.findByParticipant(loggedInUser)]
+  }
+  
+  def update = {
+    User user = userService.user
+    user.facebookProfile = getProfileLink(params.facebookProfile)
+    user.linkedInProfile = getProfileLink(params.linkedInProfile)
+    
+    user.save()
+    flash.message = "Profile updated!"
+    
+    redirect action: "index"
+  }
+  
+  private def getProfileLink(link) {
+    if (!link || link.trim() == "What's your profile link?") {
+      return null
+    }
+    
+    return link
   }
 }
