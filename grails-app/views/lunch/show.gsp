@@ -99,7 +99,7 @@
   <h3>Wanna!</h3>
   <g:each var="applicant" in="${lunch.applicants}">
     <div>
-      <g:if test="${isCreator}">
+      <g:if test="${canAcceptApplicants}">
         <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
           <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
         </a>

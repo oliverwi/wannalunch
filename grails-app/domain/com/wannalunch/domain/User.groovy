@@ -60,6 +60,10 @@ class User implements Serializable {
 	  !isApplicantOf(lunch) && !isParticipantOf(lunch) && !isCreatorOf(lunch)
 	}
 	
+	boolean canAcceptApplicantsFor(Lunch lunch) {
+	  isCreatorOf(lunch)
+	}
+	
 	boolean isCreatorOf(Lunch lunch) {
 	  lunch.creator == this
 	}

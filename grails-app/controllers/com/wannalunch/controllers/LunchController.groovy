@@ -19,15 +19,12 @@ class LunchController {
     def lunch = Lunch.get(id)
     def user = userService.user
     
-    def showDeleteButton = userService.isLoggedIn() && user.canDelete(lunch)
-    def showNotGoingButton = userService.isLoggedIn() && user.canBeRemovedFrom(lunch)
-    def showLunchButton = userService.isLoggedIn() ? user.canApplyTo(lunch) : true
-    
     [lunch: lunch,
      nextId: getNextLunchId(lunch),
-     showLunchButton: showLunchButton,
-     showNotGoingButton: showNotGoingButton,
-     showDeleteButton: showDeleteButton]
+     showLunchButton: userService.isLoggedIn() ? user.canApplyTo(lunch) : true,
+     showNotGoingButton: userService.isLoggedIn() && user.canBeRemovedFrom(lunch),
+     showDeleteButton: userService.isLoggedIn() && user.canDelete(lunch),
+     canAcceptApplicants: userService.isLoggedIn() && user.canAcceptApplicantsFor(lunch)]
   }
 
   def apply = {
