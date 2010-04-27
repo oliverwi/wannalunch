@@ -25,16 +25,16 @@
           <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
           <br/>
           <span>
-            <user:isNotLoggedIn>
+            <u:isNotLoggedIn>
               <a href="${twitter.loginLink()}">log in with twitter</a>
-            </user:isNotLoggedIn>
-            <user:isLoggedIn>
-              <user:userInfo field="username"/>
+            </u:isNotLoggedIn>
+            <u:isLoggedIn>
+              <u:userInfo field="username"/>
               /
               <a href="${createLink(controller: "profile", action: "edit")}">Profile</a>
               /
               <a href="${twitter.logoutLink()}">Logout</a>
-            </user:isLoggedIn>
+            </u:isLoggedIn>
           </span>
         </div>
       </div>
@@ -55,7 +55,7 @@
       $('a[rel*=facebox]').facebox()
     });
   </g:javascript>
-  <div id="logininfo" style="display:none;">
+  <div id="info" style="display:none;">
     <p><br/>You need to log in</p>
   </div>
   

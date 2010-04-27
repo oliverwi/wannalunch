@@ -5,7 +5,7 @@ import org.springframework.context.ApplicationContextAware;
 
 public class UserTagLib implements ApplicationContextAware {
 
-  static namespace = "user"
+  static namespace = "u"
 
   ApplicationContext applicationContext
   

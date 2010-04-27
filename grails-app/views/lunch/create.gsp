@@ -3,7 +3,7 @@
 <h3 class="pagetitle">Create lunch</h3>
 <div class="contactdetails">
   <div class="contactpicture">
-    <img src="${user.userInfo(field: 'profileImageUrl')}"/>
+    <img src="${u.userInfo(field: 'profileImageUrl')}"/>
   </div>
   <div class="contactbuttons">
     <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
