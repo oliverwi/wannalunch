@@ -79,8 +79,10 @@
 </div>
 
 <link rel="stylesheet" href="${resource(dir:'css/flick',file:'jquery-ui-1.8.custom.css')}" />
+<link rel="stylesheet" href="${resource(dir:'css',file:'timePicker.css')}" />
 <g:javascript src="jquery-ui-1.8.custom.min.js"/>
 <g:javascript src="inputTitle.js"/>
+<g:javascript src="jquery.timePicker.js"/>
 <script type="text/javascript">
   $(document).ready(function() {
 	   prepareFieldsWithTitle();
@@ -88,6 +90,7 @@
 
   $(function() {
     $('#date').datepicker({ dateFormat: 'yy-mm-dd', showAnim: '' });
+    $('#time').timePicker();
   });
 
   $("#lucky").click(function() {
