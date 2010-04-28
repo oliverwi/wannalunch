@@ -22,5 +22,9 @@ class UserService {
   boolean isLoggedIn() {
     return user != null
   }
+  
+  User getUser() {
+    user ? User.get(user.id) : null
+  }
 
 }
