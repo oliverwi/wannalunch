@@ -20,6 +20,12 @@
   <g:textField name="time" value="${lunch.time}" class="datetime clear${hasErrors(bean: lunch, field: 'time', ' error')}" title="Time" />
   <g:textField name="location" value="${lunch.location}" class="location clear${hasErrors(bean: lunch, field: 'location', ' error')}" title="Let's meet @ restaurant"/>
 
+  <div>
+    <g:each in="${com.wannalunch.domain.Lunch.PaymentOption.values()}">
+      <g:radio id="${it.name()}" name="paymentOption" value="${it.name()}" checked="${lunch.paymentOption == it}"/><label for="${it.name()}">${it.text}</label>
+    </g:each>
+  </div>
+
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
       <tr>
