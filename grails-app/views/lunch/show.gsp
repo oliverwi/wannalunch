@@ -6,18 +6,18 @@
     <img src="${lunch.creator.profileImageUrl}"/>
   </div>
   <div class="contactbuttons">
-    <a href="${twitter.linkToProfile(user: lunch.creator)}" class="clearLink">
+    <a href="${twitter.linkToProfile(user: lunch.creator)}" target="_blank" class="clearLink">
       <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
     </a>
 
     <g:if test="${lunch.creator.facebookProfile}">
-      <a href="${lunch.creator.facebookProfile}" class="clearLink">
+      <a href="${lunch.creator.facebookProfile}" target="_blank" class="clearLink">
         <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
       </a>
     </g:if>
 
     <g:if test="${lunch.creator.linkedInProfile}">
-      <a href="${lunch.creator.linkedInProfile}" class="clearLink">
+      <a href="${lunch.creator.linkedInProfile}" target="_blank" class="clearLink">
         <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}" class="contactbutton"/>
       </a>
     </g:if>

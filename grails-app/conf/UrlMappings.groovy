@@ -11,6 +11,7 @@ class UrlMappings {
 
     "/about"(uri: "/about/index.gsp")
     "/about/partners"(uri: "/about/partners.gsp")
+    "/about/signup"(uri: "/about/signup.gsp")
   }
 
 }

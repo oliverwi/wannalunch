@@ -14,7 +14,7 @@
         <td>
           <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"></img>
           <span class="grey bold">
-            <a href="${twitter.linkToProfile(user: user)}">
+            <a href="${twitter.linkToProfile(user: user)}" target="_blank">
               ${user.username}
             </a>
           </span>
@@ -24,7 +24,7 @@
 	      <tr>
 	        <td>
 	            <img src="${resource(dir: 'img', file: 'fbbutton.png')}"></img>
-	            <a href="${user.facebookProfile}">
+	            <a href="${user.facebookProfile}" target="_blank">
 	              ${user.facebookProfile}
 	            </a>
 	        </td>
@@ -34,7 +34,7 @@
 	      <tr>
 	        <td>
 	          <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"></img>
-	          <a href="${user.linkedInProfile}">
+	          <a href="${user.linkedInProfile}" target="_blank">
 	            ${user.linkedInProfile}
 	          </a>
 	        </td>

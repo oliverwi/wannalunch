@@ -16,11 +16,11 @@
           <img src="${resource(dir: 'img', file: 'logo.png')}" class="headerlogo"/>
         </a>
         <div class="headercontrols">
-          <a href="http://twitter.com/wannalunch">Follow us</a>
-          <a href="http://twitter.com/wannalunch" class="clearLink">
+          <a href="http://twitter.com/wannalunch" target="_blank">Follow us</a>
+          <a href="http://twitter.com/wannalunch" target="_blank" class="clearLink">
             <img src="${resource(dir: 'img', file: 'twitterbutton.png')}">
           </a>
-          <a href="http://www.facebook.com/wannalunch" class="clearLink">
+          <a href="http://www.facebook.com/wannalunch" target="_blank" class="clearLink">
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
           <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
