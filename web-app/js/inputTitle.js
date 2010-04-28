@@ -9,9 +9,7 @@ function prepareElementsWithTitle(elements) {
       copyTitleToValueIfEmpty($(this));
       var element = $(this);
       $(element.parents("form:first")).submit(function() {
-    	if (element.val() == element.attr("title")) {
-          element.val("").removeClass("fadeFieldColor")
-    	}
+    	clearIfHasTitle(element)
       })
     })
     .change(function() {
