@@ -15,7 +15,7 @@ class User implements Serializable {
 	String linkedInProfile
 	
 	static constraints = {
-		username blank: false
+		username blank: false, unique: true
 		facebookProfile nullable: true
 		linkedInProfile nullable: true
 	}

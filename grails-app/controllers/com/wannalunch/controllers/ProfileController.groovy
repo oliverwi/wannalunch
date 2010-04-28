@@ -30,13 +30,7 @@ class ProfileController {
     
     def uploadedImage = request.getFile("profileImage")
     if (!uploadedImage.empty) {
-      
-      def webRootDir = servletContext.getRealPath("/")
-      def profileImage = new File("${webRootDir}/img/profile/${user.username}")
-      println profileImage.absolutePath
-      profileImage.mkdirs()
-      uploadedImage.transferTo(profileImage)
-      user.profileImageUrl = "${servletContext.contextPath}/img/profile/${user.username}"
+      user.profileImageUrl = uploadAndReturnUrl(uploadedImage, user.username)
     }
     
     user.save()
@@ -51,5 +45,16 @@ class ProfileController {
     }
 
     return link
+  }
+  
+  private def uploadAndReturnUrl(uploadedImage, newFileName) {
+    def webRootDir = servletContext.getRealPath("/")
+    def profileImageUrl = "${webRootDir}/img/profile/${newFileName}"
+    
+    def profileImage = new File(profileImageUrl)
+    profileImage.mkdirs()
+    uploadedImage.transferTo(profileImage)
+    
+    return "${servletContext.contextPath}/img/profile/${newFileName}"
   }
 }
