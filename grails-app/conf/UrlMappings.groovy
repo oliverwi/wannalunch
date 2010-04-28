@@ -10,6 +10,7 @@ class UrlMappings {
     "500"(view: "/error")
 
     "/about"(uri: "/about/index.gsp")
+    "/about/partners"(uri: "/about/partners.gsp")
   }
 
 }

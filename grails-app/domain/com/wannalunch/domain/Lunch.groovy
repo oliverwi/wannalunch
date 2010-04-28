@@ -36,8 +36,10 @@ class Lunch {
     comments.sort(new CommentComparator())
   }
 
-  static def findWhereCreatorOrParticipant(User user) {
-    executeQuery("select l from Lunch l left outer join l.participants p where l.creator = :user or p = :user order by date, time", [user: user])
+  static def findUpcomingLunchesFor(User user) {
+    executeQuery(
+        "select l from Lunch l left outer join l.participants p where (l.creator = :user or p = :user) and l.date >= :today order by date, time", 
+        [user: user, today: new LocalDate()])
   }
 
   enum PaymentOption {

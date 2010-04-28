@@ -6,7 +6,6 @@ import java.io.File;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 
-@AuthRequired
 class ProfileController {
 
   private static final VALID_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/gif"]
@@ -17,16 +16,18 @@ class ProfileController {
 
   def show = {
     def user = User.findByUsername(params.id)
-    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(user)
+    def upcomingLunches = Lunch.findUpcomingLunchesFor(user)
     [view: "show", user: user, upcomingLunches: upcomingLunches]
   }
 
+  @AuthRequired
   def edit = {
     def loggedInUser = userService.user
-    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(loggedInUser)
+    def upcomingLunches = Lunch.findUpcomingLunchesFor(loggedInUser)
     [view: "edit", user: loggedInUser, upcomingLunches: upcomingLunches]
   }
 
+  @AuthRequired
   def update = {
     User user = userService.user
     user.facebookProfile = params.facebookProfile

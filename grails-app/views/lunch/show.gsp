@@ -30,13 +30,17 @@
     ${lunch.description}
   </p>
 
-  <p class="grey bold author">${lunch.creator.name}</p>
+  <p class="grey bold author">
+    <a href="${createLink(controller: "profile", action: "show", id: lunch.creator.username)}">
+      ${lunch.creator.name}
+    </a>
+  </p>
 
   <div class="eventdetails bold">
     <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
     @ ${lunch.location}
 
-    <a class="contentlink" href="">See special offers</a>
+    <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
     <p class="payment">$ ${lunch.paymentOption.text}</p>
   </div>
 
@@ -94,27 +98,31 @@
   </g:each>
 </div>
 
-<div class="participants grey">
-  <h3>Accepted!</h3>
-  <g:each var="participant" in="${lunch.participants}">
-    <div>
-      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
-    </div>
-  </g:each>
-</div>
+<g:if test="${lunch.participants.size() > 0}">
+	<div class="participants grey">
+	  <h3>Accepted!</h3>
+	  <g:each var="participant" in="${lunch.participants}">
+	    <div>
+	      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+	    </div>
+	  </g:each>
+	</div>
+</g:if>
 
-<div class="applicants grey">
-  <h3>Wanna!</h3>
-  <g:each var="applicant" in="${lunch.applicants}">
-    <div>
-      <g:if test="${canAcceptApplicants}">
-        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
-          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-        </a>
-      </g:if>
-      <g:else>
-        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-      </g:else>
-    </div>
-  </g:each>
-</div>
+<g:if test="${lunch.applicants.size() > 0}">
+	<div class="applicants grey">
+	  <h3>Wanna!</h3>
+	  <g:each var="applicant" in="${lunch.applicants}">
+	    <div>
+	      <g:if test="${canAcceptApplicants}">
+	        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
+	          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+	        </a>
+	      </g:if>
+	      <g:else>
+	        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+	      </g:else>
+	    </div>
+	  </g:each>
+	</div>
+</g:if>
