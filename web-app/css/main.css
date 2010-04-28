@@ -43,17 +43,6 @@ h3 {
   color: #3c3c3e;
 }
 
-.upcominglunch {
-  clear: both;
-  margin-bottom: 20px;
-}
-
-.upcominglunch img {
-  float: left;
-  margin-right: 10px;
-  max-width: 60px;
-}
-
 h4 {
   font-size: 1.1em;
   color: #6d6f72;
@@ -420,12 +409,18 @@ h5 {
 
 .upcominglunch {
   clear: both;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+  min-height: 90px;
+}
+
+.upcominglunch p {
+	margin: 0px 0px 0px 100px;
 }
 
 .upcominglunch img {
   float: left;
   margin-right: 10px;
+  max-width: 90px;
 }
 
 

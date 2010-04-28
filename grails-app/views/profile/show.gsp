@@ -44,7 +44,9 @@
   </g:form>
   
   <h2>${user.name}'s upcoming lunches</h2>
-  <g:render template="/templates/upcomingLunches" model="[lunches: upcomingLunches]" />
+  <g:each var="lunch" in="${upcomingLunches}">
+    <g:render template="/templates/upcomingLunch" model="[lunch: lunch]" />
+  </g:each>
 </div>
 
 <g:javascript src="inputTitle.js"/>
