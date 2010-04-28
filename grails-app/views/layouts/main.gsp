@@ -30,15 +30,15 @@
             <a href="#info" rel="facebox" class="orangebutton">Create</a>
           </u:isNotLoggedIn>
           <br/>
-          <span>
+          <span style="margin-right: 2px;">
             <u:isNotLoggedIn>
               <a href="${twitter.loginLink()}">log in with twitter</a>
             </u:isNotLoggedIn>
             <u:isLoggedIn>
               <u:userInfo field="username"/>
-              /
+              &bull;
               <a href="${createLink(controller: "profile", action: "edit")}">Profile</a>
-              /
+              &bull;
               <a href="${twitter.logoutLink()}">Logout</a>
             </u:isLoggedIn>
           </span>
