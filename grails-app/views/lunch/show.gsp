@@ -55,7 +55,8 @@
     </u:isNotLoggedIn>
   </g:if>
 
-  <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
+  <a href="${createLink(action: 'previous', params: [id: lunch.id])}" class="biggreybutton navbutton">Previous</a>
+  <a href="${createLink(action: 'next', params: [id: lunch.id])}" class="biggreybutton navbutton">Next</a>
 
   <div class="postcommentbox">
     <u:isLoggedIn>

@@ -101,6 +101,7 @@ h5 {
   color: #FFF;
   font-weight: bold;
   vertical-align: middle;
+  text-align: center;
   padding: 0 9px;
   margin-right: 1px;
   font-family: Helvetica, Arial, sans-serif;
@@ -474,4 +475,8 @@ h5 {
 
 .error {
   border-color: red !important;
+}
+
+.navbutton {
+  min-width: 75px;
 }
