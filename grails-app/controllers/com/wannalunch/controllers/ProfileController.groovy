@@ -8,6 +8,10 @@ import com.wannalunch.domain.User;
 
 @AuthRequired
 class ProfileController {
+  
+  private static final VALID_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/gif"]
+
+  private static final MAX_IMAGE_SIZE = 307200
 
   def userService
 
@@ -30,6 +34,11 @@ class ProfileController {
     
     def uploadedImage = request.getFile("profileImage")
     if (!uploadedImage.empty) {
+      if (!isValid(uploadedImage)) {
+        redirect action: "edit"
+        return
+      }
+      
       user.profileImageUrl = uploadAndReturnUrl(uploadedImage, user.username)
     }
     
@@ -45,6 +54,20 @@ class ProfileController {
     }
 
     return link
+  }
+  
+  private def isValid(uploadedImage) {
+    if (!(uploadedImage.contentType in VALID_IMAGE_TYPES)) {
+      flash.message = "Only 'png', 'jpg', 'jpeg' and 'gif' files are allowed"
+      return false
+    }
+    
+    if (uploadedImage.size > MAX_IMAGE_SIZE) {
+      flash.message = "The maximum picture file size is 300kB"
+      return false
+    }
+    
+    return true
   }
   
   private def uploadAndReturnUrl(uploadedImage, newFileName) {
