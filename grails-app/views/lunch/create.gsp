@@ -14,13 +14,11 @@
 <div class="content">
 <g:form name="createlunchform" class="createlunch" action="save" method="post">
 
-  <g:renderErrors bean="${lunch}" as="list"/>
-
-  <g:textField name="topic" value="${lunch.topic}" class="topic bold clear" title="What's your lunch topic?"/>
-  <g:textArea name="description" value="${lunch.description}" class="description clear" title="All other cool things you want to discuss" />
-  <g:textField name="date" value="${lunch.date}" class="datetime clear" title="Pick a date" />
-  <g:textField name="time" value="${lunch.time}" class="datetime clear" title="Time" />
-  <g:textField name="location" value="${lunch.location}" class="location clear" title="Let's meet @ restaurant"/>
+  <g:textField name="topic" value="${lunch.topic}" class="topic bold clear${hasErrors(bean: lunch, field: 'topic', ' error')}" title="What's your lunch topic?"/>
+  <g:textArea name="description" value="${lunch.description}" class="description clear${hasErrors(bean: lunch, field: 'description', ' error')}" title="All other cool things you want to discuss" />
+  <g:textField name="date" value="${lunch.date}" class="datetime clear${hasErrors(bean: lunch, field: 'date', ' error')}" title="Pick a date" />
+  <g:textField name="time" value="${lunch.time}" class="datetime clear${hasErrors(bean: lunch, field: 'time', ' error')}" title="Time" />
+  <g:textField name="location" value="${lunch.location}" class="location clear${hasErrors(bean: lunch, field: 'location', ' error')}" title="Let's meet @ restaurant"/>
 
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
