@@ -51,7 +51,12 @@
       </div>
 
       <div class="footer">
-        &copy; 2010 wannalunch - About - sayatme
+        &copy; 2010 Wannalunch? 
+        <a href="http://blog.wannalunch.com">Blog</a> &bull; 
+        <a href="${createLink(controller: "about")}">About</a> &bull;
+        <a href="${createLink(controller: "about", action: "signup")}">Business</a> &bull;
+        <a href="http://getsatisfaction.com/Wannalunch">Feedback</a> &bull;
+        <a href="http://feeds.wannalunch.com/Wannalunch">Subscribe</a>
       </div>
     </div>
   </body>

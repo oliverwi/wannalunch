@@ -8,6 +8,8 @@ class UrlMappings {
     }
     "/"(controller: "lunch")
     "500"(view: "/error")
+    
+    "/about"(uri: "/about/index.gsp")
   }
 
 }
