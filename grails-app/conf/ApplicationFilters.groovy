@@ -8,6 +8,10 @@ class ApplicationFilters {
       def requireAuthentication = getActionsRequiringAuthentication()
 
       before = {
+        if (!controllerName) {
+          return true
+        }
+
         def userService = applicationContext.userService
         if (actionName in requireAuthentication[controllerName] && !userService.loggedIn) {
           flash.message = "You must be logged in"

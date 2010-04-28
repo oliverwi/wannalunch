@@ -9,13 +9,13 @@
     <a href="${twitter.linkToProfile(user: lunch.creator)}" class="clearLink">
       <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
     </a>
-    
+
     <g:if test="${lunch.creator.facebookProfile}">
       <a href="${lunch.creator.facebookProfile}" class="clearLink">
         <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
       </a>
     </g:if>
-    
+
     <g:if test="${lunch.creator.linkedInProfile}">
       <a href="${lunch.creator.linkedInProfile}" class="clearLink">
         <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}" class="contactbutton"/>
@@ -41,11 +41,11 @@
   <g:if test="${showDeleteButton}">
     <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Delete lunch</a>
   </g:if>
-  
+
   <g:if test="${showNotGoingButton}">
     <a href="${createLink(action: 'leave', params: [id: lunch.id])}" class="bigbluebutton mainbutton">I'm not going</a>
   </g:if>
-  
+
   <g:if test="${showLunchButton}">
     <u:isLoggedIn>
       <a href="${createLink(action: 'apply', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Lunch!</a>
@@ -58,8 +58,8 @@
   <a href="${createLink(action: 'show', params: [id: nextId])}" class="biggreybutton">Next</a>
 
   <div class="postcommentbox">
-    <user:isLoggedIn>
-		   <img src="${user.userInfo(field: 'profileImageUrl')}"/>
+    <u:isLoggedIn>
+		   <img src="${u.userInfo(field: 'profileImageUrl')}"/>
 		   <g:form action="comment" method="post">
 		    <div class="textareawrapper">
 		      <textarea name="text"></textarea>
@@ -67,10 +67,10 @@
 		    <input type="hidden" name="lunch" value="${lunch.id}" />
 		    <p><input class="greybutton" type="submit" value="Comment" /></p>
 		   </g:form>
-    </user:isLoggedIn>
-    <user:isNotLoggedIn>
+    </u:isLoggedIn>
+    <u:isNotLoggedIn>
       You need to log in to add comments
-    </user:isNotLoggedIn>
+    </u:isNotLoggedIn>
   </div>
 
   <g:each var="comment" in="${lunch.sortedComments}">
