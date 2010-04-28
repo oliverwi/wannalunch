@@ -15,7 +15,7 @@ class ApplicationFilters {
         def userService = applicationContext.userService
         if (actionName in requireAuthentication[controllerName] && !userService.loggedIn) {
           flash.message = "You must be logged in"
-          redirect controller: controllerName
+          redirect uri: "/"
           return false
         }
 
@@ -28,14 +28,20 @@ class ApplicationFilters {
     def requireAuthentication = [:]
 
     ApplicationHolder.application.getArtefacts("Controller").each { controllerClass ->
-      controllerClass.metaClass.properties.each { prop ->
-        def cachedField = prop.field
-        if (cachedField && cachedField.field.isAnnotationPresent(AuthRequired)) {
-          def controllerClassName = controllerClass.logicalPropertyName
-          if (!requireAuthentication[controllerClassName]) {
-            requireAuthentication[controllerClassName] = []
+      def controllerClassName = controllerClass.logicalPropertyName
+      requireAuthentication[controllerClassName] = []
+
+      def allActionsRequireAuth = controllerClass.clazz.isAnnotationPresent(AuthRequired)
+
+      controllerClass.URIs.each { uri ->
+        def action = controllerClass.getClosurePropertyName(uri)
+        def prop = controllerClass.metaClass.getMetaProperty(action)
+
+        if (prop) {
+          def cachedField = prop.field
+          if (allActionsRequireAuth || (cachedField && cachedField.field.isAnnotationPresent(AuthRequired))) {
+            requireAuthentication[controllerClassName].push(prop.name)
           }
-          requireAuthentication[controllerClassName].push(prop.name)
         }
       }
     }
