@@ -468,6 +468,10 @@ h5 {
   width: 400px;
 }
 .payment {
-color: #6d6f72;
-font-weight:bold;
+  color: #6d6f72;
+  font-weight:bold;
+}
+
+.error {
+  border-color: red !important;
 }

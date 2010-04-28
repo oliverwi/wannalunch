@@ -8,9 +8,10 @@ function prepareElementsWithTitle(elements) {
     .each(function() {
       copyTitleToValueIfEmpty($(this));
       var element = $(this);
-      $(element.closest("form").get()).submit(function() {
+      element.removeAttr("disabled");
+      $(element.parents("form:first")).submit(function() {
     	if (element.val() == element.attr("title")) {
-          element.attr("disabled", "disabled")
+          element.attr("disabled", "disabled");
     	}
       })
     })
