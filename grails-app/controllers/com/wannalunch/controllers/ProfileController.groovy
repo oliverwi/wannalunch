@@ -25,36 +25,28 @@ class ProfileController {
 
   def update = {
     User user = userService.user
-    user.facebookProfile = getProfileLink(params.facebookProfile)
-    user.linkedInProfile = getProfileLink(params.linkedInProfile)
-    
+    user.facebookProfile = params.facebookProfile
+    user.linkedInProfile = params.linkedInProfile
+
     def uploadedImage = request.getFile("profileImage")
     if (!uploadedImage.empty) {
       user.profileImageUrl = uploadAndReturnUrl(uploadedImage, user.username)
     }
-    
+
     user.save()
     flash.message = "Profile updated!"
 
     redirect action: "edit"
   }
 
-  private def getProfileLink(link) {
-    if (!link || link.trim() == "What's your profile link?") {
-      return null
-    }
-
-    return link
-  }
-  
   private def uploadAndReturnUrl(uploadedImage, newFileName) {
     def webRootDir = servletContext.getRealPath("/")
     def profileImageUrl = "${webRootDir}/img/profile/${newFileName}"
-    
+
     def profileImage = new File(profileImageUrl)
     profileImage.mkdirs()
     uploadedImage.transferTo(profileImage)
-    
+
     return "${servletContext.contextPath}/img/profile/${newFileName}"
   }
 }

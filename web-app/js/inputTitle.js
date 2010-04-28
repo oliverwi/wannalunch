@@ -7,6 +7,12 @@ function prepareElementsWithTitle(elements) {
   elements
     .each(function() {
       copyTitleToValueIfEmpty($(this));
+      var element = $(this);
+      $(element.closest("form").get()).submit(function() {
+    	if (element.val() == element.attr("title")) {
+          element.attr("disabled", "disabled")
+    	}
+      })
     })
     .change(function() {
       copyTitleToValueIfEmpty($(this));
