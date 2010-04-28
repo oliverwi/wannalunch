@@ -1,6 +1,8 @@
 package com.wannalunch.controllers
 
 import com.wannalunch.aop.AuthRequired;
+import java.io.File;
+
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 
@@ -25,7 +27,18 @@ class ProfileController {
     User user = userService.user
     user.facebookProfile = getProfileLink(params.facebookProfile)
     user.linkedInProfile = getProfileLink(params.linkedInProfile)
-
+    
+    def uploadedImage = request.getFile("profileImage")
+    if (!uploadedImage.empty) {
+      
+      def webRootDir = servletContext.getRealPath("/")
+      def profileImage = new File("${webRootDir}/img/profile/${user.username}")
+      println profileImage.absolutePath
+      profileImage.mkdirs()
+      uploadedImage.transferTo(profileImage)
+      user.profileImageUrl = "${servletContext.contextPath}/img/profile/${user.username}"
+    }
+    
     user.save()
     flash.message = "Profile updated!"
 

@@ -9,7 +9,7 @@
 
 <div class="content">
   <h2>${u.userInfo(field: 'name')}</h2>
-  <g:form name="profile" method="post" action="update">
+  <g:form name="profile" method="post" action="update" enctype="multipart/form-data">
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
@@ -32,7 +32,7 @@
       <tr>
         <td>
           Update profile picture:<br/>
-          <input class="fileinput" type="file" name="picture" />
+          <input class="fileinput" type="file" name="profileImage" />
         </td>
       </tr>
       <tr>
