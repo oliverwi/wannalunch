@@ -39,7 +39,7 @@
   <div class="eventdetails bold">
     <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
     @ ${lunch.location}
-    <a class="contentlink" href="">See special offers</a>
+    <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
   </div>
 
   <g:if test="${showDeleteButton}">
