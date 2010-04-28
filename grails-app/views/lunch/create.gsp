@@ -36,9 +36,6 @@
 
   <div class="buttonsrow">
     <input type="submit" class="bigbluebutton clearLink" value="Create lunch!"></input>
-    <a href="${createLink(controller: "lunch")}">
-      <input type="button" class="biggreybutton clearLink" value="Browse lunches" />
-    </a>
   </div>
 
 </g:form>

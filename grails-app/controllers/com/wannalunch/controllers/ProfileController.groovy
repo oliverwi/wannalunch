@@ -16,14 +16,14 @@ class ProfileController {
 
   def show = {
     def user = User.findByUsername(params.id)
-    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(user)
+    def upcomingLunches = Lunch.findUpcomingLunchesFor(user)
     [view: "show", user: user, upcomingLunches: upcomingLunches]
   }
 
   @AuthRequired
   def edit = {
     def loggedInUser = userService.user
-    def upcomingLunches = Lunch.findWhereCreatorOrParticipant(loggedInUser)
+    def upcomingLunches = Lunch.findUpcomingLunchesFor(loggedInUser)
     [view: "edit", user: loggedInUser, upcomingLunches: upcomingLunches]
   }
 
