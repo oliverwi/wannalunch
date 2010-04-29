@@ -15,6 +15,7 @@ hr {
   color: #eee;
   background-color: #eee;
   height: 1px;
+  margin: 10px 0;
 }
 
 a {
@@ -423,8 +424,7 @@ h5 {
 
 .upcominglunch {
   clear: both;
-  margin: 15px 0 10px;
-  min-height: 90px;
+  min-height: 100px;
 }
 
 .upcominglunch .lunchCreator {
@@ -444,10 +444,14 @@ h5 {
 	margin: 0 0 0 70px;
 }
 
-.upcominglunch img {
+.upcominglunch .creatorImage {
   float: left;
   margin-right: 10px;
   max-width: 60px;
+}
+
+.upcominglunch .locationImage {
+  float: right;
 }
 
 .feedback {
@@ -533,10 +537,11 @@ h5 {
 }
 
 .mainPageTabLine {
+	width: 100%;
   color: #0098FE;
   background-color: #0098FE;
   height: 3px;
-  margin-top: 0px;
+  margin: 0px 0px 10px;
 }
 
 .helpBox {

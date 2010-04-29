@@ -4,7 +4,7 @@
 	<h3>Wanna lunch with some cool people like you and<br/>discuss the most interesting topics?<br/>That's the place!</h3>
 	
 	<div class="helpBox">
-		<div   class="lightGrey">How to begin?</div>
+		<div class="lightGrey">How to begin?</div>
 	  <a href="" class="small bold">Check out some tips and tricks</a>
 	</div>
   
@@ -18,7 +18,7 @@
   Freshly added lunches
 </a>
 
-<hr class="mainPageTabLine"/>
+<div class="mainPageTabLine"></div>
 
 <g:each var="lunch" in="${upcomingLunches}">
   <g:render template="/templates/upcomingLunch" model="[lunch: lunch]" />

@@ -5,10 +5,6 @@
   <div class="contactpicture">
     <img src="${u.userInfo(field: 'profileImageUrl')}"/>
   </div>
-  <div class="contactbuttons">
-    <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
-    <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
-  </div>
 </div>
 
 <div class="content">

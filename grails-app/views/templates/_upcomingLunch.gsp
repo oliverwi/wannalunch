@@ -1,5 +1,6 @@
 <div class="upcominglunch">
-  <img src="${lunch.creator.profileImageUrl}" />
+  <img class="creatorImage" src="${lunch.creator.profileImageUrl}" />
+  <img class="locationImage" src="${p.logo(lunch: lunch)}" />
   <span class="bold lunchCreator">
     <a href="${createLink(controller: "lunch", action: "show", id: lunch.id)}">${lunch.creator.name}'s lunch</a>
   </span>
