@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import com.wannalunch.aop.AuthRequired;
 
 import org.codehaus.groovy.grails.commons.ApplicationHolder
@@ -22,57 +24,38 @@ class BootStrap {
     oliver.username = "oliverwi"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
 
-    Lunch lunch1 = new Lunch()
-    lunch1.creator = oliver
-    lunch1.topic = "Topic 1"
-    lunch1.description = "Talking about something"
-    lunch1.createDateTime = new LocalDateTime().minusHours(1)
-    lunch1.date = new LocalDate().plusDays(1)
-    lunch1.time = new LocalTime()
-    lunch1.location = "Vapiano"
-    lunch1.addToApplicants(timur)
-
-    Lunch lunch2 = new Lunch()
-    lunch2.creator = oliver
-    lunch2.topic = "Topic 2"
-    lunch2.description = "Who's interested to talk about another thing?"
-    lunch2.createDateTime = new LocalDateTime()
-    lunch2.date = new LocalDate().plusDays(1)
-    lunch2.time = new LocalTime()
-    lunch2.location = "Vapiano"
-
-    Lunch lunch3 = new Lunch()
-    lunch3.creator = timur
-    lunch3.topic = "Let's talk about how awesome I am!"
-    lunch3.description = "Who could ever be interested in talking about another thing?"
-    lunch3.createDateTime = new LocalDateTime()
-    lunch3.date = new LocalDate().plusDays(1)
-    lunch3.time = new LocalTime().plusHours(1)
-    lunch3.location = "Galerii kohvik"
-
-    Lunch lunch4 = new Lunch()
-    lunch4.creator = oliver
-    lunch4.topic = "Topic 4"
-    lunch4.description = "Who's interested to talk about another thing?"
-    lunch4.createDateTime = new LocalDateTime()
-    lunch4.date = new LocalDate().minusDays(1)
-    lunch4.time = new LocalTime()
-    lunch4.location = "Vapiano"
-
-    Comment comment1 = new Comment()
-    comment1.text = "I am interested"
-    comment1.author = timur
-    comment1.date = new LocalDate()
-    comment1.time = new LocalTime()
-    comment1.lunch = lunch1
-
     assert timur.save(), timur.errors
     assert oliver.save(), oliver.errors
-    lunch1.save()
-    lunch2.save()
-    lunch3.save()
-    lunch4.save()
-    comment1.save()
+    
+    20.times {
+      createLunch(timur, oliver).save()
+    }
+  }
+  
+  private Lunch createLunch(user1, user2) {
+    def random = new Random()
+    
+    Lunch lunch = new Lunch()
+    lunch.creator = random.nextInt(100) % 2 > 0 ? user1 : user2
+    lunch.topic = "Let's talk about that topic number ${random.nextInt(9999) + 1}"
+    lunch.description = "am attending http://thenextweb.com/conference/ in Amsterdam April 27+28+29 and would love to share my experiences to others who have attended or with anyone who has an interest in the future of the interwebz :) "
+    lunch.createDateTime = new LocalDateTime().minusHours(random.nextInt(168) + 1)
+    lunch.date = new LocalDate().plusDays(random.nextInt(30))
+    lunch.time = new LocalTime().plusHours(random.nextInt(24) - 12)
+    lunch.location = ["Vapiano", "Nop", "Sushi Cat", "Olde Hansa"].get(random.nextInt(3))
+    if (random.nextInt(1) > 0) {
+      lunch.addToApplicants(lunch.creator == user1 ? user2 : user1)
+      if (random.nextInt(1) > 0) {
+        Comment comment = new Comment()
+        comment.text = "I am interested"
+        comment.author = lunch.creator == user1 ? user2 : user1
+        comment.date = new LocalDate()
+        comment.time = new LocalTime()
+        comment.lunch = lunch
+      }
+    }
+    
+    return lunch
   }
 
   def destroy = {

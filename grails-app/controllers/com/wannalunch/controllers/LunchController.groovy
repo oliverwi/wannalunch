@@ -11,9 +11,19 @@ import org.joda.time.LocalTime;
 
 class LunchController {
   
-  static defaultAction = "show"
+  static defaultAction = "index"
   
   def userService
+  
+  def index = {
+    int max = params.max ? params.max.toInteger() : 10
+    int offset = params.offset ? params.offset.toInteger() : 0
+    
+    def upcomingLunches = Lunch.findUpcomingLunches(max, offset)
+    def total = Lunch.countUpcomingLunches()
+    
+    [upcomingLunches: upcomingLunches, totalUpcomingLunches: total]
+  }
   
   def show = {
     def id = params.id ?: firstLunchId
