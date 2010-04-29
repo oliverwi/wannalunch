@@ -71,5 +71,9 @@ log4j = {
 //  info   'org.hibernate'
 //  trace  'org.hibernate.SQL',
 //         'org.hibernate.type'
+
+ debug   'com.wannalunch',
+         'grails.app'
+
   warn   'org.mortbay.log'
 }

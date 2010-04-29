@@ -45,7 +45,7 @@ class TwitterService {
     if (ConfigurationHolder.config.twitter.sendTweets) {
       client.updateStatus status
     } else {
-      println "Not sending tweet: '$status'"
+      log.debug "Not sending tweet: '$status'"
     }
   }
 
