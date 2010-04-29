@@ -507,10 +507,13 @@ h5 {
 
 .mainPageHeader {
 	width: 100%;
-	padding-bottom: 40px;
+	padding-bottom: 60px;
 }
 
-.mainPageHeader h3 {
+.mainPageTitle {
+	color: #6d6f72;
+	font-size: 1.4em;
+	line-height: 1.1em;
 	float: left;
 	margin: 0px;
 }
@@ -549,8 +552,13 @@ h5 {
 }
 
 .helpBox div {
-	line-height: 0.8;
-	font-size: 3.2em;
+	line-height: 1;
+	font-size: 3.4em;
+  font-weight: bold;
+}
+
+.helpBoxLink {
+  font-size: 0.9em;
   font-weight: bold;
 }
 

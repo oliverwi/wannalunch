@@ -1,11 +1,11 @@
 <meta name="layout" content="main" />
 
 <div class="mainPageHeader">
-	<h3>Wanna lunch with some cool people like you and<br/>discuss the most interesting topics?<br/>That's the place!</h3>
+	<h3 class="mainPageTitle">Wanna lunch with some cool people like you and<br/>discuss the most interesting topics?<br/>That's the place!</h3>
 	
 	<div class="helpBox">
 		<div class="lightGrey">How to begin?</div>
-	  <a href="" class="small bold">Check out some tips and tricks</a>
+	  <a href="" class="helpBoxLink">Check out some tips and tricks</a>
 	</div>
   
   <div class="clearfix"></div>	
