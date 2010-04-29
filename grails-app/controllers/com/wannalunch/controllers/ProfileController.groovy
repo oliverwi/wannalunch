@@ -30,6 +30,7 @@ class ProfileController {
   @AuthRequired
   def update = {
     User user = userService.user
+    user.email = params.email
     user.facebookProfile = params.facebookProfile
     user.linkedInProfile = params.linkedInProfile
 

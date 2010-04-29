@@ -19,6 +19,11 @@
       </tr>
       <tr>
         <td>
+          <g:textField class="profileinput clear" type="text" title="What's your email address?" name="email" value="${user.email}" />
+        </td>
+      </tr>
+      <tr>
+        <td>
           <img src="${resource(dir: 'img', file: 'fbbutton.png')}"></img>
           <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="facebookProfile" value="${user.facebookProfile}" />
         </td>
@@ -47,7 +52,7 @@
       </tr>
     </table>
   </g:form>
-  
+
   <h2>My upcoming lunches</h2>
   <g:each var="lunch" in="${upcomingLunches}">
     <g:render template="/templates/upcomingLunch" model="[lunch: lunch]" />

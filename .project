@@ -18,6 +18,26 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>mail-0.9-grails-app-services</name>
+			<type>2</type>
+			<location>/Users/timur/.grails/1.2.2/projects/wannalunch/plugins/mail-0.9/grails-app/services</location>
+		</link>
+		<link>
+			<name>mail-0.9-grails-app-taglib</name>
+			<type>2</type>
+			<location>/Users/timur/.grails/1.2.2/projects/wannalunch/plugins/mail-0.9/grails-app/taglib</location>
+		</link>
+		<link>
+			<name>mail-0.9-grails-app-views</name>
+			<type>2</type>
+			<location>/Users/timur/.grails/1.2.2/projects/wannalunch/plugins/mail-0.9/grails-app/views</location>
+		</link>
+		<link>
+			<name>mail-0.9-src-groovy</name>
+			<type>2</type>
+			<location>/Users/timur/.grails/1.2.2/projects/wannalunch/plugins/mail-0.9/src/groovy</location>
+		</link>
+		<link>
 			<name>tomcat-1.2.2-src-groovy</name>
 			<type>2</type>
 			<location>/home/luiz/.grails/1.2.2/projects/wannalunch/plugins/tomcat-1.2.2/src/groovy</location>
