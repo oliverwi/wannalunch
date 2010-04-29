@@ -517,6 +517,7 @@ h5 {
 	font-size: 1em;
 	color: #6d6f72;
   font-weight: bold;
+  outline: none;
 }
 
 .selectedTab {
@@ -556,6 +557,7 @@ h5 {
 .paginateButtons span {
 	padding: 0 3px;
 	font-weight: bold;
+  outline: none;
 }
 
 .paginateButtons .nextLink {

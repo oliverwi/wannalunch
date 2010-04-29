@@ -11,8 +11,12 @@
   <div class="clearfix"></div>	
 </div>
 
-<a href="${createLink(controller: 'lunch', action: 'upcomingLunches')}" class="clearLink mainPageTab selectedTab">Upcoming lunches</a>
-<a href="${createLink(controller: 'lunch', action: 'freshlyAddedLunches')}" class="clearLink mainPageTab">Freshly added lunches</a>
+<a href="${createLink(controller: 'lunch', action: 'upcomingLunches')}" class="clearLink mainPageTab ${params.action == null || params.action == 'upcomingLunches' ? 'selectedTab' : ''}">
+  Upcoming lunches
+</a>
+<a href="${createLink(controller: 'lunch', action: 'freshlyAddedLunches')}" class="clearLink mainPageTab ${params.action == 'freshlyAddedLunches' ? 'selectedTab' : ''}">
+  Freshly added lunches
+</a>
 
 <hr class="mainPageTabLine"/>
 
