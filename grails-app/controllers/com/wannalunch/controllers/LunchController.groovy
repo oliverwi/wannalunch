@@ -19,20 +19,14 @@ class LunchController {
   def lunchService
   
   def upcomingLunches = {
-    int max = params.max ? params.max.toInteger() : 10
-    int offset = params.offset ? params.offset.toInteger() : 0
-    
-    def upcomingLunches = Lunch.findUpcomingLunches(max, offset)
+    def upcomingLunches = Lunch.findUpcomingLunches(paginateParams)
     def total = Lunch.countUpcomingLunches()
     
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
   }
   
   def freshlyAddedLunches = {
-    int max = params.max ? params.max.toInteger() : 10
-    int offset = params.offset ? params.offset.toInteger() : 0
-    
-    def upcomingLunches = Lunch.findFreshlyAddedLunches(max, offset)
+    def upcomingLunches = Lunch.findFreshlyAddedLunches(paginateParams)
     def total = Lunch.countUpcomingLunches()
     
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
@@ -164,5 +158,12 @@ class LunchController {
     "from Lunch where date >= :date and time >= :time and id != :id order by date, time",
     [date: currentLunch.date, time: currentLunch.time, id: currentLunch.id])
     return nextLunch ? nextLunch.id : firstLunchId
+  }
+  
+  private def getPaginateParams() {
+    int max = params.max ? params.max.toInteger() : 10
+    int offset = params.offset ? params.offset.toInteger() : 0
+    
+    [max: max, offset: offset]
   }
 }

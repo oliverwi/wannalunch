@@ -40,19 +40,19 @@ class Lunch {
     comments.sort(new CommentComparator())
   }
   
-  static def findUpcomingLunches(int max, int offset) {
+  static def findUpcomingLunches(paginateParams) {
     executeQuery("select l from Lunch l where l.date >= :today order by date, time",
-        [today: new LocalDate(), max: max, offset: offset])
+        [today: new LocalDate(), max: paginateParams.max, offset: paginateParams.offset])
+  }
+  
+  static def findFreshlyAddedLunches(paginateParams) {
+    executeQuery("select l from Lunch l where l.date >= :today order by l.createDateTime desc",
+        [today: new LocalDate(), max: paginateParams.max, offset: paginateParams.offset])
   }
   
   static def countUpcomingLunches() {
     executeQuery("select count(l.id) from Lunch l where l.date >= :today",
         [today: new LocalDate()])[0]
-  }
-  
-  static def findFreshlyAddedLunches(int max, int offset) {
-    executeQuery("select l from Lunch l where l.date >= :today order by l.createDateTime desc",
-        [today: new LocalDate(), max: max, offset: offset])
   }
 
   static def findUpcomingLunchesFor(User user) {
