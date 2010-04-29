@@ -45,11 +45,13 @@ environments {
   development {
     grails.serverURL = "http://localhost:8080/${appName}"
     twitter.authController = "fakeauth"
+    twitter.sendTweets = false
   }
 
   test {
     grails.serverURL = "http://localhost:8080/${appName}"
     twitter.authController = "fakeauth"
+    twitter.sendTweets = false
   }
 }
 
@@ -69,5 +71,9 @@ log4j = {
 //  info   'org.hibernate'
 //  trace  'org.hibernate.SQL',
 //         'org.hibernate.type'
+
+ debug   'com.wannalunch',
+         'grails.app'
+
   warn   'org.mortbay.log'
 }

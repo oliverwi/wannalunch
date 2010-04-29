@@ -1,5 +1,3 @@
-import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
-
 beans = {
 
   userMessageSource(com.wannalunch.support.UserLocaleMessageSourceAccessor) {
@@ -28,5 +26,11 @@ beans = {
     targetBeanName = 'timeEditor'
     proxyTargetClass = true
   }
+
+  autoProxyCreator(org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator) {
+    proxyTargetClass = true
+  }
+
+  tweetingAspect(com.wannalunch.aop.TweetingAspect)
 
 }
