@@ -1,3 +1,5 @@
+import grails.util.Environment;
+
 import java.util.Random;
 
 import com.wannalunch.aop.AuthRequired;
@@ -14,6 +16,12 @@ import com.wannalunch.domain.User;
 class BootStrap {
 
   def init = { servletContext ->
+    if (Environment.current.name in ["development"]) {
+      addFakeData()
+    }
+  }
+  
+  private void addFakeData() {
     User timur = new User()
     timur.name = "Timur Strekalov"
     timur.username = "timurstrekalov"

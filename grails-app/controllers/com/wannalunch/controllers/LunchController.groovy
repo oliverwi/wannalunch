@@ -46,12 +46,12 @@ class LunchController {
 
   def next = {
     def currentLunch = Lunch.get(params.id)
-    redirect action: show, id: getNextLunchId(currentLunch)
+    redirect action: show, id: currentLunch.nextUpcomingLunch.id
   }
 
   def previous = {
     def currentLunch = Lunch.get(params.id)
-    redirect action: show, id: getPreviousLunchId(currentLunch)
+    redirect action: show, id: currentLunch.previousUpcomingLunch.id
   }
 
   @AuthRequired
@@ -144,20 +144,6 @@ class LunchController {
   private def getLastLunchId() {
     Lunch.find("from Lunch where date >= :today order by date desc, time desc",
     [today: new LocalDate()]).id
-  }
-
-  private def getPreviousLunchId(currentLunch) {
-    def previousLunch = Lunch.find(
-    "from Lunch where date >= :today and date <= :date and time <= :time and id != :id order by date desc, time desc",
-    [today: new LocalDate(), date: currentLunch.date, time: currentLunch.time, id: currentLunch.id])
-    return previousLunch ? previousLunch.id : lastLunchId
-  }
-
-  private def getNextLunchId(currentLunch) {
-    def nextLunch = Lunch.find(
-    "from Lunch where date >= :date and time >= :time and id != :id order by date, time",
-    [date: currentLunch.date, time: currentLunch.time, id: currentLunch.id])
-    return nextLunch ? nextLunch.id : firstLunchId
   }
   
   private def getPaginateParams() {
