@@ -2,9 +2,6 @@ package com.wannalunch.domain
 
 import java.io.Serializable
 
-import com.wannalunch.aop.Tweet;
-import com.wannalunch.aop.TweetType;
-
 class User implements Serializable {
 
   String name

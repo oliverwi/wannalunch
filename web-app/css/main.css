@@ -11,6 +11,13 @@ body {
 	clear: both;
 }
 
+hr {
+  color: #eee;
+  background-color: #eee;
+  height: 1px;
+  margin: 10px 0;
+}
+
 a {
   color: #0098ff;
   text-decoration: none;
@@ -54,8 +61,16 @@ h5 {
   color: #6d6f72;
 }
 
+.lightGrey {
+	color: #CACACA;
+}
+
 .grey {
   color: #6d6f72;
+}
+
+.orange {
+  color: #ff861a;
 }
 
 .bold {
@@ -409,21 +424,35 @@ h5 {
 
 .upcominglunch {
   clear: both;
-  margin-bottom: 5px;
-  min-height: 90px;
+  min-height: 100px;
 }
 
-.upcominglunch p {
-	margin: 0px 0px 0px 100px;
+.upcominglunch .lunchCreator {
+  display: block;
+  margin-bottom: 15px !important;
 }
 
-.upcominglunch img {
+.upcominglunch .lunchTopic {
+	display: block;
+	font-size: 1.3em;
+  margin-bottom: 10px !important;
+}
+
+.upcominglunch .lunchCreator,
+.upcominglunch .lunchDetails,
+.upcominglunch .lunchTopic {
+	margin: 0 0 0 70px;
+}
+
+.upcominglunch .creatorImage {
   float: left;
   margin-right: 10px;
-  max-width: 90px;
+  max-width: 60px;
 }
 
-
+.upcominglunch .locationImage {
+  float: right;
+}
 
 .feedback {
   background: #D4EEFF;
@@ -474,4 +503,80 @@ h5 {
 
 .navbutton {
   min-width: 75px;
+}
+
+.mainPageHeader {
+	width: 100%;
+	padding-bottom: 60px;
+}
+
+.mainPageTitle {
+	color: #6d6f72;
+	font-size: 1.4em;
+	line-height: 1.1em;
+	float: left;
+	margin: 0px;
+}
+
+.mainPageTab {
+	display: inline-block;
+	padding: 7px 10px;
+	font-size: 1em;
+	color: #6d6f72;
+  font-weight: bold;
+  outline: none;
+}
+
+.selectedTab {
+	background: #0098FE;
+	color: #fff;
+	-moz-border-radius: 6px 6px 0px 0px;
+  -webkit-border-radius: 6px 6px 0px 0px;
+}
+
+.selectedTab:hover,
+.mainPageTab:hover {
+  color: #ddd;
+}
+
+.mainPageTabLine {
+	width: 100%;
+  color: #0098FE;
+  background-color: #0098FE;
+  height: 3px;
+  margin: 0px 0px 10px;
+}
+
+.helpBox {
+	float: right;
+}
+
+.helpBox div {
+	line-height: 1;
+	font-size: 3.4em;
+  font-weight: bold;
+}
+
+.helpBoxLink {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.paginateButtons {
+	float: right;
+}
+
+.paginateButtons a,
+.paginateButtons span {
+	padding: 0 3px;
+	font-weight: bold;
+  outline: none;
+}
+
+.paginateButtons .nextLink {
+	padding-left: 15px;
+}
+
+.paginateButtons .prevLink {
+	padding-right: 15px;
 }

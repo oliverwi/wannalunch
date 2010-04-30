@@ -5,10 +5,6 @@
   <div class="contactpicture">
     <img src="${u.userInfo(field: 'profileImageUrl')}"/>
   </div>
-  <div class="contactbuttons">
-    <img src="${resource(dir: 'img', file: 'twitterbutton.png')}" class="contactbutton"/>
-    <img src="${resource(dir: 'img', file: 'fbbutton.png')}" class="contactbutton"/>
-  </div>
 </div>
 
 <div class="content">
@@ -53,35 +49,35 @@
   <table cellspacing="0" cellpadding="0">
     <tr>
       <td><img src="${resource(dir: 'img', file: 'part_1_africankitchen.jpg')}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_6_cestlavie.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_6_cestlavie.jpg')}"></td>
     </tr>
     <tr>
-      <td><img src="${resource(dir: 'img', file: 'part_2_bonaparte.jpg');}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_7_chakra.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_2_bonaparte.jpg')}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_7_chakra.jpg')}"></td>
     </tr>
     <tr>
-      <td><img src="${resource(dir: 'img', file: 'part_3_bossanova.jpg');}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_8_clazz.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_3_bossanova.jpg')}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_8_clazz.jpg')}"></td>
     </tr>
     <tr>
-      <td><img src="${resource(dir: 'img', file: 'part_4_cafetao.jpg');}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_9_cubanita.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_4_cafetao.jpg')}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_9_cubanita.jpg')}"></td>
     </tr>
     <tr>
-      <td><img src="${resource(dir: 'img', file: 'part_5_cafevs.jpg');}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_10_fahle.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_5_cafevs.jpg')}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_10_fahle.jpg')}"></td>
     </tr>
     <tr>
-      <td><img src="${resource(dir: 'img', file: 'part_11_island.jpg');}"></td>
-      <td><img src="${resource(dir: 'img', file: 'part_12_silk.jpg');}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_11_island.jpg')}"></td>
+      <td><img src="${resource(dir: 'img', file: 'part_12_silk.jpg')}"></td>
     </tr>
   </table>
 </div>
 
 <link rel="stylesheet" href="${resource(dir:'css/flick',file:'jquery-ui-1.8.custom.css')}" />
 <link rel="stylesheet" href="${resource(dir:'css',file:'timePicker.css')}" />
-<g:javascript src="jquery-ui-1.8.custom.min.js"/>
 <g:javascript src="inputTitle.js"/>
+<g:javascript src="jquery-ui-1.8.custom.min.js"/>
 <g:javascript src="jquery.timePicker.js"/>
 <script type="text/javascript">
   $(document).ready(function() {

@@ -12,11 +12,26 @@ import org.joda.time.LocalTime;
 
 class LunchController {
 
-  static defaultAction = "show"
-
+  static defaultAction = "upcomingLunches"
+  
   def userService
+  
   def lunchService
-
+  
+  def upcomingLunches = {
+    def upcomingLunches = Lunch.findUpcomingLunches(paginateParams)
+    def total = Lunch.countUpcomingLunches()
+    
+    render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
+  }
+  
+  def freshlyAddedLunches = {
+    def upcomingLunches = Lunch.findFreshlyAddedLunches(paginateParams)
+    def total = Lunch.countUpcomingLunches()
+    
+    render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
+  }
+  
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
@@ -143,5 +158,12 @@ class LunchController {
     "from Lunch where date >= :date and time >= :time and id != :id order by date, time",
     [date: currentLunch.date, time: currentLunch.time, id: currentLunch.id])
     return nextLunch ? nextLunch.id : firstLunchId
+  }
+  
+  private def getPaginateParams() {
+    int max = params.max ? params.max.toInteger() : 10
+    int offset = params.offset ? params.offset.toInteger() : 0
+    
+    [max: max, offset: offset]
   }
 }

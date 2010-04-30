@@ -23,13 +23,13 @@
           <a href="http://www.facebook.com/wannalunch" target="_blank" class="clearLink">
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
-          <a href="${createLink(controller: 'lunch', action: 'show')}" class="bluebutton">Browse lunches</a>
+          <a href="${createLink(controller: 'lunch')}" class="bluebutton">Browse lunches</a>
           
           <u:isLoggedIn>
-            <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create</a>
+            <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create lunch</a>
           </u:isLoggedIn>
           <u:isNotLoggedIn>
-            <a href="#info" rel="facebox" class="orangebutton">Create</a>
+            <a href="#info" rel="facebox" class="orangebutton">Create lunch</a>
           </u:isNotLoggedIn>
           <br/>
           <span style="margin-right: 2px;">
