@@ -30,7 +30,7 @@ class MailService {
     helper.setFrom(params.from ?: senderEmail)
     helper.setTo(params.to)
     helper.setSubject(params.subject)
-    helper.setText(params.text, params.isHtml)
+    helper.setText(params.text, false)
 
     if (params.document) {
       helper.addAttachment(params.document.fileName, new ByteArrayResource(params.document.content.data))
