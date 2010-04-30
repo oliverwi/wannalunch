@@ -44,10 +44,10 @@ class BootStrap {
     lunch.createDateTime = new LocalDateTime().minusHours(random.nextInt(168) + 1)
     lunch.date = new LocalDate().plusDays(random.nextInt(30))
     lunch.time = new LocalTime().plusHours(random.nextInt(24) - 12)
-    lunch.location = ["Silk", "Cafe Bonaparte", "Fahle", "Sushi Cat", "Cafe Tao"].get(random.nextInt(3))
-    if (random.nextInt(1) > 0) {
+    lunch.location = ["Vapiano", "Silk", "Cafe Bonaparte", "Fahle", "Sushi Cat", "Cafe Tao"].get(random.nextInt(5))
+    if (random.nextInt(100) % 2 > 0) {
       lunch.addToApplicants(lunch.creator == user1 ? user2 : user1)
-      if (random.nextInt(1) > 0) {
+      if (random.nextInt(100) % 2 > 0) {
         Comment comment = new Comment()
         comment.text = "I am interested"
         comment.author = lunch.creator == user1 ? user2 : user1
