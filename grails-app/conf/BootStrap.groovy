@@ -10,10 +10,12 @@ import org.joda.time.LocalTime
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.User;
+import com.wannalunch.support.DataMigrator;
 
 class BootStrap {
 
   def init = { servletContext ->
+    new DataMigrator().migrateAll()
     User timur = new User()
     timur.name = "Timur Strekalov"
     timur.username = "timurstrekalov"
@@ -28,15 +30,15 @@ class BootStrap {
 
     assert timur.save(), timur.errors
     assert oliver.save(), oliver.errors
-    
+
     20.times {
       createLunch(timur, oliver).save()
     }
   }
-  
+
   private Lunch createLunch(user1, user2) {
     def random = new Random()
-    
+
     Lunch lunch = new Lunch()
     lunch.creator = random.nextInt(100) % 2 > 0 ? user1 : user2
     lunch.topic = "Let's talk about that topic number ${random.nextInt(9999) + 1}"
@@ -56,7 +58,7 @@ class BootStrap {
         comment.lunch = lunch
       }
     }
-    
+
     return lunch
   }
 

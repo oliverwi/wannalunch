@@ -30,6 +30,7 @@ grails.project.dependency.resolution = {
     	compile 'net.homeip.yusuke:twitter4j:2.0.10'
     	compile 'javax.mail:mail:1.4.1'
     	compile 'quartz:quartz:1.5.2'
+    	compile 'mysql:mysql-connector-java:5.1.6'
     }
 
 }
