@@ -3,3 +3,11 @@ grails.serverURL = "http://www.wannalunch.com"
 twitter.oauth.consumerKey = ''
 twitter.oauth.consumerSecret = ''
 twitter.sendTweets = true
+
+mail {
+  sendMails = true
+  host = ""
+  port = 0
+  username = ""
+  password = ""
+}

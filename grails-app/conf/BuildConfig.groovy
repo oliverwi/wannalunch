@@ -28,6 +28,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.5'
     	compile 'joda-time:joda-time:1.6'
     	compile 'net.homeip.yusuke:twitter4j:2.0.10'
+    	compile 'javax.mail:mail:1.4.1'
     }
 
 }

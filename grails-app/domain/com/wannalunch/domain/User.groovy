@@ -8,6 +8,8 @@ class User implements Serializable {
 
   String username
 
+  String email
+
   String profileImageUrl
 
   String facebookProfile
@@ -16,6 +18,7 @@ class User implements Serializable {
 
   static constraints = {
     username blank: false, unique: true
+    email unique: true, email: true
     facebookProfile nullable: true
     linkedInProfile nullable: true
   }
