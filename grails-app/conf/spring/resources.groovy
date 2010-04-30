@@ -1,4 +1,15 @@
+import org.codehaus.groovy.grails.commons.ConfigurationHolder;
+
+
 beans = {
+
+  def config = ConfigurationHolder.config
+
+  if (config.mail.sendMails) {
+    mailSender(org.springframework.mail.javamail.JavaMailSenderImpl) {
+      host = config.mail.host
+    }
+  }
 
   userMessageSource(com.wannalunch.support.UserLocaleMessageSourceAccessor) {
     messageSource = ref('messageSource')

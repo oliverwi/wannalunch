@@ -46,12 +46,14 @@ environments {
     grails.serverURL = "http://localhost:8080/${appName}"
     twitter.authController = "fakeauth"
     twitter.sendTweets = false
+    mail.sendMails = false
   }
 
   test {
     grails.serverURL = "http://localhost:8080/${appName}"
     twitter.authController = "fakeauth"
     twitter.sendTweets = false
+    mail.sendMails = false
   }
 }
 
