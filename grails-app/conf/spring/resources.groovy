@@ -44,4 +44,22 @@ beans = {
 
   tweetingAspect(com.wannalunch.aop.TweetingAspect)
 
+  mailingAspect(com.wannalunch.aop.MailingAspect)
+
+  mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
+    jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->
+      targetObject = ref("mailService");
+      targetMethod = "maybeSendMail"
+    }
+    startDelay = 0
+    repeatInterval = 5 * 60 * 1000
+  }
+
+  quartzScheduler(org.springframework.scheduling.quartz.SchedulerFactoryBean) {
+    triggers = [
+        ref("mailTrigger")
+    ]
+  }
+
+
 }

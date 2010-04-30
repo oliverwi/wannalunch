@@ -19,12 +19,16 @@ class TweetingAspect implements ApplicationContextAware {
 
   @AfterReturning(pointcut = "com.wannalunch.aop.TweetingAspect.lunchOperation() && @annotation(tweet) && args(lunch)")
   void tweet(Tweet tweet, Lunch lunch) {
-    applicationContext.twitterService.tweet(tweet.value(), null, lunch)
+    twitterService.tweet(tweet.value(), null, lunch)
   }
 
   @AfterReturning(pointcut = "com.wannalunch.aop.TweetingAspect.lunchOperation() && @annotation(tweet) && args(user, lunch)")
   void tweet(Tweet tweet, User user, Lunch lunch) {
-    applicationContext.twitterService.tweet(tweet.value(), user, lunch)
+    twitterService.tweet(tweet.value(), user, lunch)
+  }
+
+  private def getTwitterService() {
+    applicationContext.twitterService
   }
 
 }
