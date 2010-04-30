@@ -11,6 +11,7 @@ import org.joda.time.LocalTime
 
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
+import com.wannalunch.domain.LunchQueries;
 import com.wannalunch.domain.User;
 
 class BootStrap {
@@ -19,6 +20,8 @@ class BootStrap {
     if (Environment.current.name in ["development"]) {
       addFakeData()
     }
+    
+    new LunchQueries().injectQueries()
   }
   
   private void addFakeData() {
