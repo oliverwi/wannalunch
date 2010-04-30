@@ -4,17 +4,17 @@ import org.joda.time.LocalDate;
 
 class LunchQueries {
   
-  def findNextUpcomingLunch() {
+  def getNextUpcomingLunch = {
     def today = new LocalDate()
-    def nextLunch = find("from Lunch l where l.id > :id and l.date >= :today order by id", [id: id, today: today])
+    def nextLunch = delegate.find("from Lunch l where l.id > :id and l.date >= :today order by id", [id: delegate.id, today: today])
     if (!nextLunch) {
-      nextLunch = find("from Lunch l where l.date >= :today order by id", [today: new LocalDate()])
+      nextLunch = delegate.find("from Lunch l where l.date >= :today order by id", [today: new LocalDate()])
     }
     
     return nextLunch
   }
   
-  def findPreviousUpcomingLunch() {
+  def getPreviousUpcomingLunch = {
     def today = new LocalDate()
     def previousLunch = delegate.find("from Lunch l where l.id < :id and l.date >= :today order by id desc", [id: delegate.id, today: today])
     if (!previousLunch) {
@@ -46,12 +46,8 @@ class LunchQueries {
   }
   
   void injectQueries() {
-    
-    this.class.methods*.name.each { methodName ->
-      if (methodName.startsWith("find")) {
-        Lunch.metaClass."$methodName" = delegate.&"$methodName"
-      }
-    }
+    Lunch.metaClass.getNextUpcomingLunch = getNextUpcomingLunch
+    Lunch.metaClass.getPreviousUpcomingLunch = getPreviousUpcomingLunch
     
     Lunch.metaClass.static.findUpcomingLunches = findUpcomingLunches
     Lunch.metaClass.static.findFreshlyAddedLunches = findFreshlyAddedLunches
