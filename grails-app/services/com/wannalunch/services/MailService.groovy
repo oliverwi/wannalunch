@@ -1,5 +1,6 @@
 package com.wannalunch.services
 
+import com.wannalunch.aop.MailType;
 import java.util.Map;
 import javax.mail.internet.MimeMessage
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
@@ -18,7 +19,22 @@ class MailService {
   String encoding = mailCfg.defaultEncoding
   String senderEmail = mailCfg.from
 
-  void sendMail(Map params) {
+  void sendMail(MailType emailType, Map params) {
+    switch (emailType) {
+      case MailType.CREATED_LUNCH:
+        break;
+      case MailType.ACCEPTED_PARTICIPANT:
+        break;
+      default:
+        throw new IllegalArgumentException("Unknown email type: " + emailType)
+    }
+  }
+
+  void maybeSendMail() {
+
+  }
+
+  private void sendMail(Map params) {
     if (!mailCfg.sendMails) {
       log.debug "Not sending email $params"
       return

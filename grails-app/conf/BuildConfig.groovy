@@ -29,6 +29,7 @@ grails.project.dependency.resolution = {
     	compile 'joda-time:joda-time:1.6'
     	compile 'net.homeip.yusuke:twitter4j:2.0.10'
     	compile 'javax.mail:mail:1.4.1'
+    	compile 'quartz:quartz:1.5.2'
     }
 
 }
