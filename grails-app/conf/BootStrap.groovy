@@ -47,6 +47,17 @@ class BootStrap {
     20.times {
       createLunch(timur, oliver).save()
     }
+
+    def todaysLunch = new Lunch()
+    todaysLunch.creator = new Luncher(user: timur)
+    todaysLunch.createDateTime = new LocalDateTime()
+    todaysLunch.topic = "Today's lunch"
+    todaysLunch.description = "Who cares?"
+    todaysLunch.date = new LocalDate()
+    todaysLunch.time = new LocalTime(12, 0)
+    todaysLunch.location = "Vapiano"
+    todaysLunch.addToParticipants(new Luncher(user: oliver))
+    todaysLunch.save()
   }
 
   private Lunch createLunch(user1, user2) {

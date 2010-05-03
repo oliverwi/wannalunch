@@ -1,6 +1,5 @@
 package com.wannalunch.services
 
-import com.wannalunch.aop.MailType;
 import java.util.Map;
 import javax.mail.internet.MimeMessage
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
@@ -16,23 +15,8 @@ class MailService {
 
   def mailCfg = ConfigurationHolder.config.mail
 
-  String encoding = mailCfg.defaultEncoding
-  String senderEmail = mailCfg.from
-
-  void sendMail(MailType emailType, Map params) {
-    switch (emailType) {
-      case MailType.CREATED_LUNCH:
-        break;
-      case MailType.ACCEPTED_PARTICIPANT:
-        break;
-      default:
-        throw new IllegalArgumentException("Unknown email type: " + emailType)
-    }
-  }
-
-  void maybeSendMail() {
-
-  }
+  def encoding = mailCfg.defaultEncoding
+  def from = mailCfg.from
 
   private void sendMail(Map params) {
     if (!mailCfg.sendMails) {
@@ -43,7 +27,7 @@ class MailService {
     MimeMessage message = mailSender.createMimeMessage()
     MimeMessageHelper helper = new MimeMessageHelper(message, true, encoding)
 
-    helper.setFrom(params.from ?: senderEmail)
+    helper.setFrom(params.from ?: from)
     helper.setTo(params.to)
     helper.setSubject(params.subject)
     helper.setText(params.text, false)
