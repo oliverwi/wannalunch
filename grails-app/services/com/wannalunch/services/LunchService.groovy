@@ -15,8 +15,8 @@ class LunchService {
   def config = ConfigurationHolder.config
 
   @Tweet(TweetType.LUNCH_WITH_ME)
-  boolean createLunch(lunch) {
-    lunch.save()
+  boolean createLunch(creator, lunch) {
+    creator.create(lunch)
   }
 
   @Tweet(TweetType.LUNCH_WITH_YOU)
