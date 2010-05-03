@@ -126,10 +126,8 @@ class LunchController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
-    lunch.creator = userService.user
-    lunch.createDateTime = new LocalDateTime()
 
-    if (lunchService.createLunch(lunch)) {
+    if (lunchService.createLunch(userService.user, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       render(view: "create", model: [lunch: lunch])

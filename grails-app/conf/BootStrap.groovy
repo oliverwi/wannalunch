@@ -12,6 +12,7 @@ import org.joda.time.LocalTime
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.LunchQueries;
+import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User;
 import com.wannalunch.support.DataMigrator;
 
@@ -50,7 +51,8 @@ class BootStrap {
     def random = new Random()
 
     Lunch lunch = new Lunch()
-    lunch.creator = random.nextInt(100) % 2 > 0 ? user1 : user2
+    User lunchCreator = random.nextInt(100) % 2 > 0 ? user1 : user2
+    lunch.creator = new Luncher(user: lunchCreator)
     lunch.topic = "Let's talk about that topic number ${random.nextInt(9999) + 1}"
     lunch.description = "am attending http://thenextweb.com/conference/ in Amsterdam April 27+28+29 and would love to share my experiences to others who have attended or with anyone who has an interest in the future of the interwebz :) "
     lunch.createDateTime = new LocalDateTime().minusHours(random.nextInt(168) + 1)
@@ -58,7 +60,8 @@ class BootStrap {
     lunch.time = new LocalTime().plusHours(random.nextInt(24) - 12)
     lunch.location = ["Vapiano", "Silk", "Cafe Bonaparte", "Fahle", "Sushi Cat", "Cafe Tao"].get(random.nextInt(5))
     if (random.nextInt(100) % 2 > 0) {
-      lunch.addToApplicants(lunch.creator == user1 ? user2 : user1)
+      User applicant = (lunch.creator.user == user1) ? user2 : user1
+      lunch.addToApplicants(new Luncher(user: applicant))
       if (random.nextInt(100) % 2 > 0) {
         Comment comment = new Comment()
         comment.text = "I am interested"

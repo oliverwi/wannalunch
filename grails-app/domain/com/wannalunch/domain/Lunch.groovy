@@ -20,11 +20,17 @@ class Lunch {
 
   String location
 
-  User creator
+  Luncher creator
 
   PaymentOption paymentOption = PaymentOption.WE_SPLIT
 
-  static hasMany = [participants:User, applicants: User, comments:Comment]
+  static hasMany = [participants: Luncher, applicants: Luncher, comments: Comment]
+
+  static mapping = {
+    creator cascade:'all, delete-orphan'
+    applicants cascade:'all, delete-orphan'
+    participants cascade:'all, delete-orphan'
+  }
 
   static constraints = {
     topic nullable: false, blank: false

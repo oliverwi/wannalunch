@@ -5,6 +5,7 @@ import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
 import com.wannalunch.domain.Lunch;
+import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User;
 
 class TestDataCreator {
@@ -33,7 +34,7 @@ class TestDataCreator {
     lunch.date = params.date ?: new LocalDate()
     lunch.time = params.time ?: new LocalTime()
     lunch.location = params.location ?: "Sushi Cat"
-    lunch.creator = params.creator ?: createUser()
+    lunch.creator = new Luncher(user: params.creator ?: createUser())
     
     lunchesCount++
     
