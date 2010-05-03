@@ -19,6 +19,7 @@
       </tr>
       <tr>
         <td>
+          <img src="${resource(dir: 'img', file: 'emailbutton.png')}"></img>
           <g:textField class="profileinput clear" type="text" title="What's your email address?" name="email" value="${user.email}" />
         </td>
       </tr>
