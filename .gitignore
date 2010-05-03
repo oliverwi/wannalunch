@@ -2,6 +2,7 @@ bin
 target
 grails-app/conf/ProductionConfig.groovy
 .DS_Store
+stacktrace.log
 
 web-app/img/profile/*
 !web-app/img/profile/wannalunch
