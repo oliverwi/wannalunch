@@ -3,6 +3,7 @@ package com.wannalunch.controllers
 import com.wannalunch.aop.AuthRequired;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
+import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User
 
 import org.hibernate.SessionFactory;
@@ -119,15 +120,22 @@ class LunchController {
 
   @AuthRequired
   def create = {
-    [lunch: new Lunch()]
+    def lunch = new Lunch()
+    lunch.creator = new Luncher(user: userService.user)
+    
+    [lunch: lunch]
   }
 
   @AuthRequired
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
+    
+    def luncher = new Luncher()
+    luncher.properties = params
+    luncher.user = userService.user
 
-    if (lunchService.createLunch(userService.user, lunch)) {
+    if (lunchService.createLunch(luncher, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       render(view: "create", model: [lunch: lunch])

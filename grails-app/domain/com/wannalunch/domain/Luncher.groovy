@@ -30,6 +30,15 @@ class Luncher {
     return user.linkedInProfile
   }
   
+  def setEmail(String email) {
+    user.setEmail(email)
+  }
+  
+  def create(lunch) {
+    lunch.creator = this
+    user.create(lunch)
+  }
+  
   def promoteToParticipant(applicant, lunch) {
     user.promoteToParticipant(applicant, lunch)
   }

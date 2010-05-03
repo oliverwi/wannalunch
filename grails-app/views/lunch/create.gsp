@@ -23,7 +23,8 @@
   </div>
   
   <div class="createlunchformControlsLine">
-    
+    <g:checkBox name="wantsNotification" value="${lunch.creator.wantsNotification}" />
+    <label for="wantsNotification">I want to receive an e-mail notification on my lunch day</label>
   </div>
 
   <div class="buttonsrow">
@@ -41,7 +42,7 @@
   </div>
 
   <div class="buttonsrow">
-    <input type="submit" class="bigbluebutton clearLink" value="Create lunch!"></input>
+    <input type="button" id="createFormButton" class="bigbluebutton clearLink" value="Create lunch!" />
   </div>
 
 </g:form>
@@ -97,3 +98,37 @@
     $("#luckytext").css("visibility", "visible");
   });
 </script>
+
+<g:javascript>
+  $("#createFormButton").click(function() {
+  
+    <g:if test="${lunch.creator.email}">
+	    $("#createlunchform").submit()
+    </g:if>
+    <g:else>
+      if ($('#wantsNotification:checked').val() !== undefined) {
+        jQuery.facebox($("#requestEmailContainer").html())
+      } else {
+        $("#createlunchform").submit()
+      }      
+    </g:else>
+    
+  });
+</g:javascript>
+
+<div id="requestEmailContainer" style="display:none;">
+	<div id="requestEmail" class="small grey">
+	  <p>
+	    <br/>
+	    Please inform your e-mail to receive an e-mail notification on the lunch day.<br/>
+	    You can always update your e-mail address in your profile page.<br/>
+	  </p>
+	  <br/>
+	  E-mail: <g:textField name="email" class="location clear" style="border: 1px solid #cacaca; width: 250px;" />
+	  <br/>
+	  <br/>
+	  <input  type="button" class="bluebutton" value="Create lunch!"></button>
+	  <br/>
+	  <br/>
+	</div>
+</div>

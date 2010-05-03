@@ -26,7 +26,6 @@ class User implements Serializable {
   }
   
   boolean create(Lunch lunch) {
-    lunch.creator = new Luncher(user: this)
     lunch.createDateTime = new LocalDateTime()
     return lunch.save()
   }
