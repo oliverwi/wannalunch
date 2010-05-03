@@ -47,6 +47,9 @@ environments {
     twitter.authController = "fakeauth"
     twitter.sendTweets = false
     mail.sendMails = false
+    mail.host = ""
+    mail.from = ""
+    mail.defaultEncoding = "UTF-8"
   }
 
   test {

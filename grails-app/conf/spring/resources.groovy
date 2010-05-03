@@ -1,4 +1,5 @@
 import org.codehaus.groovy.grails.commons.ConfigurationHolder;
+import org.joda.time.LocalTime;
 
 
 beans = {
@@ -44,15 +45,13 @@ beans = {
 
   tweetingAspect(com.wannalunch.aop.TweetingAspect)
 
-  mailingAspect(com.wannalunch.aop.MailingAspect)
-
   mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
     jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->
-      targetObject = ref("mailService");
-      targetMethod = "maybeSendMail"
+      targetObject = ref("lunchService");
+      targetMethod = "notifyOfTodaysLunches"
     }
-    startDelay = 0
-    repeatInterval = 5 * 60 * 1000
+    startDelay = getLunchNotificationTriggerStartDelay()
+    repeatInterval = 24 * 60 * 60 * 1000
   }
 
   quartzScheduler(org.springframework.scheduling.quartz.SchedulerFactoryBean) {
@@ -61,5 +60,8 @@ beans = {
     ]
   }
 
+}
 
+private static def getLunchNotificationTriggerStartDelay() {
+  (24 * 60 * 60 * 1000 - new LocalTime().millisOfDay)
 }
