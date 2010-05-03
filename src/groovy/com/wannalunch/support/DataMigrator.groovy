@@ -5,6 +5,7 @@ import groovy.sql.Sql;
 import com.wannalunch.domain.Lunch.PaymentOption;
 
 import org.apache.log4j.Logger;
+import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 import org.joda.time.LocalDateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
@@ -16,12 +17,13 @@ import com.wannalunch.domain.User;
 
 class DataMigrator {
 
-//  def sourceDbHost = "external-db.s79782.gridserver.com"
-  def sourceDbHost = "127.0.0.1"
+  def sourceDbHost = "external-db.s79782.gridserver.com"
   def sourceDbPort = "3306"
-  def sourceDbName = "db79782_wannalunch_test"
+  def sourceDbName = "db79782_wp_wannalunch"
   def sourceDbUser = "db79782_lunch"
   def sourceDbPasswd = "lendRebane7"
+
+  def config = ConfigurationHolder.config
 
   def sql
 
@@ -31,74 +33,129 @@ class DataMigrator {
 
   def users = [:]
   def lunches = [:]
-  def comments = [:]
 
   void migrateAll() {
-    sql = Sql.newInstance("jdbc:mysql://${sourceDbHost}:${sourceDbPort}/${sourceDbName}",
+    sql = Sql.newInstance("jdbc:mysql://${sourceDbHost}:${sourceDbPort}/${sourceDbName}?zeroDateTimeBehavior=convertToNull",
         sourceDbUser, sourceDbPasswd, "com.mysql.jdbc.Driver")
 
-    String info = "Starting database migration... " +
-                  "Migrating data from database: ${sourceDbHost}:${sourceDbPort}/${sourceDbName}. " +
-                  "Please make sure the database contains no data"
-
-    log.info info
+    log.info "Starting database migration..."
+    log.info "Migrating data from database: ${sourceDbHost}:${sourceDbPort}/${sourceDbName}."
+    log.info "Please make sure the database contains no data"
 
     migrateUsers()
     migrateLunches()
-//    migrateComments()
+    migrateComments()
+    migrateLunchRequests()
   }
 
   private void migrateUsers() {
-    sql.eachRow("select * from twitter_users") {
+    log.info "Migrating users..."
+
+    sql.eachRow("""
+    		  select * from twitter_users u
+                where u.user in (select user from lunches)
+                  or  u.user in (select user from comments)
+                  or  u.user in (select twitter_user from lunch_requests)
+		    """) {
       def user = new User(
           name: it.fullname,
           username: it.user,
           facebookProfile: it.fb_url,
-          linkedInProfile: it.linkedin_url)
+          linkedInProfile: it.linkedin_url,
+          profileImageUrl: "$config.grails.serverURL/img/profile/wannalunch")
 
       users[it.user] = user
       save(user)
     }
+
+    log.info "Done"
   }
 
   private void migrateLunches() {
+    log.info "Migrating lunches..."
+
     def createdStartDate = new LocalDateTime(2010, 04, 23, 12, 00)
     def rowId = 0
 
     sql.eachRow("select * from lunches order by id") {
-      PaymentOption paymentOption;
+      if (users[it.user]) {
+        PaymentOption paymentOption;
 
-      switch (Integer.parseInt(it.payment)) {
-        case 1:
-          paymentOption = PaymentOption.I_PAY
-          break;
-        case 2:
-          paymentOption = PaymentOption.YOU_PAY
-          break;
-        case 3:
-          paymentOption = PaymentOption.WE_SPLIT
-          break;
-        default:
-          throw new IllegalArgumentException("Unknown payment type: " + it.payment)
+        switch (Integer.parseInt(it.payment)) {
+          case 1:
+            paymentOption = PaymentOption.I_PAY
+            break;
+          case 2:
+            paymentOption = PaymentOption.YOU_PAY
+            break;
+          case 3:
+            paymentOption = PaymentOption.WE_SPLIT
+            break;
+          default:
+            throw new IllegalArgumentException("Unknown payment type: " + it.payment)
+        }
+
+        def description = it.desc.empty ? it.topic : it.desc
+
+        def lunch = new Lunch(
+            topic: it.topic,
+            description: description,
+            createDateTime: createdStartDate.plusMinutes(10 * rowId++),
+            date: new LocalDate(it.lunchdate),
+            time: new LocalTime(it.lunchtime),
+            location: it.place,
+            creator: users[it.user],
+            paymentOption: paymentOption)
+
+        lunches[it.id] = lunch
+        save(lunch)
       }
-
-      def lunch = new Lunch(
-          topic: it.topic,
-          description: it.desc,
-          createdDateTime: createdStartDate.plusMinutes(10 * rowId++),
-          date: new LocalDate(it.lunchdate),
-          time: new LocalTime(it.lunchtime),
-          location: it.place,
-          creator: users[it.user],
-          paymentOption: paymentOption)
-
-      lunches[it.id] = lunch
-      save(lunch)
     }
+
+    log.info "Done"
   }
 
   private void migrateComments() {
-    sql.eachRow("select * from comments") {
+    log.info "Migrating comments..."
+
+    sql.eachRow("""
+        select
+          c.comment comment,
+          c.user user,
+          c.lunch lunch,
+          coalesce(date(c.datetime), l.lunchdate) date,
+          coalesce(time(c.datetime), l.lunchtime) time
+        from comments c, lunches l
+          where l.id = c.lunch""") {
+      if (users[it.user] && lunches[it.lunch]) {
+        save(new Comment(
+            text: it.comment,
+            author: users[it.user],
+            lunch: lunches[it.lunch],
+            date: new LocalDate(it.date),
+            time: new LocalTime(it.time))
+        )
+      }
+    }
+
+    log.info "Done"
+  }
+
+  private migrateLunchRequests() {
+    log.info "Migrating lunch requests..."
+
+    sql.eachRow("select * from lunch_requests") {
+      def user = users[it.twitter_user]
+      def lunch = lunches[it.lunch_id]
+      if (user && lunch) {
+        if (it.selected_for_the_lunch) {
+          lunch.addToParticipants(user)
+        } else {
+          lunch.addToApplicants(user)
+        }
+
+        save(lunch)
+      }
     }
   }
 
