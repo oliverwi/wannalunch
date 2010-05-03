@@ -18,10 +18,12 @@ import com.wannalunch.support.DataMigrator;
 class BootStrap {
 
   def init = { servletContext ->
-    if (Environment.current.name in ["development"]) {
+    if (new Boolean(System.getenv("WL_MIGRATE"))) {
+      new DataMigrator().migrateAll()
+    } else if (Environment.current.name in ["development"]) {
       addFakeData()
     }
-    
+
     new LunchQueries().injectQueries()
   }
 
