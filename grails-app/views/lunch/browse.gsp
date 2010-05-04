@@ -5,7 +5,7 @@
 	
 	<div class="helpBox">
 		<div class="lightGrey">How to begin?</div>
-	  <a href="" class="helpBoxLink">Check out some tips and tricks</a>
+	  <a href="#showHelp" class="helpBoxLink">Check out some tips and tricks</a>
 	</div>
   
   <div class="clearfix"></div>	

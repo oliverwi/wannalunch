@@ -69,6 +69,10 @@ h5 {
   color: #6d6f72;
 }
 
+.blue {
+	color: #0098FE;
+}
+
 .orange {
   color: #ff861a;
 }
@@ -601,4 +605,65 @@ h5 {
 
 .createLunchFormControlsLine {
   padding: 5px 0;
+}
+
+
+
+
+
+#facebox .body {
+  width: 630px !important;
+}
+
+.helpPopup {
+	padding: 20px;
+	width: 550px;
+}
+
+.helpPopup table {
+	vertical-align: top;
+	width: 100%;
+}
+
+.helpTitle {
+	margin-bottom: 25px;
+	font-size: 1.1em;
+	font-weight: bold;
+  color: #3C3C3E;
+}
+
+.helpImg {
+  float: left;
+}
+
+.helpPoints {
+	float: right;
+	width: 250px;
+	padding-left: 1em;
+}
+
+.helpPoints li {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 25px;
+  color: #6d6f72;
+}
+
+.helpEg {
+  font-size: 0.8em;
+  color: #0098FE;
+  font-weight: normal;
+}
+
+.helpNav {
+	clear: both;
+	width: 100%;
+}
+
+.helpNav .prev {
+  float: left;
+}
+
+.helpNav .next {
+  float: right;
 }

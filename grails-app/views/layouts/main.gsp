@@ -58,7 +58,8 @@
         <a href="${createLink(controller: "about")}">About</a> &bull;
         <a href="${createLink(controller: "about", action: "signup")}">Business</a> &bull;
         <a href="http://getsatisfaction.com/Wannalunch">Feedback</a> &bull;
-        <a href="http://feeds.wannalunch.com/Wannalunch">Subscribe</a>
+        <a href="http://feeds.wannalunch.com/Wannalunch">Subscribe</a> &bull;
+        <a href="#helpPopupStep1" rel="facebox">Help</a>
       </div>
     </div>
   </body>
@@ -71,5 +72,7 @@
   <div id="info" style="display:none;">
     <p><br/>You need to log in</p>
   </div>
+  
+  <g:render template="/templates/helpPopup" />
   
 </html>
