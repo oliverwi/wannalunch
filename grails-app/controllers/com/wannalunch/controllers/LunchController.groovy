@@ -81,7 +81,7 @@ class LunchController {
     def user = userService.user
 
     lunch.delete(flush: true)
-    redirect action: "show"
+    redirect action: "upcomingLunches"
   }
 
   @AuthRequired
