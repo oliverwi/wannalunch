@@ -24,7 +24,7 @@
             <img src="${resource(dir: 'img', file: 'fbbutton.png')}">
           </a>
           <a href="${createLink(controller: 'lunch')}" class="bluebutton">Browse lunches</a>
-          
+
           <u:isLoggedIn>
             <a href="${createLink(controller: 'lunch', action: 'create')}" class="orangebutton">Create lunch</a>
           </u:isLoggedIn>
@@ -53,8 +53,8 @@
       </div>
 
       <div class="footer">
-        &copy; 2010 Wannalunch? 
-        <a href="http://blog.wannalunch.com">Blog</a> &bull; 
+        &copy; 2010 Wannalunch?
+        <a href="http://blog.wannalunch.com">Blog</a> &bull;
         <a href="${createLink(controller: "about")}">About</a> &bull;
         <a href="${createLink(controller: "about", action: "signup")}">Business</a> &bull;
         <a href="http://getsatisfaction.com/Wannalunch">Feedback</a> &bull;
@@ -62,7 +62,7 @@
       </div>
     </div>
   </body>
-  
+
   <g:javascript>
     jQuery(document).ready(function($) {
       $('a[rel*=facebox]').facebox()
@@ -71,5 +71,5 @@
   <div id="info" style="display:none;">
     <p><br/>You need to log in</p>
   </div>
-  
+
 </html>

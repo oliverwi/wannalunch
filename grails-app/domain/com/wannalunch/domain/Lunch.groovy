@@ -37,6 +37,9 @@ class Lunch {
     topic nullable: false, blank: false
     description nullable: false, blank: false
     location nullable: false, blank: false
+    date validator: { val, obj ->
+      return val >= new LocalDate()
+    }
   }
 
   static transients = ['showUrl']
