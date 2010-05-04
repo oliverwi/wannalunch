@@ -2,7 +2,8 @@ package com.wannalunch.services
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
-import com.wannalunch.aop.TweetType;
+import com.wannalunch.aop.Tweet;
+import com.wannalunch.aop.Tweet.Kind;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 
@@ -39,8 +40,8 @@ class TwitterService {
     log.debug "Validate successful for ${twitterUser.screenName}"
   }
 
-  def tweet(TweetType tweetType, User user, Lunch lunch) {
-    def status = constructStatus(tweetType, user, lunch)
+  def tweet(Kind kind, User user, Lunch lunch) {
+    def status = constructStatus(kind, user, lunch)
 
     if (ConfigurationHolder.config.twitter.sendTweets) {
       client.updateStatus status
@@ -53,18 +54,18 @@ class TwitterService {
     ConfigurationHolder.config.grails.serverURL + "/lunch/show/$lunch.id"
   }
 
-  private def constructStatus(tweetType, user, lunch) {
+  private def constructStatus(kind, user, lunch) {
     def lunchDetailsUrl = constructLunchDetailsUrl(lunch)
 
-    switch (tweetType) {
-      case TweetType.LUNCH_WITH_YOU:
+    switch (kind) {
+      case Kind.LUNCH_WITH_YOU:
         return "@${lunch.creator.username} #wannalunch with you $lunchDetailsUrl"
-      case TweetType.LUNCH_WITH_ME:
+      case Kind.LUNCH_WITH_ME:
         return "#wannalunch with me? See more information $lunchDetailsUrl"
-      case TweetType.LUNCH_WITH_EACH_OTHER:
+      case Kind.LUNCH_WITH_EACH_OTHER:
         return "${user.username} and @${lunch.creator.username} #wannalunch $lunchDetailsUrl"
       default:
-        throw new IllegalArgumentException("Unknown tweet type " + tweetType)
+        throw new IllegalArgumentException("Unknown tweet kind " + tweetType)
     }
   }
 

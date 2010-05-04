@@ -1,38 +1,34 @@
 package com.wannalunch.controllers
 
 import com.wannalunch.aop.AuthRequired;
-import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User
 
-import org.hibernate.SessionFactory;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime
-import org.joda.time.LocalTime;
 
 class LunchController {
 
   static defaultAction = "upcomingLunches"
-  
+
   def userService
-  
+
   def lunchService
-  
+
   def upcomingLunches = {
     def upcomingLunches = Lunch.findUpcomingLunches(paginateParams)
     def total = Lunch.countUpcomingLunches()
-    
+
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
   }
-  
+
   def freshlyAddedLunches = {
     def upcomingLunches = Lunch.findFreshlyAddedLunches(paginateParams)
     def total = Lunch.countUpcomingLunches()
-    
+
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
   }
-  
+
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
@@ -103,15 +99,12 @@ class LunchController {
   @AuthRequired
   def comment = {
     def lunch = Lunch.get(Long.parseLong(params.lunch))
+    def author = userService.user
+    def text = params.text
 
-    def comment = new Comment()
-    comment.text = params.text
-    comment.date = new LocalDate()
-    comment.time = new LocalTime()
-    comment.author = userService.user
-    comment.lunch = lunch
+    def comment = lunchService.comment(lunch, author, text)
 
-    if (comment.save()) {
+    if (comment) {
       redirect action: "show", id: lunch.id
     } else {
       throw new RuntimeException(comment.errors)
@@ -122,7 +115,7 @@ class LunchController {
   def create = {
     def lunch = new Lunch()
     lunch.creator = new Luncher(user: userService.user)
-    
+
     [lunch: lunch]
   }
 
@@ -130,7 +123,7 @@ class LunchController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
-    
+
     def luncher = new Luncher()
     luncher.properties = params
     luncher.user = userService.user
@@ -151,11 +144,11 @@ class LunchController {
     Lunch.find("from Lunch where date >= :today order by date desc, time desc",
     [today: new LocalDate()]).id
   }
-  
+
   private def getPaginateParams() {
     int max = params.max ? params.max.toInteger() : 10
     int offset = params.offset ? params.offset.toInteger() : 0
-    
+
     [max: max, offset: offset]
   }
 }

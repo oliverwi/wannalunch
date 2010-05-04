@@ -1,55 +1,62 @@
 package com.wannalunch.services
 
-import org.codehaus.groovy.grails.commons.ConfigurationHolder;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
+import com.wannalunch.aop.Mail;
+import com.wannalunch.aop.Mail.Kind;
 import com.wannalunch.aop.Tweet;
-import com.wannalunch.aop.TweetType;
+import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
-import com.wannalunch.domain.User;
+import com.wannalunch.domain.Luncher;
 
 class LunchService {
 
-  def mailService
   def userMessageSource
-  def config = ConfigurationHolder.config
 
-  @Tweet(TweetType.LUNCH_WITH_ME)
+  @Tweet(Tweet.Kind.LUNCH_WITH_ME)
   boolean createLunch(creator, lunch) {
     creator.create(lunch)
   }
 
-  @Tweet(TweetType.LUNCH_WITH_YOU)
+  @Tweet(Tweet.Kind.LUNCH_WITH_YOU)
   boolean applyTo(user, lunch) {
     user.applyTo(lunch)
   }
 
-  @Tweet(TweetType.LUNCH_WITH_EACH_OTHER)
+  @Tweet(Tweet.Kind.LUNCH_WITH_EACH_OTHER)
+  @Mail(Mail.Kind.ACCEPT)
   boolean promoteToParticipant(applicant, lunch) {
     lunch.creator.promoteToParticipant(applicant, lunch)
   }
 
-  void notifyOfTodaysLunches() {
+  @Mail(Kind.COMMENT)
+  def comment(lunch, author, text) {
+    def comment = new Comment()
+    comment.text = text
+    comment.date = new LocalDate()
+    comment.time = new LocalTime()
+    comment.author = author
+    comment.lunch = lunch
+    comment.save()
+  }
+
+  void remindOfTodaysLunches() {
     log.debug "Maybe sending mail..."
 
     Lunch.findTodaysLunches().each { lunch ->
-      notifyOfLunch(lunch)
+      remindOfLunch(lunch)
     }
   }
 
-  private void notifyOfLunch(Lunch lunch) {
+  private void remindOfLunch(Lunch lunch) {
     def formatter = DateTimeFormat.forPattern(userMessageSource.getMessage("default.time.format"))
-    lunch.participants.each { User participant ->
+    def participants = lunch.participants + lunch.creator
+
+    participants.each { Luncher luncher ->
       def time = formatter.print(lunch.time)
-      mailService.sendMail(
-          to: participant.email,
-          subject: "You have an upcoming lunch today",
-          text: "Dear $participant.name,\n\n" +
-          		"Please, do not forget that you have a lunch today with $lunch.creator.name ($config.grails.serverURL/lunch/show/$lunch.id).\n\n" +
-          		"Where: @ $lunch.location\n" +
-          		"When: $time\n\n" +
-          		"Bon appetit!\n" +
-          		"wannalunch.com")
+      mailService.sendMail(luncher, Kind.REMINDER, lunch.location, time, lunch.showUrl)
     }
   }
 

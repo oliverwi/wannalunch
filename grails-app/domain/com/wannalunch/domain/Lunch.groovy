@@ -1,5 +1,6 @@
 package com.wannalunch.domain
 
+import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
@@ -37,13 +38,19 @@ class Lunch {
     description nullable: false, blank: false
     location nullable: false, blank: false
   }
-  
+
+  static transients = ['showUrl']
+
   def getShortDescription() {
     description.length() <= 100 ? description : description[0..97] + "..."
   }
 
   def getSortedComments() {
     comments.sort(new CommentComparator())
+  }
+
+  def getShowUrl() {
+    "${ConfigurationHolder.config.grails.serverURL}/lunch/show/$id"
   }
 
   enum PaymentOption {
