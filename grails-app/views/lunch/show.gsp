@@ -103,7 +103,9 @@
 	  <h3>Accepted!</h3>
 	  <g:each var="participant" in="${lunch.participants}">
 	    <div>
-	      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+	      <a href="${createLink(controller: "profile", action: "show", id: participant.username)}">
+	        <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+	      </a>
 	    </div>
 	  </g:each>
 	</div>
@@ -114,14 +116,14 @@
 	  <h3>Wanna!</h3>
 	  <g:each var="applicant" in="${lunch.applicants}">
 	    <div>
-	      <g:if test="${canAcceptApplicants}">
-	        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
-	          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-	        </a>
-	      </g:if>
-	      <g:else>
-	        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-	      </g:else>
+        <a href="${createLink(controller: "profile", action: "show", id: applicant.username)}">
+          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+        </a>
+        <g:if test="${canAcceptApplicants}">
+          <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
+            Confirm!
+          </a>
+        </g:if>
 	    </div>
 	  </g:each>
 	</div>

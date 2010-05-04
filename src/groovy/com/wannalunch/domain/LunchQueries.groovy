@@ -41,7 +41,7 @@ class LunchQueries {
 
   static def findUpcomingLunchesFor = { User user ->
     delegate.executeQuery(
-        "select l from Lunch l left outer join l.participants p where (l.creator = :user or p = :user) and l.date >= :today order by date, time",
+        "select l from Lunch l left outer join l.participants p where (l.creator.user = :user or p.user = :user) and l.date >= :today order by date, time",
         [user: user, today: new LocalDate()])
   }
 
