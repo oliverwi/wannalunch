@@ -1,5 +1,13 @@
 <meta name="layout" content="main" />
 
+<g:javascript>
+  $(document).ready(function() {
+    $('#delete').click(function() {
+      return confirm('Do you really want to delete this lunch?');
+    });
+  });
+</g:javascript>
+
 <h4>${lunch.creator.name}'s lunch</h4>
 <div class="contactdetails">
   <div class="contactpicture">
@@ -46,7 +54,7 @@
   </div>
 
   <g:if test="${showDeleteButton}">
-    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" class="bigbluebutton mainbutton">Delete lunch</a>
+    <a href="${createLink(action: 'delete', params: [id: lunch.id])}" id="delete" class="bigbluebutton mainbutton">Delete lunch</a>
   </g:if>
 
   <g:if test="${showNotGoingButton}">

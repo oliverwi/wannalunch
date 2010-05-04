@@ -1,22 +1,38 @@
 package com.wannalunch.services
 
+import java.util.List;
 import java.util.Map;
 import javax.mail.internet.MimeMessage
+
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
+
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.mail.javamail.MimeMessageHelper
-import org.springframework.stereotype.Service;
+
+import com.wannalunch.aop.Mail.Kind;
+import com.wannalunch.domain.Luncher;
 
 class MailService {
 
   boolean transactional = false
 
   def mailSender
+  def mailBuilder
 
   def mailCfg = ConfigurationHolder.config.mail
 
   def encoding = mailCfg.defaultEncoding
   def from = mailCfg.from
+
+  void sendMail(Luncher luncher, Kind kind, List args) {
+    if (!luncher.wantsNotification) {
+      return
+    }
+
+    def subject = mailBuilder.subject(kind)
+    def body = mailBuilder.body(kind, [luncher.name, args].flatten())
+    sendMail(to: luncher.email, subject: subject, text: body)
+  }
 
   private void sendMail(Map params) {
     if (!mailCfg.sendMails) {

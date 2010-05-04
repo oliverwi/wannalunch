@@ -1,3 +1,5 @@
+import grails.util.Environment;
+
 class UrlMappings {
 
   static mappings = {
@@ -7,7 +9,12 @@ class UrlMappings {
       }
     }
     "/"(controller: "lunch")
-    "500"(view: "/error")
+
+    def errorPage = Environment.isDevelopmentMode() ? "/error" : "/errorProduction"
+
+    "403"(view: errorPage)
+    "404"(view: errorPage)
+    "500"(view: errorPage)
 
     "/about"(uri: "/about/index.gsp")
     "/about/partners"(uri: "/about/partners.gsp")

@@ -5,16 +5,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@interface Tweet {
+@Target(ElementType.METHOD)
+@interface Mail {
 
   Kind value()
 
   enum Kind {
-    LUNCH_WITH_ME,
-    LUNCH_WITH_YOU,
-    LUNCH_WITH_EACH_OTHER;
+    ACCEPT,
+    COMMENT,
+    REMINDER;
   }
 
 }

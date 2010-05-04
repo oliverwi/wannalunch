@@ -5,7 +5,7 @@ twitter.oauth.consumerSecret = ''
 twitter.sendTweets = true
 
 mail {
-  sendMails = true
+  sendMails = false
   host = ""
   port = 0
   username = ""

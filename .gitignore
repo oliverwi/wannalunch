@@ -6,3 +6,4 @@ stacktrace.log
 
 web-app/img/profile/*
 !web-app/img/profile/wannalunch
+prodDb.*

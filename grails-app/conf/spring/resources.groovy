@@ -45,10 +45,18 @@ beans = {
 
   tweetingAspect(com.wannalunch.aop.TweetingAspect)
 
+  mailBuilder(com.wannalunch.notifications.MailBuilder) {
+    userMessageSource = ref('userMessageSource')
+  }
+
+  mailingAspect(com.wannalunch.aop.MailingAspect) {
+    mailService = ref('mailService')
+  }
+
   mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
     jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->
       targetObject = ref("lunchService");
-      targetMethod = "notifyOfTodaysLunches"
+      targetMethod = "remindOfTodaysLunches"
     }
     startDelay = getLunchNotificationTriggerStartDelay()
     repeatInterval = 24 * 60 * 60 * 1000
