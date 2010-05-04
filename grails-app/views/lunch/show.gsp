@@ -37,10 +37,11 @@
   </p>
 
   <div class="eventdetails bold">
-    <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
-    @ ${lunch.location}
-
-    <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
+    <p>On       <f:date value="${lunch.date}" /> at ${fieldValue(bean: lunch, field: 'time')}</p>
+    <p>
+      @ ${lunch.location}
+      <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
+    </p>
     <p class="payment">$ ${lunch.paymentOption.text}</p>
   </div>
 

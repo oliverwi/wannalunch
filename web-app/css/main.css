@@ -231,7 +231,11 @@ h5 {
 }
 
 .eventdetails {
-  margin: 25px 0;
+  margin: 18px 0 20px;
+}
+
+.eventdetails p {
+	margin: 2px 0;
 }
 
 .author {
@@ -493,8 +497,8 @@ h5 {
   width: 400px;
 }
 .payment {
-  color: #6d6f72;
-  font-weight:bold;
+  color: #ff861a;
+  font-weight: bold;
 }
 
 .error {
