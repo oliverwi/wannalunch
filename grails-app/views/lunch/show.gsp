@@ -105,7 +105,13 @@
 	  <g:each var="participant" in="${lunch.participants}">
 	    <div>
 	      <a href="${createLink(controller: "profile", action: "show", id: participant.username)}">
-	        <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+	        <div class="participantImageWrapper">
+	          <img src="${participant.profileImageUrl}"/>
+	          <img class="participantImageTick" src="${resource(dir: 'img', file: 'tick.png')}" />
+	        </div>
+	        <span class="small">
+	          ${participant.name}
+	        </span>
 	      </a>
 	    </div>
 	  </g:each>
@@ -118,7 +124,7 @@
 	  <g:each var="applicant" in="${lunch.applicants}">
 	    <div>
         <a href="${createLink(controller: "profile", action: "show", id: applicant.username)}">
-          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
+          <img src="${applicant.profileImageUrl}"/><br/><span class="small">${applicant.name}</span>
         </a>
         <g:if test="${canAcceptApplicants}">
           <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
