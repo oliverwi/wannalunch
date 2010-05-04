@@ -231,7 +231,11 @@ h5 {
 }
 
 .eventdetails {
-  margin: 25px 0;
+  margin: 18px 0 20px;
+}
+
+.eventdetails p {
+	margin: 2px 0;
 }
 
 .author {
@@ -311,8 +315,18 @@ h5 {
 
 .applicants img,
 .participants img {
-  max-width: 60px;
-  max-height: 60px;
+  width: 60px;
+  height: 60px;
+}
+
+.participantImageWrapper {
+	margin: 0px !important;
+	height: 60px;
+}
+
+.participantImageTick {
+	position: relative;
+	top: -60px;
 }
 
 .applicants img {
@@ -493,8 +507,8 @@ h5 {
   width: 400px;
 }
 .payment {
-  color: #6d6f72;
-  font-weight:bold;
+  color: #ff861a;
+  font-weight: bold;
 }
 
 .error {
@@ -562,6 +576,10 @@ h5 {
   font-weight: bold;
 }
 
+.paginateButtonsTop {
+	padding-top: 8px;
+}
+
 .paginateButtons {
 	float: right;
 }
@@ -581,6 +599,6 @@ h5 {
 	padding-right: 15px;
 }
 
-.createlunchformControlsLine {
+.createLunchFormControlsLine {
   padding: 5px 0;
 }

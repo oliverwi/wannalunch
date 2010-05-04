@@ -19,6 +19,18 @@ class ProfileController {
     def upcomingLunches = Lunch.findUpcomingLunchesFor(user)
     [view: "show", user: user, upcomingLunches: upcomingLunches]
   }
+  
+  @AuthRequired
+  def updateEmail = {
+    def user = userService.user
+    user.email = params.email
+    
+    if (user.save()) {
+      render "success"
+    } else {
+      throw new RuntimeException("Failed to save e-mail")
+    }
+  }
 
   @AuthRequired
   def edit = {

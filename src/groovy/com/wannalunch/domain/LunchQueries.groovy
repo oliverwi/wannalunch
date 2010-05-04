@@ -5,20 +5,38 @@ import org.joda.time.LocalDate;
 class LunchQueries {
 
   def getNextUpcomingLunch = {
-    def today = new LocalDate()
-    def nextLunch = delegate.find("from Lunch l where l.id > :id and l.date >= :today order by id", [id: delegate.id, today: today])
+    def nextLunch = delegate.find(
+        "from Lunch l where " +
+          "(l.date > :date) or " +
+          "(l.date = :date and l.time > :time) or " +
+          "(l.date = :date and l.time = :time and l.id > :id) " +
+        "order by date, time, id",
+    		[date: delegate.date, time: delegate.time, id: delegate.id])
+    
     if (!nextLunch) {
-      nextLunch = delegate.find("from Lunch l where l.date >= :today order by id", [today: new LocalDate()])
+      nextLunch = delegate.find(
+          "from Lunch l where l.date >= :today order by date, time, id",
+          [today: new LocalDate()])
     }
-
+    
     return nextLunch
   }
 
   def getPreviousUpcomingLunch = {
     def today = new LocalDate()
-    def previousLunch = delegate.find("from Lunch l where l.id < :id and l.date >= :today order by id desc", [id: delegate.id, today: today])
+    
+    def previousLunch = delegate.find(
+        "from Lunch l where l.date >= :today and (" +
+          "(l.date = :date and l.time = :time and l.id < :id) or " +
+          "(l.date = :date and l.time < :time) or " +
+          "(l.date < :date)" +
+        ") order by date desc, time desc, id desc",
+        [today: today, date: delegate.date, time: delegate.time, id: delegate.id])
+    
     if (!previousLunch) {
-      previousLunch = delegate.find("from Lunch l where l.date >= :today order by id desc", [today: new LocalDate()])
+      previousLunch = delegate.find(
+          "from Lunch l where l.date >= :today order by date desc, time desc, id desc",
+          [today: today])
     }
 
     return previousLunch
@@ -41,7 +59,7 @@ class LunchQueries {
 
   static def findUpcomingLunchesFor = { User user ->
     delegate.executeQuery(
-        "select l from Lunch l left outer join l.participants p where (l.creator = :user or p = :user) and l.date >= :today order by date, time",
+        "select l from Lunch l left outer join l.participants p where (l.creator.user = :user or p.user = :user) and l.date >= :today order by date, time",
         [user: user, today: new LocalDate()])
   }
 

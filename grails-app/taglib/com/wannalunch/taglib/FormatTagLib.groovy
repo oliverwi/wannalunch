@@ -9,7 +9,7 @@ class FormatTagLib {
   def date = { attrs ->
     def date = attrs.value
     def dayOrdinal = getNumberOrdinal(date.dayOfMonth)
-    def formatter = DateTimeFormat.forPattern("d'$dayOrdinal' 'of' MMM, yyyy")
+    def formatter = DateTimeFormat.forPattern("EEEE, d'$dayOrdinal' 'of' MMMM")
     
     out << formatter.print(date)
   }

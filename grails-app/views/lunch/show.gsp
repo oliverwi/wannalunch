@@ -37,10 +37,11 @@
   </p>
 
   <div class="eventdetails bold">
-    <p>On ${fieldValue(bean: lunch, field: 'date')} at ${fieldValue(bean: lunch, field: 'time')}</p>
-    @ ${lunch.location}
-
-    <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
+    <p>On       <f:date value="${lunch.date}" /> at ${fieldValue(bean: lunch, field: 'time')}</p>
+    <p>
+      @ ${lunch.location}
+      <a class="contentlink" href="${createLink(controller: "about", action: "partners")}">See special offers</a>
+    </p>
     <p class="payment">$ ${lunch.paymentOption.text}</p>
   </div>
 
@@ -103,7 +104,15 @@
 	  <h3>Accepted!</h3>
 	  <g:each var="participant" in="${lunch.participants}">
 	    <div>
-	      <img src="${participant.profileImageUrl}"/><br/>${participant.name}
+	      <a href="${createLink(controller: "profile", action: "show", id: participant.username)}">
+	        <div class="participantImageWrapper">
+	          <img src="${participant.profileImageUrl}"/>
+	          <img class="participantImageTick" src="${resource(dir: 'img', file: 'tick.png')}" />
+	        </div>
+	        <span class="small">
+	          ${participant.name}
+	        </span>
+	      </a>
 	    </div>
 	  </g:each>
 	</div>
@@ -114,14 +123,14 @@
 	  <h3>Wanna!</h3>
 	  <g:each var="applicant" in="${lunch.applicants}">
 	    <div>
-	      <g:if test="${canAcceptApplicants}">
-	        <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
-	          <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-	        </a>
-	      </g:if>
-	      <g:else>
-	        <img src="${applicant.profileImageUrl}"/><br/>${applicant.name}
-	      </g:else>
+        <a href="${createLink(controller: "profile", action: "show", id: applicant.username)}">
+          <img src="${applicant.profileImageUrl}"/><br/><span class="small">${applicant.name}</span>
+        </a>
+        <g:if test="${canAcceptApplicants}">
+          <a href="${createLink(controller: "lunch", action: "accept", id: lunch.id, params: [username: applicant.username])}">
+            Confirm!
+          </a>
+        </g:if>
 	    </div>
 	  </g:each>
 	</div>

@@ -8,7 +8,7 @@
 </div>
 
 <div class="content">
-<g:form name="createlunchform" class="createlunch" action="save" method="post">
+<g:form name="createLunchForm" class="createlunch" action="save" method="post">
 
   <g:textField name="topic" value="${lunch.topic}" class="topic bold clear${hasErrors(bean: lunch, field: 'topic', ' error')}" title="What's your lunch topic?"/>
   <g:textArea name="description" value="${lunch.description}" class="description clear${hasErrors(bean: lunch, field: 'description', ' error')}" title="All other cool things you want to discuss" />
@@ -16,15 +16,15 @@
   <g:textField name="time" value="${lunch.time}" class="datetime clear${hasErrors(bean: lunch, field: 'time', ' error')}" title="Time" />
   <g:textField name="location" value="${lunch.location}" class="location clear${hasErrors(bean: lunch, field: 'location', ' error')}" title="Let's meet @ restaurant"/>
 
-  <div class="createlunchformControlsLine">
+  <div class="createLunchFormControlsLine">
     <g:each in="${com.wannalunch.domain.Lunch.PaymentOption.values()}">
       <g:radio id="${it.name()}" name="paymentOption" value="${it.name()}" checked="${lunch.paymentOption == it}"/><label for="${it.name()}">${it.text}</label>
     </g:each>
   </div>
   
-  <div class="createlunchformControlsLine">
+  <div class="createLunchFormControlsLine">
     <g:checkBox name="wantsNotification" value="${lunch.creator.wantsNotification}" />
-    <label for="wantsNotification">I want to receive an e-mail notification on my lunch day</label>
+    <label for="wantsNotification">I want to receive e-mail notifications for this lunch</label>
   </div>
 
   <div class="buttonsrow">
@@ -44,7 +44,7 @@
   <div class="buttonsrow">
     <input type="button" id="createFormButton" class="bigbluebutton clearLink" value="Create lunch!" />
   </div>
-
+  
 </g:form>
 </div>
 
@@ -99,36 +99,60 @@
   });
 </script>
 
+
+<div id="requestEmailContainer" style="display:none;">
+  <div id="requestEmail" class="small grey">
+    <p>
+      <br/>
+      We need your e-mail address to send you notifications about your lunch.<br/>
+      You can always update your e-mail in your profile page.<br/>
+    </p>
+    <br/>
+    E-mail: <g:textField name="email" class="location clear" value="${lunch.creator.email}" style="border: 1px solid #cacaca; width: 250px;" />
+    <br/>
+    <div id="ajaxMessage"></div>
+    <br/>
+    <input type="button" id="createFormWithEmailButton" class="bluebutton clearLink" value="Thanks!" />
+    <br/>
+    <br/>
+  </div>
+</div>
+
 <g:javascript>
   $("#createFormButton").click(function() {
   
     <g:if test="${lunch.creator.email}">
-	    $("#createlunchform").submit()
+	    $("#createLunchForm").submit()
     </g:if>
     <g:else>
       if ($('#wantsNotification:checked').val() !== undefined) {
         jQuery.facebox($("#requestEmailContainer").html())
+        
+        // facebox duplicates the code into a #facebox div so both 
+        // IDs are needed to select the displayed element
+        $("#facebox #email").focus()
+        $("#facebox #createFormWithEmailButton").click(function() {
+          saveEmail()
+        });
       } else {
-        $("#createlunchform").submit()
+        $("#createLunchForm").submit()
       }      
     </g:else>
     
   });
+  
+  function saveEmail() {
+    $.ajax({
+      method: "post",
+      url: "${createLink(controller: 'profile', action: 'updateEmail')}",
+      data: "email=" + $("#facebox #email").val(),
+      dataType: "text",
+      success: function() {
+        $("#createLunchForm").submit()
+      },
+      error: function() { 
+        $("#facebox #ajaxMessage").html('Oops! An error occurred! Please check if the address you typed is correct!<br/>')
+      }
+    })
+  }
 </g:javascript>
-
-<div id="requestEmailContainer" style="display:none;">
-	<div id="requestEmail" class="small grey">
-	  <p>
-	    <br/>
-	    Please inform your e-mail to receive an e-mail notification on the lunch day.<br/>
-	    You can always update your e-mail address in your profile page.<br/>
-	  </p>
-	  <br/>
-	  E-mail: <g:textField name="email" class="location clear" style="border: 1px solid #cacaca; width: 250px;" />
-	  <br/>
-	  <br/>
-	  <input  type="button" class="bluebutton" value="Create lunch!"></button>
-	  <br/>
-	  <br/>
-	</div>
-</div>

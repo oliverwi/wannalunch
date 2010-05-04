@@ -4,7 +4,7 @@ class Luncher {
 
   User user
   
-  boolean wantsNotification
+  boolean wantsNotification = true
   
   def getName() {
     return user.name
