@@ -56,7 +56,7 @@ class LunchService {
 
     participants.each { Luncher luncher ->
       def time = formatter.print(lunch.time)
-      mailService.sendMail(luncher, Kind.REMINDER, lunch.location, time, lunch.showUrl)
+      mailService.sendMail(luncher, Kind.REMINDER, [luncher.name, lunch.location, time, lunch.showUrl])
     }
   }
 

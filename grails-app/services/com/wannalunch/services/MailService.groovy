@@ -1,5 +1,6 @@
 package com.wannalunch.services
 
+import java.util.List;
 import java.util.Map;
 import javax.mail.internet.MimeMessage
 
@@ -23,13 +24,13 @@ class MailService {
   def encoding = mailCfg.defaultEncoding
   def from = mailCfg.from
 
-  void sendMail(Luncher luncher, Kind kind, Object... args) {
+  void sendMail(Luncher luncher, Kind kind, List args) {
     if (!luncher.wantsNotification) {
       return
     }
 
     def subject = mailBuilder.subject(kind)
-    def body = mailBuilder.body(kind, [luncher] + args)
+    def body = mailBuilder.body(kind, [luncher.name, args].flatten())
     sendMail(to: luncher.email, subject: subject, text: body)
   }
 

@@ -30,12 +30,12 @@ class MailingAspect {
 
     def text = comment.text
 
-    mailService.sendMail(creator, mail.value(), author.name, lunch.topic, text, lunch.showUrl)
+    mailService.sendMail(creator, mail.value(), [author.name, lunch.topic, text, lunch.showUrl])
   }
 
   @AfterReturning(pointcut = "com.wannalunch.aop.MailingAspect.lunchOperation() && @annotation(mail) && args(applicant, lunch)")
   void mail(Mail mail, User applicant, Lunch lunch) {
-    mailService.sendMail(applicant, mail.value(), lunch.creator.name, lunch.topic, lunch.showUrl)
+    mailService.sendMail(applicant, mail.value(), [lunch.creator.name, lunch.topic, lunch.showUrl])
   }
 
 }
