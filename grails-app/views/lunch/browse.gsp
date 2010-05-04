@@ -18,6 +18,10 @@
   Freshly added lunches
 </a>
 
+<div class="paginateButtons paginateButtonsTop">
+  <g:paginate next="Next" prev="Prev" controller="lunch" action="index" total="${totalUpcomingLunches}" />
+</div>
+
 <div class="mainPageTabLine"></div>
 
 <g:each var="lunch" in="${upcomingLunches}">

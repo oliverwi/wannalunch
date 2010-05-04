@@ -562,6 +562,10 @@ h5 {
   font-weight: bold;
 }
 
+.paginateButtonsTop {
+	padding-top: 8px;
+}
+
 .paginateButtons {
 	float: right;
 }
