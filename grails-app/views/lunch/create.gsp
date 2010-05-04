@@ -24,7 +24,7 @@
   
   <div class="createLunchFormControlsLine">
     <g:checkBox name="wantsNotification" value="${lunch.creator.wantsNotification}" />
-    <label for="wantsNotification">I want to receive an e-mail notification on my lunch day</label>
+    <label for="wantsNotification">I want to receive e-mail notifications for this lunch</label>
   </div>
 
   <div class="buttonsrow">
