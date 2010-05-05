@@ -14,4 +14,8 @@ class Comment {
   LocalTime time
   
   static belongsTo = [lunch:Lunch]
+
+  static mapping = {
+    text type: 'text'
+  }
 }

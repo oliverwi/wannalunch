@@ -13,6 +13,7 @@ import org.joda.time.format.DateTimeFormat;
 
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch;
+import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User;
 
 class DataMigrator {
@@ -104,7 +105,7 @@ class DataMigrator {
             date: new LocalDate(it.lunchdate),
             time: new LocalTime(it.lunchtime),
             location: it.place,
-            creator: users[it.user],
+            creator: new Luncher(user: users[it.user], wantsNotification: true),
             paymentOption: paymentOption)
 
         lunches[it.id] = lunch
@@ -145,16 +146,19 @@ class DataMigrator {
     log.info "Migrating lunch requests..."
 
     sql.eachRow("select * from lunch_requests") {
-      def user = users[it.twitter_user]
-      def lunch = lunches[it.lunch_id]
-      if (user && lunch) {
-        if (it.selected_for_the_lunch) {
-          lunch.addToParticipants(user)
-        } else {
-          lunch.addToApplicants(user)
+      def twitterUser = users[it.twitter_user]
+      if (twitterUser) {
+        def user = new Luncher(user: twitterUser, wantsNotification: true)
+        def lunch = lunches[it.lunch_id]
+        if (user && lunch) {
+          if (it.selected_for_the_lunch) {
+            lunch.addToParticipants(user)
+          } else {
+            lunch.addToApplicants(user)
+          }
+  
+          save(lunch)
         }
-
-        save(lunch)
       }
     }
   }

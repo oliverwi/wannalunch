@@ -25,6 +25,10 @@ class User implements Serializable {
     linkedInProfile nullable: true
   }
   
+  static mapping = {
+    table 'wl_user'
+  }
+  
   boolean create(Lunch lunch) {
     lunch.createDateTime = new LocalDateTime()
     return lunch.save()

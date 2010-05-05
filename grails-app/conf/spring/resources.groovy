@@ -53,21 +53,20 @@ beans = {
     mailService = ref('mailService')
   }
 
-  mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
-    jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->
-      targetObject = ref("lunchService");
-      targetMethod = "remindOfTodaysLunches"
-    }
-    startDelay = getLunchNotificationTriggerStartDelay()
-    repeatInterval = 24 * 60 * 60 * 1000
-  }
-
-  quartzScheduler(org.springframework.scheduling.quartz.SchedulerFactoryBean) {
-    triggers = [
-        ref("mailTrigger")
-    ]
-  }
-
+//  mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
+//    jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->
+//      targetObject = ref("lunchService");
+//      targetMethod = "remindOfTodaysLunches"
+//    }
+//    startDelay = getLunchNotificationTriggerStartDelay()
+//    repeatInterval = 24 * 60 * 60 * 1000
+//  }
+//
+//  quartzScheduler(org.springframework.scheduling.quartz.SchedulerFactoryBean) {
+//    triggers = [
+//        ref("mailTrigger")
+//    ]
+//  }
 }
 
 private static def getLunchNotificationTriggerStartDelay() {

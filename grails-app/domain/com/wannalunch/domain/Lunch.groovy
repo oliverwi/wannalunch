@@ -28,18 +28,16 @@ class Lunch {
   static hasMany = [participants: Luncher, applicants: Luncher, comments: Comment]
 
   static mapping = {
-    creator cascade:'all, delete-orphan'
-    applicants cascade:'all, delete-orphan'
-    participants cascade:'all, delete-orphan'
+    creator cascade:'all, delete-orphan', column: 'lunch_creator_id'
+    applicants cascade:'all, delete-orphan', column: 'lunch_applicant_id'
+    participants cascade:'all, delete-orphan', column: 'lunch_participant_id'
+    description type: 'text'
   }
 
   static constraints = {
     topic nullable: false, blank: false
     description nullable: false, blank: false
     location nullable: false, blank: false
-    date validator: { val, obj ->
-      return val >= new LocalDate()
-    }
   }
 
   static transients = ['showUrl']
