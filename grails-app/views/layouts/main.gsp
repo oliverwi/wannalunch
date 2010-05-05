@@ -68,7 +68,6 @@
         <a href="${createLink(controller: "about", action: "signup")}">Business</a> &bull;
         <a href="http://getsatisfaction.com/Wannalunch">Feedback</a> &bull;
         <a href="http://feeds.wannalunch.com/Wannalunch">Subscribe</a> &bull;
-        <a href="#helpPopupStep1" rel="facebox">Help</a>
       </div>
     </div>
 
