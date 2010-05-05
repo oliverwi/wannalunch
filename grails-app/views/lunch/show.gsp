@@ -92,17 +92,20 @@
   <g:each var="comment" in="${lunch.sortedComments}">
     <div class="comment">
 		   <img src="${comment.author.profileImageUrl}"/>
-		   <p>
-		     <span class="bold">
-		       <a href="${createLink(controller: "profile", action: "show", id: comment.author.username)}">
-		         ${comment.author.name}
-		       </a>
-		     </span>
-		     <span class="small">
-		       ${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}
-		     </span>
-		   </p>
-		   ${comment.text}
+		   <div class="commentBody">
+			   <p>
+			     <span class="bold">
+			       <a href="${createLink(controller: "profile", action: "show", id: comment.author.username)}">
+			         ${comment.author.name}
+			       </a>
+			     </span>
+			     <span class="small">
+			       ${fieldValue(bean: comment, field: 'date')} ${fieldValue(bean: comment, field: 'time')}
+			     </span>
+			   </p>
+			   ${comment.text}
+			 </div>
+		   <div class="clearfix"></div>
     </div>
   </g:each>
 </div>
