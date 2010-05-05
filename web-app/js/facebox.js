@@ -79,8 +79,8 @@
     settings: {
       opacity      : 0,
       overlay      : true,
-      loadingImage : '/wannalunch/facebox/loading.gif',
-      closeImage   : '/wannalunch/facebox/closelabel.gif',
+      loadingImage : '../facebox/loading.gif',
+      closeImage   : '../facebox/closelabel.gif',
       imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
       faceboxHtml  : '\
     <div id="facebox" style="display:none;"> \

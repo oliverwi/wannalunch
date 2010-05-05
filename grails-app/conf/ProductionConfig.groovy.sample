@@ -11,3 +11,13 @@ mail {
   username = ""
   password = ""
 }
+
+dataSource {
+  dbCreate = "update"
+  url = "jdbc:postgresql://host:port/dbname"
+  driverClassName = "org.postgresql.Driver"
+  dialect = org.hibernate.dialect.PostgreSQLDialect
+  pooled = true
+  username = "sa"
+  password = ""
+}

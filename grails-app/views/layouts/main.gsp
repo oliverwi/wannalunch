@@ -111,7 +111,10 @@
 
   <g:javascript>
     jQuery(document).ready(function($) {
-      $('a[rel*=facebox]').facebox()
+      $('a[rel*=facebox]').facebox({
+        loadingImage: "<g:resource dir="facebox" file="loading.gif" />", 
+        closeImage: "<g:resource dir="facebox" file="closelabel.gif" />"
+      });
     });
   </g:javascript>
   <div id="info" style="display:none;">

@@ -31,6 +31,7 @@ grails.project.dependency.resolution = {
     	compile 'javax.mail:mail:1.4.1'
     	compile 'quartz:quartz:1.5.2'
     	compile 'mysql:mysql-connector-java:5.1.6'
+    	runtime 'postgresql:postgresql:8.0-318.jdbc3'
     }
 
 }
