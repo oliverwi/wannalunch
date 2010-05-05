@@ -451,13 +451,13 @@ h5 {
 
 .upcominglunch .lunchCreator {
   display: block;
-  margin-bottom: 15px !important;
+  margin-bottom: 10px !important;
 }
 
 .upcominglunch .lunchTopic {
 	display: block;
 	font-size: 1.3em;
-  margin-bottom: 10px !important;
+  margin-bottom: 16px !important;
 }
 
 .upcominglunch .lunchCreator,
