@@ -20,7 +20,7 @@ class User implements Serializable {
 
   static constraints = {
     username blank: false, unique: true
-    email unique: true, email: true, nullable: true
+    email email: true, nullable: true
     facebookProfile nullable: true
     linkedInProfile nullable: true
   }
