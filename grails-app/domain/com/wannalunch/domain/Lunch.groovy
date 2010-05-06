@@ -25,6 +25,8 @@ class Lunch {
   String location
 
   Luncher creator
+  
+  City city
 
   PaymentOption paymentOption = PaymentOption.WE_SPLIT
 

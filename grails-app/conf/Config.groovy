@@ -58,6 +58,17 @@ environments {
     twitter.sendTweets = false
     mail.sendMails = false
   }
+  
+  luiz {
+    grails.serverURL = "http://localhost:8080/${appName}"
+    twitter.authController = "fakeauth"
+    twitter.sendTweets = false
+    mail.sendMails = false
+    mail.host = ""
+    mail.from = ""
+    mail.defaultEncoding = "UTF-8"
+    grails.gsp.enable.reload = true
+  }
 }
 
 // log4j configuration

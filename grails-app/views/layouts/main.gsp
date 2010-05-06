@@ -21,9 +21,13 @@
   <body>
     <div class="wrapper">
       <div class="header">
-        <a href="${createLink(uri: "/")}">
-          <img src="${resource(dir: 'img', file: 'logo.png')}" class="headerlogo"/>
-        </a>
+        <div class="headerLogo">
+	        <a href="${createLink(uri: "/")}">
+	          <img src="${resource(dir: 'img', file: 'logo.png')}"/>
+	        </a>
+          <span class="headerCity grey"><u:city /></span>
+	      </div>
+        
         <div class="headercontrols">
           <a href="http://twitter.com/wannalunch" target="_blank">Follow us</a>
           <a href="http://twitter.com/wannalunch" target="_blank" class="clearLink">

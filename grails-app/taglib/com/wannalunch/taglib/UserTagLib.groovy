@@ -26,6 +26,10 @@ public class UserTagLib implements ApplicationContextAware {
     out << userService.user[field]
   }
   
+  def city = { attrs ->
+    out << userService.city.name
+  }
+  
   private def getUserService() {
     applicationContext.userService
   }

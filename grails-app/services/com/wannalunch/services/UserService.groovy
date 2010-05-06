@@ -1,5 +1,6 @@
 package com.wannalunch.services
 
+import com.wannalunch.domain.City;
 import com.wannalunch.domain.User
 
 class UserService {
@@ -7,6 +8,8 @@ class UserService {
   static scope = "session"
 
   def user
+  
+  def city
 
   def maybeCreateAccount(twitterUser) {
     def username = twitterUser.screenName
@@ -26,5 +29,8 @@ class UserService {
   User getUser() {
     user ? User.get(user.id) : null
   }
-
+  
+  City getCity() {
+    city ?: City.findByName("Tallinn")
+  }
 }
