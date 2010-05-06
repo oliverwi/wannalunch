@@ -14,7 +14,7 @@
   <g:textArea name="description" value="${lunch.description}" class="description clear${hasErrors(bean: lunch, field: 'description', ' error')}" title="All other cool things you want to discuss" />
   <g:textField name="date" value="${lunch.date}" class="datetime clear${hasErrors(bean: lunch, field: 'date', ' error')}" title="Pick a date" />
   <g:textField name="time" value="${lunch.time}" class="datetime clear${hasErrors(bean: lunch, field: 'time', ' error')}" title="Time" />
-  <g:textField name="location" value="${lunch.location}" class="location clear${hasErrors(bean: lunch, field: 'location', ' error')}" title="Let's meet @ restaurant"/>
+  <g:textField name="location" value="${lunch.location}" class="location clear${hasErrors(bean: lunch, field: 'location', ' error')}" title="Restaurant @ ${u.city()}"/>
 
   <div class="createLunchFormControlsLine">
     <g:each in="${com.wannalunch.domain.Lunch.PaymentOption.values()}">

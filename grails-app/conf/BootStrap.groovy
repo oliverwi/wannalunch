@@ -44,6 +44,7 @@ class BootStrap {
     
     createCityIfNeeded("Tallinn")
     createCityIfNeeded("Tartu")
+    createCityIfNeeded("World")
   }
   
   private void moveAllCitylessLunchesToTallinn() {

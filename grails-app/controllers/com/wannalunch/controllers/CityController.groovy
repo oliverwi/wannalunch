@@ -14,6 +14,11 @@ class CityController {
     City city = City.get(params.id)
     userService.city = city
     
-    redirect controller: "lunch"
+    String referer = request.getHeader("referer")
+    if (referer.contains("create") || referer.contains("lunch/save")) {
+      redirect controller: "lunch", action: "create"
+    } else {
+      redirect controller: "lunch"
+    }
   }
 }
