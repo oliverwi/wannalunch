@@ -15,6 +15,10 @@ class FormatTagLib {
   }
   
   private def getNumberOrdinal(number) {
+    if (number >= 4  && number <= 20) {
+      return "th"
+    }
+    
     switch (number % 10) {
       case 1:
         return "st"
