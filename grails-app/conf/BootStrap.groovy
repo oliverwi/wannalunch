@@ -26,8 +26,10 @@ class BootStrap {
       addFakeData()
     }
     
-    addCitiesIfNeeded()
-    moveAllCitylessLunchesToTallinn()
+    if (Environment.current.name != "test") {
+      addCitiesIfNeeded()
+      moveAllCitylessLunchesToTallinn()
+    }
 
     new LunchQueries().injectQueries()
   }

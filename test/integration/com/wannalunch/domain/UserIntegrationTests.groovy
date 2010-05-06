@@ -19,11 +19,13 @@ class UserIntegrationTests extends GrailsUnitTestCase {
     
     user.save()
     creator.save()
+    lunch.city.save()
     lunch.save()
   }
   
   void tearDown() {
     lunch.delete()
+    lunch.city.delete()
     user.delete()
     creator.delete()
   }

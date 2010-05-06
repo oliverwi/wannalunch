@@ -11,6 +11,8 @@ class LunchIntegrationTest extends GrailsUnitTestCase {
 
   private def creator
   
+  private def cities = []
+  
   private def lunches = []
   
   void setUp() {
@@ -19,25 +21,33 @@ class LunchIntegrationTest extends GrailsUnitTestCase {
     
     def today = new LocalDate()
     
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(12, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(12, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(13, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(1), time: new LocalTime(11, 30)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(1), time: new LocalTime(11, 0)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(5), time: new LocalTime(10, 30)])
-    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(19, 0)])
+    cities << new City(name: "Tallinn")
+    cities << new City(name: "Tartu")
+    
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(12, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(12, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today, time: new LocalTime(13, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(13, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(1), time: new LocalTime(11, 30), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(1), time: new LocalTime(11, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(5), time: new LocalTime(10, 30), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.minusDays(1), time: new LocalTime(19, 0), city: cities[0]])
+    lunches << TestDataCreator.createLunch([creator: creator, date: today.plusDays(5), time: new LocalTime(11, 30), city: cities[1]])
+    
+    cities.each {
+      assert it.save(), it.errors
+    }
     
     lunches.each {
       assert it.save()
-      println it
     }
   }
   
   void tearDown() {
     lunches.each{ it.delete() }
+    cities.each{ it.delete() }
     creator.delete()
   }
   

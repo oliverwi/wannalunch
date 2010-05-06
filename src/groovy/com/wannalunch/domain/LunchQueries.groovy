@@ -6,7 +6,7 @@ class LunchQueries {
 
   def getNextUpcomingLunch = {
     def nextLunch = delegate.find(
-        "from Lunch l where city = :city and (" +
+        "from Lunch l where l.city = :city and (" +
           "(l.date > :date) or " +
           "(l.date = :date and l.time > :time) or " +
           "(l.date = :date and l.time = :time and l.id > :id) " +
@@ -15,8 +15,8 @@ class LunchQueries {
     
     if (!nextLunch) {
       nextLunch = delegate.find(
-          "from Lunch l where l.date >= :today order by date, time, id",
-          [today: new LocalDate()])
+          "from Lunch l where l.city = :city and l.date >= :today order by date, time, id",
+          [city: delegate.city, today: new LocalDate()])
     }
     
     return nextLunch
@@ -35,8 +35,8 @@ class LunchQueries {
     
     if (!previousLunch) {
       previousLunch = delegate.find(
-          "from Lunch l where l.date >= :today order by date desc, time desc, id desc",
-          [today: today])
+          "from Lunch l where l.city = :city and l.date >= :today order by date desc, time desc, id desc",
+          [city: delegate.city, today: today])
     }
 
     return previousLunch
