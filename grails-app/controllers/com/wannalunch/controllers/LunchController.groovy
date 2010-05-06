@@ -125,6 +125,7 @@ class LunchController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
+    lunch.city = userService.city
 
     def luncher = new Luncher()
     luncher.user = userService.user
