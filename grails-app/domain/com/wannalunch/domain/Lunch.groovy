@@ -51,10 +51,6 @@ class Lunch {
 
   static transients = ['showUrl']
 
-  def getShortDescription() {
-    description.length() <= 100 ? description : description[0..97] + "..."
-  }
-
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
