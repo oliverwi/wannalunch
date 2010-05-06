@@ -126,7 +126,7 @@ class LunchController {
 
     def luncher = new Luncher()
     luncher.user = userService.user
-    luncher.wantsNotification = params.wantsNotification
+    luncher.wantsNotification = new Boolean(params.wantsNotification)
 
     if (lunchService.createLunch(luncher, lunch)) {
       redirect action: "show", id: lunch.id
