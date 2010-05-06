@@ -93,13 +93,6 @@ h5 {
   float: left;
 }
 
-.headerCity {
-	position: relative;
-	bottom: 8px;
-	font-weight: bold;
-	font-size: 1.2em;
-}
-
 .bluebutton,
 .greybutton,
 .bigbluebutton,
@@ -677,4 +670,42 @@ h5 {
 
 .helpNav .next {
   float: right;
+}
+
+
+
+
+#citySelectorLink {
+  position: relative;
+  bottom: 8px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #6d6f72;
+  outline: none;
+}
+
+#citySelector {
+	position: absolute;
+	top: 70px;
+	width: 100%;
+	text-align: center;
+}
+
+.citySelectorContent {
+	width: 960px;
+	margin: 0 auto;
+	font-size: 1.1em;
+}
+
+.citySelectorContent a {
+	color: #6d6f72;
+	margin: 0 5px 0 0;
+  padding: 2px 7px;
+  -moz-border-radius: 4px 4px 4px 4px;
+  -webkit-border-radius: 4px 4px 4px 4px;
+}
+
+.citySelectorContent a.selected {
+  background: #0098FE;
+  color: white;
 }

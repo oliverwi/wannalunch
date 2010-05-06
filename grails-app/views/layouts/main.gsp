@@ -15,17 +15,18 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
     <g:javascript library="application" />
     <g:javascript src="facebox.js" />
-
-    <script src="http://c.compete.com/bootstrap/d7f94c9f6fce7cd4d6eea7184b4a203f/bootstrap.js" type="text/javascript" async=""></script>
   </head>
   <body>
     <div class="wrapper">
       <div class="header">
         <div class="headerLogo">
-	        <a href="${createLink(uri: "/")}">
+	        <a href="${createLink(uri: "/")}" class="clearLink">
 	          <img src="${resource(dir: 'img', file: 'logo.png')}"/>
 	        </a>
-          <span class="headerCity grey"><u:city /></span>
+	        <a href="#" id="citySelectorLink">
+            <u:city />
+            <img src="${resource(dir: 'img', file: 'select_arrow_up.png')}" />
+          </a>
 	      </div>
         
         <div class="headercontrols">
@@ -75,34 +76,89 @@
       </div>
     </div>
 
-    <script type="text/javascript" charset="utf-8">
-      var is_ssl = ("https:" == document.location.protocol);
-      var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
-      document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script
-      src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"
-      type="text/javascript">
-    </script>
-
-    <script type="text/javascript" charset="utf-8">
-      var feedback_widget_options = {};
-
-      feedback_widget_options.display = "overlay";
-      feedback_widget_options.company = "wannalunch";
-      feedback_widget_options.placement = "left";
-      feedback_widget_options.color = "#222";
-      feedback_widget_options.style = "idea";
-
-      var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
-    </script>
-
-    <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
+	  <g:javascript>
+	    $("#citySelectorLink").click(function(event) {
+	      if (isCitySelectorShown()) {
+	        hideCitySelector()
+        } else {
+          showCitySelector()
+        }
+        event.stopPropagation()
+        event.cancelBubble = true
+      });
+      
+      function isCitySelectorShown() {
+        return $("#citySelector").css('display') != 'none'
+      }
+      
+      function hideCitySelector() {
+        var arrowUp = '<g:resource dir="img" file="select_arrow_up.png" />'
+        $("#citySelector").fadeOut(200);
+        $("#citySelectorLink").find('img').attr('src', arrowUp)
+      }
+      
+      function showCitySelector() {
+        var arrowDown = '<g:resource dir="img" file="select_arrow_down.png" />'
+        $("#citySelector").fadeIn(200);
+        $("#citySelectorLink").find('img').attr('src', arrowDown)
+      }
+      
+      $("body").click(function() {
+        if (isCitySelectorShown()) {
+          hideCitySelector()
+        }
+      })
+    </g:javascript>      
+	  <div id="citySelector" style="display: none;">
+	    <div class="citySelectorContent">
+	      <u:availableCities />
+	    </div>
+	  </div>
+	  
+	  <g:javascript>
+	    jQuery(document).ready(function($) {
+	      $('a[rel*=facebox]').facebox({
+	        loadingImage: "<g:resource dir="facebox" file="loading.gif" />", 
+	        closeImage: "<g:resource dir="facebox" file="closelabel.gif" />"
+	      });
+	    });
+	  </g:javascript>
+	  <div id="info" style="display:none;">
+	    <p><br/>You need to log in</p>
+	  </div>
+	  
+	  <g:render template="/templates/helpPopup" />
 
     <g:if env="production">
+      <script src="http://c.compete.com/bootstrap/d7f94c9f6fce7cd4d6eea7184b4a203f/bootstrap.js" type="text/javascript" async=""></script>
+    
+	    <script type="text/javascript" charset="utf-8">
+	      var is_ssl = ("https:" == document.location.protocol);
+	      var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
+	      document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+	    </script>
+	    <script
+	      src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"
+	      type="text/javascript">
+	    </script>
+	
+	    <script type="text/javascript" charset="utf-8">
+	      var feedback_widget_options = {};
+	
+	      feedback_widget_options.display = "overlay";
+	      feedback_widget_options.company = "wannalunch";
+	      feedback_widget_options.placement = "left";
+	      feedback_widget_options.color = "#222";
+	      feedback_widget_options.style = "idea";
+	
+	      var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+	    </script>
+	
+	    <script type="text/javascript">
+	      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	    </script>
+
       <script type="text/javascript">
         try {
       	  var pageTracker = _gat._getTracker("UA-2481746-23");
@@ -110,20 +166,6 @@
       	} catch(err) {}
       </script>
     </g:if>
-  </body>
-
-  <g:javascript>
-    jQuery(document).ready(function($) {
-      $('a[rel*=facebox]').facebox({
-        loadingImage: "<g:resource dir="facebox" file="loading.gif" />", 
-        closeImage: "<g:resource dir="facebox" file="closelabel.gif" />"
-      });
-    });
-  </g:javascript>
-  <div id="info" style="display:none;">
-    <p><br/>You need to log in</p>
-  </div>
   
-  <g:render template="/templates/helpPopup" />
-
+  </body>
 </html>
