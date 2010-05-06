@@ -16,15 +16,17 @@ class LunchController {
   def lunchService
 
   def upcomingLunches = {
-    def upcomingLunches = Lunch.findUpcomingLunches(paginateParams)
-    def total = Lunch.countUpcomingLunches()
+    def city = userService.city
+    def upcomingLunches = Lunch.findUpcomingLunchesInCity(city, paginateParams)
+    def total = Lunch.countUpcomingLunchesInCity(city)
 
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
   }
 
   def freshlyAddedLunches = {
-    def upcomingLunches = Lunch.findFreshlyAddedLunches(paginateParams)
-    def total = Lunch.countUpcomingLunches()
+    def city = userService.city
+    def upcomingLunches = Lunch.findFreshlyAddedLunchesInCity(city, paginateParams)
+    def total = Lunch.countUpcomingLunchesInCity(city)
 
     render(view: "browse", model: [upcomingLunches: upcomingLunches, totalUpcomingLunches: total])
   }
