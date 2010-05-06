@@ -67,6 +67,7 @@ environments {
     mail.host = ""
     mail.from = ""
     mail.defaultEncoding = "UTF-8"
+    grails.gsp.enable.reload = true
   }
 }
 
