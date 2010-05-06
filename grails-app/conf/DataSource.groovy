@@ -24,4 +24,15 @@ environments {
 			url = "jdbc:hsqldb:mem:testDb"
 		}
 	}
+	luiz {
+	  dataSource {
+	    dbCreate = "update"
+      url = "jdbc:postgresql://localhost/wannalunch"
+      driverClassName = "org.postgresql.Driver"
+      dialect = org.hibernate.dialect.PostgreSQLDialect
+      pooled = true
+      username = "luiz"
+      password = "psql"
+	  }
+	}
 }

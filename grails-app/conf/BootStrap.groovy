@@ -9,6 +9,7 @@ import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 
+import com.wannalunch.domain.City;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.LunchQueries;
@@ -24,8 +25,30 @@ class BootStrap {
     } else if (Environment.current.name in ["development"]) {
       addFakeData()
     }
+    
+    addCitiesIfNeeded()
+    moveAllCitylessLunchesToTallinn()
 
     new LunchQueries().injectQueries()
+  }
+  
+  private void addCitiesIfNeeded() {
+    def createCityIfNeeded = { cityName ->
+      if (!City.findByName(cityName)) {
+        City city = new City(name: cityName)
+        assert city.save(flush: true), "Could not save city with name $cityName"
+      }
+    }
+    
+    createCityIfNeeded("Tallinn")
+    createCityIfNeeded("Tartu")
+  }
+  
+  private void moveAllCitylessLunchesToTallinn() {
+    Lunch.findAll("from Lunch l where l.city is null").each{
+      it.city = City.findByName("Tallinn")
+      assert it.save(), "Could not move lunch with it ${it.id} to Tallinn: ${it.errors}"
+    }
   }
 
   private void addFakeData() {
