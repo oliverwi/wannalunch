@@ -4,6 +4,9 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
+import org.joda.time.contrib.hibernate.PersistentLocalDate;
+import org.joda.time.contrib.hibernate.PersistentLocalDateTime;
+import org.joda.time.contrib.hibernate.PersistentLocalTimeAsTime;
 
 import com.wannalunch.util.CommentComparator;
 
@@ -34,6 +37,10 @@ class Lunch {
     applicants cascade:'all, delete-orphan', column: 'lunch_applicant_id'
     participants cascade:'all, delete-orphan', column: 'lunch_participant_id'
     description type: 'text'
+
+    createDateTime type: PersistentLocalDateTime
+    date type: PersistentLocalDate
+    time type: PersistentLocalTimeAsTime
   }
 
   static constraints = {

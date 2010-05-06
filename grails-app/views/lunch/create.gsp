@@ -21,11 +21,13 @@
       <g:radio id="${it.name()}" name="paymentOption" value="${it.name()}" checked="${lunch.paymentOption == it}"/><label for="${it.name()}">${it.text}</label>
     </g:each>
   </div>
-  
+
+  <%--
   <div class="createLunchFormControlsLine">
     <g:checkBox name="wantsNotification" value="${lunch.creator.wantsNotification}" />
     <label for="wantsNotification">I want to receive e-mail notifications for this lunch</label>
   </div>
+  --%>
 
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
@@ -44,7 +46,7 @@
   <div class="buttonsrow">
     <input type="button" id="createFormButton" class="bigbluebutton clearLink" value="Create lunch!" />
   </div>
-  
+
 </g:form>
 </div>
 
@@ -120,15 +122,15 @@
 
 <g:javascript>
   $("#createFormButton").click(function() {
-  
+
     <g:if test="${lunch.creator.email}">
 	    $("#createLunchForm").submit()
     </g:if>
     <g:else>
       if ($('#wantsNotification:checked').val() !== undefined) {
         jQuery.facebox($("#requestEmailContainer").html())
-        
-        // facebox duplicates the code into a #facebox div so both 
+
+        // facebox duplicates the code into a #facebox div so both
         // IDs are needed to select the displayed element
         $("#facebox #email").focus()
         $("#facebox #createFormWithEmailButton").click(function() {
@@ -136,11 +138,11 @@
         });
       } else {
         $("#createLunchForm").submit()
-      }      
+      }
     </g:else>
-    
+
   });
-  
+
   function saveEmail() {
     $.ajax({
       method: "post",
@@ -150,7 +152,7 @@
       success: function() {
         $("#createLunchForm").submit()
       },
-      error: function() { 
+      error: function() {
         $("#facebox #ajaxMessage").html('Oops! An error occurred! Please check if the address you typed is correct!<br/>')
       }
     })
