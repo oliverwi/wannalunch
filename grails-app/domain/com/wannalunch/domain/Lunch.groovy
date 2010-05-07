@@ -35,11 +35,7 @@ class Lunch {
   static hasMany = [participants: User, applicants: User, comments: Comment]
 
   static mapping = {
-    creator column: 'lunch_creator_id'
-    applicants column: 'lunch_applicant_id'
-    participants column: 'lunch_participant_id'
     description type: 'text'
-
     createDateTime type: PersistentLocalDateTime
     date type: PersistentLocalDate
     time type: PersistentLocalTimeAsTime

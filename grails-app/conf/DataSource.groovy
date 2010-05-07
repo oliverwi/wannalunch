@@ -27,7 +27,7 @@ environments {
 	luiz {
 	  dataSource {
 	    dbCreate = "update"
-      url = "jdbc:postgresql://localhost/wannalunch"
+      url = "jdbc:postgresql://localhost/wannalunch2"
       driverClassName = "org.postgresql.Driver"
       dialect = org.hibernate.dialect.PostgreSQLDialect
       pooled = true

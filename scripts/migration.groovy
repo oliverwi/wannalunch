@@ -26,7 +26,7 @@ sql.withTransaction {
     def time = new java.sql.Time(new ObjectInputStream(new ByteArrayInputStream(it.time)).readObject().toDateTimeToday().withZone(org.joda.time.DateTimeZone.UTC).millis)
     def createDateTime = new java.sql.Timestamp(new ObjectInputStream(new ByteArrayInputStream(it.create_date_time)).readObject().toDateTime().millis)
 
-    sql.execute('update lunch set date_tmp = ?, time_tmp = ?, create_date_time_tmp = ? where id = ?', date, time, createDateTime, it.id)
+    sql.execute('update lunch set date_tmp = ?, time_tmp = ?, create_date_time_tmp = ? where id = ?', [date, time, createDateTime, it.id])
   }
 
   sql.execute('alter table lunch drop column date')
@@ -41,10 +41,6 @@ sql.withTransaction {
   sql.execute('alter table lunch alter column time set not null')
   sql.execute('alter table lunch alter column create_date_time set not null')
 
-  println ''
-
-  desc(sql, "lunch")
-
   // comments
 
   println ''
@@ -57,7 +53,7 @@ sql.withTransaction {
     def date = new java.sql.Date(new ObjectInputStream(new ByteArrayInputStream(it.date)).readObject().toDateTimeAtStartOfDay().millis)
     def time = new java.sql.Time(new ObjectInputStream(new ByteArrayInputStream(it.time)).readObject().toDateTimeToday().withZone(org.joda.time.DateTimeZone.UTC).millis)
 
-    sql.execute('update comment set date_tmp = ?, time_tmp = ? where id = ?', date, time, it.id)
+    sql.execute('update comment set date_tmp = ?, time_tmp = ? where id = ?', [date, time, it.id])
   }
 
   sql.execute('alter table comment drop column date')
@@ -68,9 +64,41 @@ sql.withTransaction {
 
   sql.execute('alter table comment alter column date set not null')
   sql.execute('alter table comment alter column time set not null')
-
+  
   println ''
-
+  println 'creating table city'
+  sql.execute("create table city (" +
+  		  "id bigint not null primary key," +
+  		  "version bigint not null," +
+  		  "name varchar(255) not null unique" +
+  		");")
+  
+  println ''
+  println 'inserting data on relation city'
+  sql.execute("insert into city(id, version, name) values (?, ?, ?)", [1, 0, 'Tallinn'])
+  sql.execute("insert into city(id, version, name) values (?, ?, ?)", [2, 0, 'Tartu'])
+  sql.execute("insert into city(id, version, name) values (?, ?, ?)", [3, 0, 'World'])
+  
+  println ''
+  println 'adding column city_id to relation lunch'
+  sql.execute("alter table lunch add column city_id bigint")
+  sql.execute("alter table lunch add constraint fk628c32ae77c2c76 foreign key (city_id) references city(id)")
+  
+  println ''
+  println 'assigning all current lunches to Tallinn'
+  sql.execute("update lunch set city_id = ?", [1])
+  
+  println ''
+  println 'adding not null constraint to city_id on relation lunch'
+  sql.execute('alter table lunch alter column city_id set not null')
+  
+  println ''
+  desc(sql, "city")
+  
+  println ''
+  desc(sql, "lunch")
+  
+  println ''
   desc(sql, "comment")
 
   println ''
