@@ -35,4 +35,15 @@ environments {
       password = "psql"
 	  }
 	}
+	timur {
+	  dataSource {
+        dbCreate = "create-drop"
+        url = "jdbc:postgresql://localhost/wannalunch"
+        driverClassName = "org.postgresql.Driver"
+        dialect = org.hibernate.dialect.PostgreSQLDialect
+        pooled = true
+        username = "postgres"
+        password = "postgres"
+	  }
+	}
 }
