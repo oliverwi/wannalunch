@@ -31,14 +31,14 @@ class UserIntegrationTests extends GrailsUnitTestCase {
   }
   
   void testUserCreatesLunch() {
-    assertEquals new Luncher(user: creator), lunch.creator
+    assertEquals creator, lunch.creator
     assertTrue creator.isCreatorOf(lunch)
   }
   
   void testApplyTo() {
     assertTrue user.applyTo(lunch)
 
-    assertEquals new Luncher(user: user), lunch.applicants.iterator().next()
+    assertEquals user, lunch.applicants.iterator().next()
     assertTrue user.isApplicantOf(lunch)
     assertEmpty lunch.participants
   }
@@ -54,11 +54,11 @@ class UserIntegrationTests extends GrailsUnitTestCase {
   
   void testPromoteToParticipant() {
     assertTrue user.applyTo(lunch)
-    assertTrue lunch.applicants.contains(new Luncher(user: user))
+    assertTrue lunch.applicants.contains(user)
     assertTrue creator.promoteToParticipant(user, lunch)
     
     assertTrue user.isParticipantOf(lunch)
-    assertEquals new Luncher(user: user), lunch.participants.iterator().next()
+    assertEquals user, lunch.participants.iterator().next()
     assertEmpty lunch.applicants
   }
   
@@ -71,6 +71,19 @@ class UserIntegrationTests extends GrailsUnitTestCase {
     assertFalse user.isParticipantOf(lunch)
     assertEmpty lunch.participants
     assertEmpty lunch.applicants
+  }
+  
+  void testFindUpcomingLunches() {
+    def lunches = user.findUpcomingLunches()
+    
+    assertEquals 0, lunches.size()
+    
+    user.applyTo(lunch)
+    creator.promoteToParticipant(user, lunch)
+    lunches = user.findUpcomingLunches()
+    
+    assertEquals 1, lunches.size()
+    assertEquals lunch, lunches.get(0)
   }
   
   private void assertEmpty(collection) {

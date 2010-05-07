@@ -13,22 +13,18 @@ import com.wannalunch.domain.City;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.LunchQueries;
-import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User;
-import com.wannalunch.support.DataMigrator;
 
 class BootStrap {
 
   def init = { servletContext ->
-    if (new Boolean(System.getenv("WL_MIGRATE"))) {
-      new DataMigrator().migrateAll()
-    } else if (Environment.current.name in ["development"]) {
-      addFakeData()
-    }
-    
     if (Environment.current.name != "test") {
       addCitiesIfNeeded()
       moveAllCitylessLunchesToTallinn()
+    }
+  
+    if (Environment.current.name in ["development"]) {
+      addFakeData()
     }
 
     new LunchQueries().injectQueries()
@@ -66,41 +62,46 @@ class BootStrap {
     oliver.email = "blabla@blabla.com"
     oliver.username = "oliverwi"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
-
+    
     assert timur.save(), timur.errors
     assert oliver.save(), oliver.errors
-
+    
+    City tallinn = City.findByName("Tallinn")
+    
     20.times {
-      createLunch(timur, oliver).save()
+      def lunch = createLunch(timur, oliver, tallinn)
+      assert lunch.save(), lunch.errors
     }
 
     def todaysLunch = new Lunch()
-    todaysLunch.creator = new Luncher(user: timur)
+    todaysLunch.creator = timur
     todaysLunch.createDateTime = new LocalDateTime()
     todaysLunch.topic = "Today's lunch"
     todaysLunch.description = "Who cares?"
     todaysLunch.date = new LocalDate()
     todaysLunch.time = new LocalTime(12, 0)
     todaysLunch.location = "Vapiano"
-    todaysLunch.addToParticipants(new Luncher(user: oliver))
-    todaysLunch.save()
+    todaysLunch.city = tallinn
+    todaysLunch.addToParticipants(oliver)
+    assert todaysLunch.save(), todaysLunch.errors
   }
 
-  private Lunch createLunch(user1, user2) {
+  private Lunch createLunch(user1, user2, city) {
     def random = new Random()
 
     Lunch lunch = new Lunch()
     User lunchCreator = random.nextInt(100) % 2 > 0 ? user1 : user2
-    lunch.creator = new Luncher(user: lunchCreator)
+    lunch.creator = lunchCreator
     lunch.topic = "Let's talk about that topic number ${random.nextInt(9999) + 1}"
     lunch.description = "am attending http://thenextweb.com/conference/ in Amsterdam April 27+28+29 and would love to share my experiences to others who have attended or with anyone who has an interest in the future of the interwebz :) "
     lunch.createDateTime = new LocalDateTime().minusHours(random.nextInt(168) + 1)
     lunch.date = new LocalDate().plusDays(random.nextInt(30))
     lunch.time = new LocalTime().plusHours(random.nextInt(24) - 12)
     lunch.location = ["Vapiano", "Silk", "Cafe Bonaparte", "Fahle", "Sushi Cat", "Cafe Tao"].get(random.nextInt(5))
+    lunch.city = city
     if (random.nextInt(100) % 2 > 0) {
-      User applicant = (lunch.creator.user == user1) ? user2 : user1
-      lunch.addToApplicants(new Luncher(user: applicant))
+      User applicant = (lunch.creator == user1) ? user2 : user1
+      lunch.addToApplicants(applicant)
       if (random.nextInt(100) % 2 > 0) {
         Comment comment = new Comment()
         comment.text = "I am interested"

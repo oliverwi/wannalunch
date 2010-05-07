@@ -2,10 +2,10 @@ package com.wannalunch.controllers
 
 import com.wannalunch.aop.AuthRequired;
 import com.wannalunch.domain.Lunch
-import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User
 
 import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 
 class LunchController {
 
@@ -116,7 +116,7 @@ class LunchController {
   @AuthRequired
   def create = {
     def lunch = new Lunch()
-    lunch.creator = new Luncher(user: userService.user)
+    lunch.creator = userService.user
 
     [lunch: lunch]
   }
@@ -125,13 +125,12 @@ class LunchController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
+    
     lunch.city = userService.city
-
-    def luncher = new Luncher()
-    luncher.user = userService.user
-    luncher.wantsNotification = new Boolean(params.wantsNotification)
-
-    if (lunchService.createLunch(luncher, lunch)) {
+    lunch.creatorWantsNotifications = new Boolean(params.creatorWantsNotifications)
+    lunch.createDateTime = new LocalDateTime()
+    
+    if (lunchService.createLunch(userService.user, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       render(view: "create", model: [lunch: lunch])

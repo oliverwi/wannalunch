@@ -2,7 +2,6 @@ package com.wannalunch.aop
 
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.Comment;
-import com.wannalunch.domain.Luncher;
 import com.wannalunch.domain.User;
 
 import org.aspectj.lang.annotation.AfterReturning;
@@ -35,7 +34,7 @@ class MailingAspect {
   }
 
   @AfterReturning(pointcut = "com.wannalunch.aop.MailingAspect.lunchOperation() && @annotation(mail) && args(applicant, lunch)")
-  void mail(Mail mail, Luncher applicant, Lunch lunch) {
+  void mail(Mail mail, applicant, Lunch lunch) {
 //    mailService.sendMail(applicant, mail.value(), [lunch.creator.name, lunch.topic, lunch.showUrl])
   }
 

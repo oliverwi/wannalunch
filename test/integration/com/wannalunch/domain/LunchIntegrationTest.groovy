@@ -70,4 +70,12 @@ class LunchIntegrationTest extends GrailsUnitTestCase {
     assertEquals(lunches[2].id, lunches[3].previousUpcomingLunch.id)
     assertEquals(lunches[1].id, lunches[2].previousUpcomingLunch.id)
   }
+  
+  void testDeleteLunch() {
+    def newLunch = TestDataCreator.createLunch([creator: creator, date: new LocalDate(), time: new LocalTime(12, 0), city: cities[0]])
+    newLunch.delete(flush: true)
+    
+    assertNull(Lunch.get(newLunch.id))
+    assert User.get(newLunch.creator.id)
+  }
 }

@@ -57,12 +57,6 @@ class LunchQueries {
         [city: city, today: new LocalDate()])[0]
   }
 
-  static def findUpcomingLunchesFor = { User user ->
-    delegate.executeQuery(
-        "select l from Lunch l left outer join l.participants p where (l.creator.user = :user or p.user = :user) and l.date >= :today order by date, time",
-        [user: user, today: new LocalDate()])
-  }
-
   static def findTodaysLunches = {
     delegate.findAllWhere(date: new LocalDate())
   }
@@ -74,7 +68,6 @@ class LunchQueries {
     Lunch.metaClass.static.findUpcomingLunchesInCity = findUpcomingLunchesInCity
     Lunch.metaClass.static.findFreshlyAddedLunchesInCity = findFreshlyAddedLunchesInCity
     Lunch.metaClass.static.countUpcomingLunchesInCity = countUpcomingLunchesInCity
-    Lunch.metaClass.static.findUpcomingLunchesFor = findUpcomingLunchesFor
     Lunch.metaClass.static.findTodaysLunches = findTodaysLunches
   }
 }

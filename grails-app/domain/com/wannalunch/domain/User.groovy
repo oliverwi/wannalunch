@@ -2,6 +2,7 @@ package com.wannalunch.domain
 
 import java.io.Serializable
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 class User implements Serializable {
@@ -30,22 +31,22 @@ class User implements Serializable {
   }
   
   boolean create(Lunch lunch) {
-    lunch.createDateTime = new LocalDateTime()
+    lunch.creator = this
     return lunch.save()
   }
 
   boolean applyTo(Lunch lunch) {
-    lunch.addToApplicants(new Luncher(user: this))
+    lunch.addToApplicants(this)
     return lunch.save()
   }
 
   boolean cancelParticipation(Lunch lunch) {
     if (isApplicantOf(lunch)) {
-      lunch.removeFromApplicants(new Luncher(user: this))
+      lunch.removeFromApplicants(this)
       return lunch.save()
     }
     if (isParticipantOf(lunch)) {
-      lunch.removeFromParticipants(new Luncher(user: this))
+      lunch.removeFromParticipants(this)
       return lunch.save()
     }
     return false
@@ -56,13 +57,8 @@ class User implements Serializable {
       return false
     }
 
-    Luncher luncherApplicant = lunch.applicants.find { it.user == applicant }
-    if (!luncherApplicant) {
-      return false
-    }
-    
-    lunch.removeFromApplicants(luncherApplicant)
-    lunch.addToParticipants(new Luncher(user: luncherApplicant.user))
+    lunch.removeFromApplicants(applicant)
+    lunch.addToParticipants(applicant)
 
     return lunch.save()
   }
@@ -84,15 +80,22 @@ class User implements Serializable {
   }
 
   boolean isCreatorOf(Lunch lunch) {
-    lunch.creator == new Luncher(user: this)
+    lunch.creator == this
   }
 
   boolean isApplicantOf(Lunch lunch) {
-    lunch.applicants.contains(new Luncher(user: this))
+    lunch.applicants.contains(this)
   }
 
   boolean isParticipantOf(Lunch lunch) {
-    lunch.participants.contains(new Luncher(user: this))
+    lunch.participants.contains(this)
+  }
+
+  def findUpcomingLunches() {
+    executeQuery(
+      "select l from Lunch l left outer join l.participants p where (" +
+        "l.creator = :user or p = :user) and l.date >= :today order by date, time",
+      [user: this, today: new LocalDate()])
   }
 
   public boolean equals(Object o) {

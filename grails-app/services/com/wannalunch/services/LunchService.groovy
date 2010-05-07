@@ -9,7 +9,6 @@ import com.wannalunch.aop.Mail.Kind;
 import com.wannalunch.aop.Tweet;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
-import com.wannalunch.domain.Luncher;
 
 class LunchService {
 
@@ -43,21 +42,21 @@ class LunchService {
   }
 
   void remindOfTodaysLunches() {
-    log.debug "Maybe sending mail..."
-
-    Lunch.findTodaysLunches().each { lunch ->
-      remindOfLunch(lunch)
-    }
+//    log.debug "Maybe sending mail..."
+//
+//    Lunch.findTodaysLunches().each { lunch ->
+//      remindOfLunch(lunch)
+//    }
   }
 
   private void remindOfLunch(Lunch lunch) {
-    def formatter = DateTimeFormat.forPattern(userMessageSource.getMessage("default.time.format"))
-    def participants = lunch.participants + lunch.creator
-
-    participants.each { Luncher luncher ->
-      def time = formatter.print(lunch.time)
-      mailService.sendMail(luncher, Kind.REMINDER, [luncher.name, lunch.location, time, lunch.showUrl])
-    }
+//    def formatter = DateTimeFormat.forPattern(userMessageSource.getMessage("default.time.format"))
+//    def participants = lunch.participants + lunch.creator
+//
+//    participants.each { Luncher luncher ->
+//      def time = formatter.print(lunch.time)
+//      mailService.sendMail(luncher, Kind.REMINDER, [luncher.name, lunch.location, time, lunch.showUrl])
+//    }
   }
 
 }

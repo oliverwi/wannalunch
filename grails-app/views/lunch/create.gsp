@@ -24,8 +24,8 @@
 
   <%--
   <div class="createLunchFormControlsLine">
-    <g:checkBox name="wantsNotification" value="${lunch.creator.wantsNotification}" />
-    <label for="wantsNotification">I want to receive e-mail notifications for this lunch</label>
+    <g:checkBox name="creatorWantsNotifications" value="${lunch.creatorWantsNotifications}" />
+    <label for="creatorWantsNotifications">I want to receive e-mail notifications for this lunch</label>
   </div>
   --%>
 
@@ -127,7 +127,7 @@
 	    $("#createLunchForm").submit()
     </g:if>
     <g:else>
-      if ($('#wantsNotification:checked').val() !== undefined) {
+      if ($('#creatorWantsNotifications:checked').val() !== undefined) {
         jQuery.facebox($("#requestEmailContainer").html())
 
         // facebox duplicates the code into a #facebox div so both

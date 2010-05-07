@@ -24,18 +24,20 @@ class Lunch {
 
   String location
 
-  Luncher creator
+  User creator
+  
+  boolean creatorWantsNotifications
   
   City city
 
   PaymentOption paymentOption = PaymentOption.WE_SPLIT
 
-  static hasMany = [participants: Luncher, applicants: Luncher, comments: Comment]
+  static hasMany = [participants: User, applicants: User, comments: Comment]
 
   static mapping = {
-    creator cascade:'all, delete-orphan', column: 'lunch_creator_id'
-    applicants cascade:'all, delete-orphan', column: 'lunch_applicant_id'
-    participants cascade:'all, delete-orphan', column: 'lunch_participant_id'
+    creator column: 'lunch_creator_id'
+    applicants column: 'lunch_applicant_id'
+    participants column: 'lunch_participant_id'
     description type: 'text'
 
     createDateTime type: PersistentLocalDateTime
