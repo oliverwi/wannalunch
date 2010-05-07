@@ -34,10 +34,11 @@ sql.withTransaction {
   sql.execute('alter table lunch alter column time set not null')
   sql.execute('alter table lunch alter column create_date_time set not null')
 
-  if (args.find { 'commit' }) {
-    println "found"
-//    sql.commit()
+  if (args.find { it == 'commit' }) {
+    println "committing transaction"
+    sql.commit()
   } else {
+    println "rolling transaction back"
     sql.rollback()
   }
 }
