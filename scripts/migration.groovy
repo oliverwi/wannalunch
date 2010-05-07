@@ -7,7 +7,7 @@ def sql = Sql.newInstance("jdbc:postgresql://localhost/wannalunch", args[0], arg
 sql.withTransaction {
 
   println 'dropping wl_user_email_key'
-  println sql.execute("alter table wl_user drop constraint wl_user_email_key")
+  sql.execute("alter table wl_user drop constraint wl_user_email_key")
 
   println ''
   desc(sql, "wl_user")
