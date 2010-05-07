@@ -1,4 +1,4 @@
-// sample: groovy -cp posgresql-8.4-701.jdbc4.jar:joda-time-1.6.jar convert.groovy postgres ohlala
+// sample: groovy -cp posgresql-8.4-701.jdbc4.jar:joda-time-1.6.jar migration.groovy postgres ohlala
 
 import groovy.sql.Sql
 
