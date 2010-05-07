@@ -6,7 +6,7 @@ def sql = Sql.newInstance("jdbc:postgresql://localhost/wannalunch", args[0], arg
 
 sql.withTransaction {
 
-//  sql.execute("alter table wl_user alter column drop constraint 'wl_user_email_key'")
+//  println sql.execute("alter table wl_user drop constraint wl_user_email_key")
 
   sql.execute('alter table lunch add column create_date_time_tmp timestamp')
   sql.execute('alter table lunch add column date_tmp date')
@@ -16,8 +16,6 @@ sql.withTransaction {
     def date = new java.sql.Date(new ObjectInputStream(new ByteArrayInputStream(it.date)).readObject().toDateTimeAtStartOfDay().millis)
     def time = new java.sql.Time(new ObjectInputStream(new ByteArrayInputStream(it.time)).readObject().toDateTimeToday().withZone(org.joda.time.DateTimeZone.UTC).millis)
     def createDateTime = new java.sql.Timestamp(new ObjectInputStream(new ByteArrayInputStream(it.create_date_time)).readObject().toDateTime().millis)
-
-    println time
 
     sql.execute('update lunch set date_tmp = ?, time_tmp = ?, create_date_time_tmp = ? where id = ?', date, time, createDateTime, it.id)
   }
