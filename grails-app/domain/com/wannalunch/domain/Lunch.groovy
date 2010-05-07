@@ -51,8 +51,6 @@ class Lunch {
     location nullable: false, blank: false
   }
 
-  static transients = ['showUrl']
-
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
