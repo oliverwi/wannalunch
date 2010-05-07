@@ -35,7 +35,7 @@ class ProfileController {
   @AuthRequired
   def edit = {
     def loggedInUser = userService.user
-    def upcomingLunches = loggedInUser.findUpcomingLunchesFor()
+    def upcomingLunches = loggedInUser.findUpcomingLunches()
     [view: "edit", user: loggedInUser, upcomingLunches: upcomingLunches]
   }
 
