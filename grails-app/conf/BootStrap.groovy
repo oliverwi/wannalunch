@@ -22,14 +22,14 @@ class BootStrap {
       addCitiesIfNeeded()
       moveAllCitylessLunchesToTallinn()
     }
-  
-    if (Environment.current.name in ["development"]) {
+
+    if (Environment.current.name in ["development", "timur"]) {
       addFakeData()
     }
 
     new LunchQueries().injectQueries()
   }
-  
+
   private void addCitiesIfNeeded() {
     def createCityIfNeeded = { cityName ->
       if (!City.findByName(cityName)) {
@@ -37,12 +37,12 @@ class BootStrap {
         assert city.save(flush: true), "Could not save city with name $cityName"
       }
     }
-    
+
     createCityIfNeeded("Tallinn")
     createCityIfNeeded("Tartu")
     createCityIfNeeded("World")
   }
-  
+
   private void moveAllCitylessLunchesToTallinn() {
     Lunch.findAll("from Lunch l where l.city is null").each{
       it.city = City.findByName("Tallinn")
@@ -62,12 +62,12 @@ class BootStrap {
     oliver.email = "blabla@blabla.com"
     oliver.username = "oliverwi"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
-    
+
     assert timur.save(), timur.errors
     assert oliver.save(), oliver.errors
-    
+
     City tallinn = City.findByName("Tallinn")
-    
+
     20.times {
       def lunch = createLunch(timur, oliver, tallinn)
       assert lunch.save(), lunch.errors
