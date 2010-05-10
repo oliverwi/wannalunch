@@ -4,15 +4,13 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder;
 
 import com.wannalunch.domain.City;
 
-class CityController {
+class CityController extends AbstractController {
 
-  def userService
-  
   def config = ConfigurationHolder.config
   
   def change = {
     City city = City.get(params.id)
-    userService.city = city
+    setCity(city)
     
     String referer = request.getHeader("referer")
     if (referer.contains("create") || referer.contains("lunch/save")) {

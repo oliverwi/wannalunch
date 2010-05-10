@@ -6,13 +6,11 @@ import java.io.File;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 
-class ProfileController {
+class ProfileController extends AbstractController {
 
   private static final VALID_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/gif"]
 
   private static final MAX_IMAGE_SIZE = 307200
-
-  def userService
 
   def show = {
     def user = User.findByUsername(params.id)
@@ -22,7 +20,7 @@ class ProfileController {
   
   @AuthRequired
   def updateEmail = {
-    def user = userService.user
+    def user = loggedInUser
     user.email = params.email
     
     if (user.save()) {
@@ -34,14 +32,14 @@ class ProfileController {
 
   @AuthRequired
   def edit = {
-    def loggedInUser = userService.user
-    def upcomingLunches = loggedInUser.findUpcomingLunches()
-    [view: "edit", user: loggedInUser, upcomingLunches: upcomingLunches]
+    def user = loggedInUser
+    def upcomingLunches = user.findUpcomingLunches()
+    [view: "edit", user: user, upcomingLunches: upcomingLunches]
   }
 
   @AuthRequired
   def update = {
-    User user = userService.user
+    User user = loggedInUser
     user.email = params.email
     user.facebookProfile = params.facebookProfile
     user.linkedInProfile = params.linkedInProfile

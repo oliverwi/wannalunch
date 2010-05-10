@@ -7,16 +7,13 @@ import com.wannalunch.domain.User
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
-class LunchController {
+class LunchController extends AbstractController {
 
   static defaultAction = "upcomingLunches"
-
-  def userService
 
   def lunchService
 
   def upcomingLunches = {
-    def city = userService.city
     def upcomingLunches = Lunch.findUpcomingLunchesInCity(city, paginateParams)
     def total = Lunch.countUpcomingLunchesInCity(city)
 
@@ -24,7 +21,6 @@ class LunchController {
   }
 
   def freshlyAddedLunches = {
-    def city = userService.city
     def upcomingLunches = Lunch.findFreshlyAddedLunchesInCity(city, paginateParams)
     def total = Lunch.countUpcomingLunchesInCity(city)
 
@@ -34,13 +30,13 @@ class LunchController {
   def show = {
     def id = params.id ?: firstLunchId
     def lunch = Lunch.get(id)
-    def user = userService.user
+    def user = loggedInUser
 
     [lunch: lunch,
-    showLunchButton: userService.isLoggedIn() ? user.canApplyTo(lunch) : true,
-    showNotGoingButton: userService.isLoggedIn() && user.canBeRemovedFrom(lunch),
-    showDeleteButton: userService.isLoggedIn() && user.canDelete(lunch),
-    canAcceptApplicants: userService.isLoggedIn() && user.canAcceptApplicantsFor(lunch)]
+    showLunchButton: isLoggedIn() ? user.canApplyTo(lunch) : true,
+    showNotGoingButton: isLoggedIn() && user.canBeRemovedFrom(lunch),
+    showDeleteButton: isLoggedIn() && user.canDelete(lunch),
+    canAcceptApplicants: isLoggedIn() && user.canAcceptApplicantsFor(lunch)]
   }
 
   def next = {
@@ -56,7 +52,7 @@ class LunchController {
   @AuthRequired
   def apply = {
     def lunch = Lunch.get(params.id)
-    def user = userService.user
+    def user = loggedInUser
 
     if (lunchService.applyTo(user, lunch)) {
       redirect action: "show", id: lunch.id
@@ -68,7 +64,7 @@ class LunchController {
   @AuthRequired
   def leave = {
     def lunch = Lunch.get(params.id)
-    def user = userService.user
+    def user = loggedInUser
 
     if (user.cancelParticipation(lunch)) {
       redirect action: "show", id: lunch.id
@@ -80,7 +76,7 @@ class LunchController {
   @AuthRequired
   def delete = {
     def lunch = Lunch.get(params.id)
-    def user = userService.user
+    def user = loggedInUser
 
     lunch.delete(flush: true)
     redirect action: "upcomingLunches"
@@ -101,7 +97,7 @@ class LunchController {
   @AuthRequired
   def comment = {
     def lunch = Lunch.get(Long.parseLong(params.lunch))
-    def author = userService.user
+    def author = loggedInUser
     def text = params.text
 
     def comment = lunchService.comment(lunch, author, text)
@@ -116,7 +112,7 @@ class LunchController {
   @AuthRequired
   def create = {
     def lunch = new Lunch()
-    lunch.creator = userService.user
+    lunch.creator = loggedInUser
 
     [lunch: lunch]
   }
@@ -126,11 +122,11 @@ class LunchController {
     def lunch = new Lunch()
     lunch.properties = params
     
-    lunch.city = userService.city
+    lunch.city = city
     lunch.creatorWantsNotifications = new Boolean(params.creatorWantsNotifications)
     lunch.createDateTime = new LocalDateTime()
     
-    if (lunchService.createLunch(userService.user, lunch)) {
+    if (lunchService.createLunch(loggedInUser, lunch)) {
       redirect action: "show", id: lunch.id
     } else {
       render(view: "create", model: [lunch: lunch])
