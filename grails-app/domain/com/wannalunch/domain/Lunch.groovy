@@ -31,8 +31,12 @@ class Lunch {
   City city
 
   PaymentOption paymentOption = PaymentOption.WE_SPLIT
+  
+  @Delegate LunchQueries lunchQueries = new LunchQueries(this)
 
   static hasMany = [participants: User, applicants: User, comments: Comment]
+  
+  static transients = ["lunchQueries"]
 
   static mapping = {
     description type: 'text'
