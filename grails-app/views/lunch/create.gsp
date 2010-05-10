@@ -84,7 +84,7 @@
 <link rel="stylesheet" href="${resource(dir:'css/flick',file:'jquery-ui-1.8.custom.css')}" />
 <link rel="stylesheet" href="${resource(dir:'css',file:'timePicker.css')}" />
 <g:javascript src="inputTitle.js"/>
-<g:javascript src="jquery-ui-1.8.custom.min.js"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 <g:javascript src="jquery.timePicker.js"/>
 <script type="text/javascript">
   $(document).ready(function() {
