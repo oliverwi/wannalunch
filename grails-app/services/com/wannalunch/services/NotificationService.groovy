@@ -28,7 +28,7 @@ class NotificationService {
   String encoding = ConfigurationHolder.config.mail.defaultEncoding
   
   void sendCommentNotification(Comment comment) {
-    if (shouldSendEmailsToCreatorOf(comment.lunch)) {
+    if (shouldSendEmailsToCreatorOf(comment.lunch) && comment.author != comment.lunch.creator) {
       sendEmail(
           comment.lunch.creatorEmail, 
           "Wannalunch: ${comment.author.name} commented on your lunch",
@@ -45,8 +45,15 @@ class NotificationService {
     }
   }
   
+  void sendAcceptanceNotification(User user, Lunch lunch) {
+    sendEmail(
+        user.email,
+        "Wannalunch: ${lunch.creator.name} accepted you to his lunch",
+        "${lunch.creator.name} accepted you to participate on his/her lunch ${lunch.topic}")
+  }
+  
   private boolean shouldSendEmailsToCreatorOf(Lunch lunch) {
-    return lunch.creatorWantsNotification && lunch.creatorEmail
+    return lunch.creatorWantsNotifications && lunch.creatorEmail
   }
   
   private void sendEmail(String to, String subject, String body) {

@@ -15,8 +15,6 @@ class MailBuilder {
   
   MimeMessage message
   
-  def userMessageSource
-  
   MailBuilder(JavaMailSender mailSender) {
     this.mailSender = mailSender
   }

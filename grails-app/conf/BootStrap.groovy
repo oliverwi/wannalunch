@@ -56,7 +56,7 @@ class BootStrap {
 
     User oliver = new User()
     oliver.name = "Oliver Wihler"
-    oliver.email = "blabla@blabla.com"
+    oliver.email = "luiz.ribeiro@aqris.com"
     oliver.username = "oliverwi"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
 
@@ -89,6 +89,7 @@ class BootStrap {
     Lunch lunch = new Lunch()
     User lunchCreator = random.nextInt(100) % 2 > 0 ? user1 : user2
     lunch.creator = lunchCreator
+    lunch.creatorWantsNotifications = true
     lunch.topic = "Let's talk about that topic number ${random.nextInt(9999) + 1}"
     lunch.description = "am attending http://thenextweb.com/conference/ in Amsterdam April 27+28+29 and would love to share my experiences to others who have attended or with anyone who has an interest in the future of the interwebz :) "
     lunch.createDateTime = new LocalDateTime().minusHours(random.nextInt(168) + 1)
