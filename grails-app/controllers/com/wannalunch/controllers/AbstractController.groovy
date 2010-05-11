@@ -34,7 +34,6 @@ abstract class AbstractController {
     conn.doOutput = true
     
     def writer = new OutputStreamWriter(conn.outputStream)
-    writer.write()
     writer.flush()
     
     def detectedCity = getCityFromXMLResponse(conn.inputStream.text)

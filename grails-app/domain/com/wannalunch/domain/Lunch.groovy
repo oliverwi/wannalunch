@@ -50,15 +50,15 @@ class Lunch {
     description nullable: false, blank: false
     location nullable: false, blank: false
   }
+  
+  def String getCreatorEmail() {
+    creator.email
+  }
 
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
-
-  def getShowUrl() {
-    "${ConfigurationHolder.config.grails.serverURL}/lunch/show/$id"
-  }
-
+  
   enum PaymentOption {
     WE_SPLIT("We split"), I_PAY("I pay"), YOU_PAY("You pay");
 

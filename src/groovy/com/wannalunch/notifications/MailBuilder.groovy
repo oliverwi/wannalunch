@@ -2,20 +2,52 @@ package com.wannalunch.notifications
 
 import java.util.List;
 
-import com.wannalunch.aop.Mail.Kind;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 class MailBuilder {
+  
+  JavaMailSender mailSender
 
+  MimeMessageHelper helper
+  
+  MimeMessage message
+  
   def userMessageSource
-
-  def subject(Kind kind) {
-    userMessageSource.getMessage("mail.${kind.name()}.subject")
+  
+  MailBuilder(JavaMailSender mailSender) {
+    this.mailSender = mailSender
+  }
+  
+  MailBuilder createMail() {
+    message = mailSender.createMimeMessage()
+    helper = new MimeMessageHelper(message, true)
+    return this
+  }
+  
+  MailBuilder from(String from) {
+    helper.setFrom(from)
+    return this
+  }
+  
+  MailBuilder to(String to) {
+    helper.setTo(to)
+    return this
+  }
+  
+  MailBuilder withSubject(String subject) {
+    helper.subject = subject
+    return this
   }
 
-  def body(Kind kind, List args) {
-    def text = userMessageSource.getMessage("mail.${kind.name()}.body", args)
-    def footer = userMessageSource.getMessage("mail.default.footer")
-    "$text\n\n$footer"
+  MailBuilder withBody(String text) {
+    helper.text = text
+    return this
   }
-
+  
+  MimeMessage done() {
+    return message
+  }
 }

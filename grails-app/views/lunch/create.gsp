@@ -21,14 +21,12 @@
       <g:radio id="${it.name()}" name="paymentOption" value="${it.name()}" checked="${lunch.paymentOption == it}"/><label for="${it.name()}">${it.text}</label>
     </g:each>
   </div>
-
-  <%--
+  
   <div class="createLunchFormControlsLine">
     <g:checkBox name="creatorWantsNotifications" value="${lunch.creatorWantsNotifications}" />
     <label for="creatorWantsNotifications">I want to receive e-mail notifications for this lunch</label>
   </div>
-  --%>
-
+  
   <div class="buttonsrow">
     <table cellpadding="0" cellspacing="0">
       <tr>

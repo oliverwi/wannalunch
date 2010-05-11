@@ -4,14 +4,14 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
 
-import com.wannalunch.aop.Mail;
-import com.wannalunch.aop.Mail.Kind;
 import com.wannalunch.aop.Tweet;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
 
 class LunchService {
 
+  def notificationService
+  
   def userMessageSource
 
   @Tweet(Tweet.Kind.LUNCH_WITH_ME)
@@ -22,23 +22,17 @@ class LunchService {
   @Tweet(Tweet.Kind.LUNCH_WITH_YOU)
   boolean applyTo(user, lunch) {
     user.applyTo(lunch)
+    notificationService.sendApplicationNotification(user, lunch)
   }
 
   @Tweet(Tweet.Kind.LUNCH_WITH_EACH_OTHER)
-  @Mail(Mail.Kind.ACCEPT)
   boolean promoteToParticipant(applicant, lunch) {
     lunch.creator.promoteToParticipant(applicant, lunch)
   }
 
-  @Mail(Kind.COMMENT)
   def comment(lunch, author, text) {
-    def comment = new Comment()
-    comment.text = text
-    comment.date = new LocalDate()
-    comment.time = new LocalTime()
-    comment.author = author
-    comment.lunch = lunch
-    comment.save()
+    Comment comment = author.comment(text, lunch)
+    notificationService.sendCommentNotification(comment)
   }
 
   void remindOfTodaysLunches() {

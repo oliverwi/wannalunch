@@ -4,6 +4,7 @@ import java.io.Serializable
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.LocalTime;
 
 class User implements Serializable {
 
@@ -61,6 +62,18 @@ class User implements Serializable {
     lunch.addToParticipants(applicant)
 
     return lunch.save()
+  }
+  
+  Comment comment(String commentText, Lunch lunch) {
+    Comment comment = new Comment()
+    comment.text = commentText
+    comment.date = new LocalDate()
+    comment.time = new LocalTime()
+    comment.author = this
+    comment.lunch = lunch
+    
+    comment.save()
+    return comment
   }
 
   boolean canDelete(Lunch lunch) {
