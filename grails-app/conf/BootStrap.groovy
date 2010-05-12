@@ -50,14 +50,14 @@ class BootStrap {
   private void addFakeData() {
     User timur = new User()
     timur.name = "Timur Strekalov"
-    timur.username = "timurstrekalov"
+    timur.twitterUsername = "timurstrekalov"
     timur.email = "timur.strekalov@gmail.com"
     timur.profileImageUrl = "http://a1.twimg.com/profile_images/755799796/userpic.jpeg"
 
     User oliver = new User()
     oliver.name = "Oliver Wihler"
     oliver.email = "blabla@blabla.com"
-    oliver.username = "oliverwi"
+    oliver.twitterUsername = "oliverwi"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
 
     assert timur.save(), timur.errors

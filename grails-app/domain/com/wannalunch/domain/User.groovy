@@ -16,21 +16,24 @@ class User implements Serializable {
 
   String profileImageUrl
 
-  String facebookProfile
-
   String linkedInProfile
+
+  TwitterAccount twitterAccount = []
+
+  FacebookAccount facebookAccount = []
 
   static constraints = {
     username blank: false, unique: true
     email email: true, nullable: true
-    facebookProfile nullable: true
     linkedInProfile nullable: true
   }
-  
+
   static mapping = {
     table 'wl_user'
   }
-  
+
+  static embedded = ['twitterAccount', 'facebookAccount']
+
   boolean create(Lunch lunch) {
     lunch.creator = this
     return lunch.save()
@@ -63,7 +66,7 @@ class User implements Serializable {
 
     return lunch.save()
   }
-  
+
   Comment comment(String commentText, Lunch lunch) {
     Comment comment = new Comment()
     comment.text = commentText
@@ -71,7 +74,7 @@ class User implements Serializable {
     comment.time = new LocalTime()
     comment.author = this
     comment.lunch = lunch
-    
+
     comment.save()
     return comment
   }
@@ -102,6 +105,16 @@ class User implements Serializable {
 
   boolean isParticipantOf(Lunch lunch) {
     lunch.participants.contains(this)
+  }
+
+  def setTwitterUsername(String twitterUsername) {
+    twitterAccount.username = twitterUsername
+    username = twitterUsername
+  }
+
+  def setFacebookUsername(String facebookUsername) {
+    facebookAccount.username = facebookUsername
+    username = facebookUsername
   }
 
   def findUpcomingLunches() {
