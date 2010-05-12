@@ -9,7 +9,18 @@ beans = {
   if (config.mail.sendMails) {
     mailSender(org.springframework.mail.javamail.JavaMailSenderImpl) {
       host = config.mail.host
+      username = config.mail.username
+      password = config.mail.password
+      port = config.mail.port
+      protocol = config.mail.protocol
+      javaMailProperties = [
+        "mail.smtp.auth" : "true",
+        "mail.smtp.starttls.enable" : "true",
+        "mail.smtp.starttls.required": "true"
+      ]
     }
+    
+    mailBuilder(com.wannalunch.notifications.MailBuilder, ref('mailSender'))
   }
 
   userMessageSource(com.wannalunch.support.UserLocaleMessageSourceAccessor) {
@@ -44,14 +55,6 @@ beans = {
   }
 
   tweetingAspect(com.wannalunch.aop.TweetingAspect)
-
-  mailBuilder(com.wannalunch.notifications.MailBuilder) {
-    userMessageSource = ref('userMessageSource')
-  }
-
-  mailingAspect(com.wannalunch.aop.MailingAspect) {
-    mailService = ref('mailService')
-  }
 
 //  mailTrigger(org.springframework.scheduling.quartz.SimpleTriggerBean) {
 //    jobDetail = { org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean bean ->

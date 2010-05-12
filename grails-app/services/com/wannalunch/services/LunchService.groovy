@@ -21,18 +21,27 @@ class LunchService {
 
   @Tweet(Tweet.Kind.LUNCH_WITH_YOU)
   boolean applyTo(user, lunch) {
-    user.applyTo(lunch)
-    notificationService.sendApplicationNotification(user, lunch)
+    if (user.applyTo(lunch)) {
+      notificationService.sendApplicationNotification(user, lunch)
+      return true
+    }
+    return false
   }
 
   @Tweet(Tweet.Kind.LUNCH_WITH_EACH_OTHER)
   boolean promoteToParticipant(applicant, lunch) {
-    lunch.creator.promoteToParticipant(applicant, lunch)
+    if (lunch.creator.promoteToParticipant(applicant, lunch)) {
+      notificationService.sendAcceptanceNotification(applicant, lunch)
+      return true
+    }
+    return false
   }
 
-  def comment(lunch, author, text) {
+  Comment comment(lunch, author, text) {
     Comment comment = author.comment(text, lunch)
     notificationService.sendCommentNotification(comment)
+
+    return comment
   }
 
   void remindOfTodaysLunches() {

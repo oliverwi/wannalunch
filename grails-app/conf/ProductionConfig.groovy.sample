@@ -4,13 +4,14 @@ twitter.oauth.consumerKey = ''
 twitter.oauth.consumerSecret = ''
 twitter.sendTweets = true
 
-mail {
-  sendMails = false
-  host = ""
-  port = 0
-  username = ""
-  password = ""
-}
+mail.sendMails = true
+mail.host = "smtp.sendgrid.net"
+mail.username = "lunch@wannalunch.com"
+mail.password = ""
+mail.port = 465
+mail.protocol = "smtps"
+mail.from = "lunch@wannalunch.com"
+mail.defaultEncoding = "UTF-8"
 
 dataSource {
   dbCreate = "update"

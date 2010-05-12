@@ -45,10 +45,16 @@ environments {
   development {
     grails.serverURL = "http://localhost:8080/${appName}"
     twitter.authController = "fakeauth"
+    
     twitter.sendTweets = false
     mail.sendMails = false
-    mail.host = ""
-    mail.from = ""
+    
+    mail.host = "smtp.sendgrid.net"
+    mail.username = "lunch@wannalunch.com"
+    mail.password = "bazzinga"
+    mail.port = 465
+    mail.protocol = "smtps"
+    mail.from = "lunch@wannalunch.com"
     mail.defaultEncoding = "UTF-8"
   }
 

@@ -27,8 +27,10 @@ class NotificationService {
 
   String encoding = ConfigurationHolder.config.mail.defaultEncoding
   
+  boolean sendEmails = ConfigurationHolder.config.mail.sendMails
+  
   void sendCommentNotification(Comment comment) {
-    if (shouldSendEmailsToCreatorOf(comment.lunch)) {
+    if (shouldSendEmailsToCreatorOf(comment.lunch) && comment.author != comment.lunch.creator) {
       sendEmail(
           comment.lunch.creatorEmail, 
           "Wannalunch: ${comment.author.name} commented on your lunch",
@@ -39,25 +41,37 @@ class NotificationService {
   void sendApplicationNotification(User user, Lunch lunch) {
     if (shouldSendEmailsToCreatorOf(lunch)) {
       sendEmail(
-          comment.lunch.creatorEmail,
+          lunch.creatorEmail,
           "Wannalunch: ${user.name} applied to your lunch",
           "${user.name} applied to your lunch ${lunch.topic}")
     }
   }
   
+  void sendAcceptanceNotification(User user, Lunch lunch) {
+    sendEmail(
+        user.email,
+        "Wannalunch: ${lunch.creator.name} accepted you to his lunch",
+        "${lunch.creator.name} accepted you to participate on his/her lunch ${lunch.topic}")
+  }
+  
   private boolean shouldSendEmailsToCreatorOf(Lunch lunch) {
-    return lunch.creatorWantsNotification && lunch.creatorEmail
+    return lunch.creatorWantsNotifications && lunch.creatorEmail
   }
   
   private void sendEmail(String to, String subject, String body) {
-    def message = mailBuilder
-        .createMail()
-        .from(from)
-        .to(to)
-        .withSubject(subject)
-        .withBody(body)
-        .done()
-    
-    mailSender.send(message)
+    if (sendEmails) {
+      def message = mailBuilder
+          .createMail()
+          .from(from)
+          .to(to)
+          .withSubject(subject)
+          .withBody(body)
+          .done()
+      
+      Thread.start {
+        log.info "Sending e-mail to $to"
+        mailSender.send(message)
+      }
+    }
   }
 }

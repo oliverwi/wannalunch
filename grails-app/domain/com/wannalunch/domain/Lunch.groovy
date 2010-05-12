@@ -51,7 +51,7 @@ class Lunch {
     location nullable: false, blank: false
   }
   
-  def String getCreatorEmail() {
+  def getCreatorEmail() {
     creator.email
   }
 
