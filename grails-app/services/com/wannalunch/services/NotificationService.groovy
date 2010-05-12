@@ -14,6 +14,7 @@ import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 import com.wannalunch.notifications.MailBuilder;
+import com.wannalunch.support.UserLocaleMessageSourceAccessor;
 
 class NotificationService {
 
@@ -22,40 +23,56 @@ class NotificationService {
   JavaMailSender mailSender
   
   MailBuilder mailBuilder
+  
+  UserLocaleMessageSourceAccessor userMessageSource
 
   String from = ConfigurationHolder.config.mail.from
 
   String encoding = ConfigurationHolder.config.mail.defaultEncoding
   
-  boolean sendEmails = ConfigurationHolder.config.mail.sendMails
+  String serverURL = ConfigurationHolder.config.grails.serverURL
   
-  void sendCommentNotification(Comment comment) {
-    if (shouldSendEmailsToCreatorOf(comment.lunch) && comment.author != comment.lunch.creator) {
-      sendEmail(
-          comment.lunch.creatorEmail, 
-          "Wannalunch: ${comment.author.name} commented on your lunch",
-          "${comment.author.name} wrote on ${comment.date} - ${comment.time}: \n ${comment.text}")
-    }
-  }
+  boolean sendEmails = ConfigurationHolder.config.mail.sendMails
   
   void sendApplicationNotification(User user, Lunch lunch) {
     if (shouldSendEmailsToCreatorOf(lunch)) {
+      User creator = lunch.creator
       sendEmail(
-          lunch.creatorEmail,
-          "Wannalunch: ${user.name} applied to your lunch",
-          "${user.name} applied to your lunch ${lunch.topic}")
+          creator.email,
+          userMessageSource.getMessage("mail.application.subject"),
+          userMessageSource.getMessage("mail.application.body", [creator.name, user.name, lunch.topic, getLunchURL(lunch)]))
     }
   }
   
   void sendAcceptanceNotification(User user, Lunch lunch) {
+    User creator = lunch.creator
     sendEmail(
         user.email,
-        "Wannalunch: ${lunch.creator.name} accepted you to his lunch",
-        "${lunch.creator.name} accepted you to participate on his/her lunch ${lunch.topic}")
+        userMessageSource.getMessage("mail.acceptance.subject"),
+        userMessageSource.getMessage("mail.acceptance.body", [user.name, creator.name, lunch.topic, getLunchURL(lunch)]))
+  }
+  
+  void sendCommentNotification(Comment comment) {
+    Lunch lunch = comment.lunch
+    User creator = lunch.creator
+    User author = comment.author
+    
+    if (shouldSendEmailsToCreatorOf(comment.lunch) && comment.author != comment.lunch.creator) {
+      sendEmail(
+          creator.email, 
+          userMessageSource.getMessage("mail.comment.subject"),
+          userMessageSource.getMessage("mail.comment.body", [creator.name, author.name, lunch.topic, comment.text, getLunchURL(lunch)]))
+    }
+    
+    // TODO also send notification to applicants and participants
   }
   
   private boolean shouldSendEmailsToCreatorOf(Lunch lunch) {
-    return lunch.creatorWantsNotifications && lunch.creatorEmail
+    return lunch.creatorWantsNotifications && lunch.creator.email
+  }
+  
+  private String getLunchURL(Lunch lunch) {
+    return serverURL + "/lunch/show/$lunch.id"
   }
   
   private void sendEmail(String to, String subject, String body) {
@@ -65,7 +82,7 @@ class NotificationService {
           .from(from)
           .to(to)
           .withSubject(subject)
-          .withBody(body)
+          .withBody(body + userMessageSource.getMessage("mail.default.footer"))
           .done()
       
       Thread.start {

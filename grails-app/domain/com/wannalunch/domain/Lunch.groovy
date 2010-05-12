@@ -51,10 +51,6 @@ class Lunch {
     location nullable: false, blank: false
   }
   
-  def getCreatorEmail() {
-    creator.email
-  }
-
   def getSortedComments() {
     comments.sort(new CommentComparator())
   }
