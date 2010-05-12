@@ -2,9 +2,7 @@ import grails.util.Environment;
 
 import java.util.Random;
 
-import com.wannalunch.aop.AuthRequired;
 
-import org.codehaus.groovy.grails.commons.ApplicationHolder
 import org.joda.time.LocalDateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
@@ -12,6 +10,7 @@ import org.joda.time.LocalTime
 import com.wannalunch.domain.City;
 import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch
+import com.wannalunch.domain.TwitterAccount
 import com.wannalunch.domain.User;
 
 class BootStrap {
@@ -48,16 +47,22 @@ class BootStrap {
   }
 
   private void addFakeData() {
+    def username = "timurstrekalov"
+
     User timur = new User()
     timur.name = "Timur Strekalov"
-    timur.twitterUsername = "timurstrekalov"
+    timur.username = username
+    timur.twitterAccount = new TwitterAccount(username: username)
     timur.email = "timur.strekalov@gmail.com"
     timur.profileImageUrl = "http://a1.twimg.com/profile_images/755799796/userpic.jpeg"
+
+    username = "oliverwi"
 
     User oliver = new User()
     oliver.name = "Oliver Wihler"
     oliver.email = "luiz.ribeiro@aqris.com"
-    oliver.twitterUsername = "oliverwi"
+    oliver.username = username
+    oliver.twitterAccount = new TwitterAccount(username: username)
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
 
     assert timur.save(), timur.errors

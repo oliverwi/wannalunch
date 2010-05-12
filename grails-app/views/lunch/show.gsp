@@ -1,5 +1,8 @@
 <meta name="layout" content="main" />
 
+<meta property="og:title" content="wannalunch with ${fieldValue(bean: lunch, field: 'creator.name')}? ${fieldValue(bean: lunch, field: 'topic')}"/>
+<meta property="og:site_name" content="wannalunch.com"/>
+
 <g:javascript>
   $(document).ready(function() {
     $('#delete').click(function() {
@@ -43,6 +46,8 @@
       ${lunch.creator.name}
     </a>
   </p>
+
+  <fb:like layout="standard" show_faces="false" action="recommend" width="400"/>
 
   <div class="eventdetails bold">
     <p>On       <f:date value="${lunch.date}" /> at ${fieldValue(bean: lunch, field: 'time')}</p>

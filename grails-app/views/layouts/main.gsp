@@ -17,6 +17,21 @@
     <g:javascript src="facebox.js" />
   </head>
   <body>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({appId: '125714360775749', status: true, cookie: true,
+                 xfbml: true});
+      };
+      (function() {
+        var e = document.createElement('script');
+        e.type = 'text/javascript';
+        e.src = document.location.protocol + '//connect.facebook.net/en_US/all.js';
+        e.async = true;
+        document.getElementById('fb-root').appendChild(e);
+      }());
+    </script>
+
     <div class="wrapper">
       <div class="header">
         <div class="headerLogo">
@@ -28,7 +43,7 @@
             <img src="${resource(dir: 'img', file: 'select_arrow_up.png')}" />
           </a>
 	      </div>
-        
+
         <div class="headercontrols">
           <a href="http://twitter.com/wannalunch" target="_blank">Follow us</a>
           <a href="http://twitter.com/wannalunch" target="_blank" class="clearLink">
@@ -86,39 +101,39 @@
         event.stopPropagation()
         event.cancelBubble = true
       });
-      
+
       function isCitySelectorShown() {
         return $("#citySelector").css('display') != 'none'
       }
-      
+
       function hideCitySelector() {
         var arrowUp = '<g:resource dir="img" file="select_arrow_up.png" />'
         $("#citySelector").fadeOut(200);
         $("#citySelectorLink").find('img').attr('src', arrowUp)
       }
-      
+
       function showCitySelector() {
         var arrowDown = '<g:resource dir="img" file="select_arrow_down.png" />'
         $("#citySelector").fadeIn(200);
         $("#citySelectorLink").find('img').attr('src', arrowDown)
       }
-      
+
       $("body").click(function() {
         if (isCitySelectorShown()) {
           hideCitySelector()
         }
       })
-    </g:javascript>      
+    </g:javascript>
 	  <div id="citySelector" style="display: none;">
 	    <div class="citySelectorContent">
 	      <u:availableCities />
 	    </div>
 	  </div>
-	  
+
 	  <g:javascript>
 	    jQuery(document).ready(function($) {
 	      $('a[rel*=facebox]').facebox({
-	        loadingImage: "<g:resource dir="facebox" file="loading.gif" />", 
+	        loadingImage: "<g:resource dir="facebox" file="loading.gif" />",
 	        closeImage: "<g:resource dir="facebox" file="closelabel.gif" />"
 	      });
 	    });
@@ -126,12 +141,12 @@
 	  <div id="info" style="display:none;">
 	    <p><br/>You need to log in</p>
 	  </div>
-	  
+
 	  <g:render template="/templates/helpPopup" />
 
     <g:if env="production">
       <script src="http://c.compete.com/bootstrap/d7f94c9f6fce7cd4d6eea7184b4a203f/bootstrap.js" type="text/javascript" async=""></script>
-    
+
 	    <script type="text/javascript" charset="utf-8">
 	      var is_ssl = ("https:" == document.location.protocol);
 	      var asset_host = is_ssl ? "https://s3.amazonaws.com/getsatisfaction.com/" : "http://s3.amazonaws.com/getsatisfaction.com/";
@@ -141,19 +156,19 @@
 	      src="http://s3.amazonaws.com/getsatisfaction.com/javascripts/feedback-v2.js"
 	      type="text/javascript">
 	    </script>
-	
+
 	    <script type="text/javascript" charset="utf-8">
 	      var feedback_widget_options = {};
-	
+
 	      feedback_widget_options.display = "overlay";
 	      feedback_widget_options.company = "wannalunch";
 	      feedback_widget_options.placement = "left";
 	      feedback_widget_options.color = "#222";
 	      feedback_widget_options.style = "idea";
-	
+
 	      var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
 	    </script>
-	
+
 	    <script type="text/javascript">
 	      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 	      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
@@ -166,6 +181,6 @@
       	} catch(err) {}
       </script>
     </g:if>
-  
+
   </body>
 </html>
