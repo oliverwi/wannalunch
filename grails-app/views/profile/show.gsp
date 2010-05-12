@@ -42,7 +42,7 @@
 	    </g:if>
     </table>
   </g:form>
-  
+
   <h2>${user.name}'s upcoming lunches</h2>
   <g:each var="lunch" in="${upcomingLunches}">
     <g:render template="/templates/upcomingLunch" model="[lunch: lunch]" />

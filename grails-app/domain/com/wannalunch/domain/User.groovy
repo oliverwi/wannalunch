@@ -114,6 +114,18 @@ class User implements Serializable {
       [user: this, today: new LocalDate()])
   }
 
+  def getFacebookProfile() {
+    facebookAccount ? facebookAccount.profileUrl : ''
+  }
+
+  def setFacebookProfile(profileUrl) {
+    if (!facebookAccount) {
+      facebookAccount = new FacebookAccount()
+    }
+
+    facebookAccount.profileUrl = profileUrl
+  }
+
   public boolean equals(Object o) {
     if (!(o instanceof User)) {
       return false

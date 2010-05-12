@@ -25,12 +25,6 @@
       </tr>
       <tr>
         <td>
-          <img src="${resource(dir: 'img', file: 'fbbutton.png')}"></img>
-          <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="facebookProfile" value="${user.facebookProfile}" />
-        </td>
-      </tr>
-      <tr>
-        <td>
           <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"></img>
           <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="linkedInProfile" value="${user.linkedInProfile}" />
         </td>

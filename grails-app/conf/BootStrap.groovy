@@ -60,9 +60,9 @@ class BootStrap {
 
     User oliver = new User()
     oliver.name = "Oliver Wihler"
-    oliver.email = "luiz.ribeiro@aqris.com"
     oliver.username = username
     oliver.twitterAccount = new TwitterAccount(username: username)
+    oliver.email = "luiz.ribeiro@aqris.com"
     oliver.profileImageUrl = "http://a1.twimg.com/profile_images/300575924/ls_6914_2009-04-09_at_21-37-24__1_.jpg"
 
     assert timur.save(), timur.errors

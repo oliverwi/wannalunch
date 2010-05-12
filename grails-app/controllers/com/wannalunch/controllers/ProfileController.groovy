@@ -17,12 +17,12 @@ class ProfileController extends AbstractController {
     def upcomingLunches = user.findUpcomingLunches()
     [view: "show", user: user, upcomingLunches: upcomingLunches]
   }
-  
+
   @AuthRequired
   def updateEmail = {
     def user = loggedInUser
     user.email = params.email
-    
+
     if (user.save()) {
       render "success"
     } else {
@@ -41,7 +41,6 @@ class ProfileController extends AbstractController {
   def update = {
     User user = loggedInUser
     user.email = params.email
-    user.facebookProfile = params.facebookProfile
     user.linkedInProfile = params.linkedInProfile
 
     def uploadedImage = request.getFile("profileImage")
