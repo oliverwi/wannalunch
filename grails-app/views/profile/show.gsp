@@ -10,30 +10,30 @@
 <div class="content">
   <g:form name="profile" method="post" action="update">
     <table cellpadding="0" cellspacing="0">
-      <tr>
-        <td>
-          <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"></img>
-          <span class="grey bold">
-            <a href="${twitter.linkToProfile(user: user)}" target="_blank">
-              ${user.username}
-            </a>
-          </span>
-        </td>
-      </tr>
-      <g:if test="${user.facebookProfile}">
+      <g:if test="${user.twitterAccount}">
+        <tr>
+          <td>
+            <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"/>
+            <span class="grey bold">
+              <a href="${twitter.linkToProfile(user: user)}" target="_blank">
+                <g:fieldValue bean="${user}" field="twitterAccount.username"/>
+              </a>
+            </span>
+          </td>
+        </tr>
+      </g:if>
+      <g:if test="${user.facebookAccount}">
 	      <tr>
 	        <td>
-	            <img src="${resource(dir: 'img', file: 'fbbutton.png')}"></img>
-	            <a href="${user.facebookProfile}" target="_blank">
-	              ${user.facebookProfile}
-	            </a>
+	            <img src="${resource(dir: 'img', file: 'fbbutton.png')}"/>
+	            <a href="${facebook.linkToProfile(user: user)}" target="_blank">Facebook profile</a>
 	        </td>
 	      </tr>
       </g:if>
       <g:if test="${user.linkedInProfile}">
 	      <tr>
 	        <td>
-	          <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"></img>
+	          <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"/>
 	          <a href="${user.linkedInProfile}" target="_blank">
 	            ${user.linkedInProfile}
 	          </a>

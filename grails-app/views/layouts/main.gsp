@@ -63,6 +63,8 @@
           <br/>
           <span style="margin-right: 2px;">
             <u:isNotLoggedIn>
+              <a href="${facebook.loginLink()}">log in with facebook</a>
+              &bull;
               <a href="${twitter.loginLink()}">log in with twitter</a>
             </u:isNotLoggedIn>
             <u:isLoggedIn>

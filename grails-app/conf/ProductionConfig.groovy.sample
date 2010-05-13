@@ -4,6 +4,9 @@ twitter.oauth.consumerKey = ''
 twitter.oauth.consumerSecret = ''
 twitter.sendTweets = true
 
+facebook.oauth.apiKey = ''
+facebook.oauth.apiSecret = ''
+
 mail.sendMails = true
 mail.host = "smtp.sendgrid.net"
 mail.username = "lunch@wannalunch.com"

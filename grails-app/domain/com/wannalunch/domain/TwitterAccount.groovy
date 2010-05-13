@@ -4,7 +4,7 @@ class TwitterAccount {
 
   String username
 
-  static belongsTo = User
+  static belongsTo = [user: User]
 
   static constraints = {
     username blank: false, unique: true

@@ -2,14 +2,12 @@ package com.wannalunch.domain
 
 class FacebookAccount {
 
-  String username
+  long userId
 
-  String profileUrl
-
-  static belongsTo = User
+  static belongsTo = [user: User]
 
   static constraints = {
-    username blank: false, unique: true
+    userId unique: true
   }
 
 }

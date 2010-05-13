@@ -44,6 +44,8 @@ environments {
         pooled = true
         username = "postgres"
         password = "postgres"
+//        dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+//        url = "jdbc:hsqldb:mem:devDB"
 	  }
 	}
 }

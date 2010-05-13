@@ -1,5 +1,7 @@
 package com.wannalunch.services
 
+import java.io.Serializable;
+
 import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 import com.wannalunch.aop.Tweet;
@@ -9,7 +11,7 @@ import com.wannalunch.domain.User;
 
 import twitter4j.Twitter
 
-class TwitterService {
+class TwitterService implements Serializable {
 
   static scope = "session"
 
@@ -32,15 +34,20 @@ class TwitterService {
     requestToken = client.getOAuthRequestToken(returnUrl)
   }
 
-  def validate(oauthVerifierParam) {
+  def validate(oauthVerifierParam, merge) {
     accessToken = client.getOAuthAccessToken(requestToken, oauthVerifierParam)
     log.debug "Attempting validate..."
     twitterUser = client.verifyCredentials()
-    userService.maybeCreateAccount(twitterUser)
     log.debug "Validate successful for ${twitterUser.screenName}"
+    userService.maybeCreateTwitterAccount(twitterUser, merge)
   }
 
   def tweet(Kind kind, User user, Lunch lunch) {
+    if (!user.twitterAccount) {
+      log.debug "User $user.username doesn't have twitter account, not tweeting about lunch '$lunch.topic'"
+      return
+    }
+
     def status = constructStatus(kind, user, lunch)
 
     if (ConfigurationHolder.config.twitter.sendTweets) {
@@ -59,11 +66,11 @@ class TwitterService {
 
     switch (kind) {
       case Kind.LUNCH_WITH_YOU:
-        return "@${lunch.creator.username} #wannalunch with you $lunchDetailsUrl"
+        return "@${lunch.creator.twitterAcount.username} #wannalunch with you $lunchDetailsUrl"
       case Kind.LUNCH_WITH_ME:
         return "#wannalunch with me? See more information $lunchDetailsUrl"
       case Kind.LUNCH_WITH_EACH_OTHER:
-        return "${user.username} and @${lunch.creator.username} #wannalunch $lunchDetailsUrl"
+        return "${user.twitterAcount.username} and @${lunch.creator.twitterAcount.username} #wannalunch $lunchDetailsUrl"
       default:
         throw new IllegalArgumentException("Unknown tweet kind " + tweetType)
     }

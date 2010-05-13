@@ -4,6 +4,7 @@ import com.wannalunch.aop.AuthRequired;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.User
 
+import org.hibernate.Session
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
@@ -121,11 +122,11 @@ class LunchController extends AbstractController {
   def save = {
     def lunch = new Lunch()
     lunch.properties = params
-    
+
     lunch.city = city
     lunch.creatorWantsNotifications = new Boolean(params.creatorWantsNotifications)
     lunch.createDateTime = new LocalDateTime()
-    
+
     if (lunchService.createLunch(loggedInUser, lunch)) {
       redirect action: "show", id: lunch.id
     } else {

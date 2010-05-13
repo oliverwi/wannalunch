@@ -9,20 +9,21 @@ class TwitterTagLib implements ApplicationContextAware {
   static namespace = "twitter"
 
   ApplicationContext applicationContext
-  
+
   def config = ConfigurationHolder.config
 
-  def loginLink = {
-    out << "${config.grails.serverURL}/${config.twitter.authController}/authorize"
+  def loginLink = { attrs ->
+    def merge = attrs.merge ? '?merge=true' : ''
+    out << "${config.grails.serverURL}/${config.authController}/authorize$merge"
   }
-  
+
   def logoutLink = {
-    out << "${config.grails.serverURL}/${config.twitter.authController}/logout"
+    out << "${config.grails.serverURL}/${config.authController}/logout"
   }
-  
+
   def linkToProfile = { attrs ->
     def user = attrs.remove("user")
-    out << "http://twitter.com/${user.username}"
+    out << "http://twitter.com/${user.twitterAccount.username}"
   }
 
   private def getTwitterService() {

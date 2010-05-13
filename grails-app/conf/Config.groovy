@@ -39,16 +39,16 @@ grails.spring.bean.packages = []
 environments {
   production {
     grails.config.locations = ["classpath:ProductionConfig.groovy"]
-    twitter.authController = "oauth"
+    authController = "oauth"
   }
 
   development {
     grails.serverURL = "http://localhost:8080/${appName}"
-    twitter.authController = "fakeauth"
-    
+    authController = "fakeauth"
+
     twitter.sendTweets = false
     mail.sendMails = false
-    
+
     mail.host = "smtp.sendgrid.net"
     mail.username = "lunch@wannalunch.com"
     mail.password = "bazzinga"
@@ -64,16 +64,40 @@ environments {
     twitter.sendTweets = false
     mail.sendMails = false
   }
-  
+
   luiz {
     grails.serverURL = "http://localhost:8080/${appName}"
-    twitter.authController = "fakeauth"
+    authController = "fakeauth"
     twitter.sendTweets = false
     mail.sendMails = false
     mail.host = ""
     mail.from = ""
     mail.defaultEncoding = "UTF-8"
     grails.gsp.enable.reload = true
+  }
+
+  timur {
+//    grails.serverURL = "https://aqris.com/ams-timur"
+//    authController = "oauth"
+    grails.serverURL = "http://localhost:8080/${appName}"
+    authController = "fakeauth"
+
+    twitter.oauth.consumerKey = 'HQCgtBoVwFpnAnJO2DwQcA'
+    twitter.oauth.consumerSecret = 'w1DhISNrommAU6ZDFhbW4y8mvpFqWZV1ddgtNGxHYs0'
+
+    facebook.oauth.apiKey = "63ed680b9eb59465ad0b9f5c100ccef3"
+    facebook.oauth.apiSecret = "7e513d208acc8c8cfca2d5836c492183"
+
+    twitter.sendTweets = false
+    mail.sendMails = false
+
+    mail.host = "smtp.sendgrid.net"
+    mail.username = "lunch@wannalunch.com"
+    mail.password = "bazzinga"
+    mail.port = 465
+    mail.protocol = "smtps"
+    mail.from = "lunch@wannalunch.com"
+    mail.defaultEncoding = "UTF-8"
   }
 }
 

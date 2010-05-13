@@ -13,19 +13,41 @@
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
-          <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"></img>
-          <span class="grey bold"><u:userInfo field="username" /></span>
+          <img src="${resource(dir: 'img', file: 'twitterbutton.png')}"/>
+          <span class="grey bold">
+            <g:if test="${user.twitterAccount}">
+              <a href="${twitter.linkToProfile(user: user)}" target="_blank">
+                <g:fieldValue bean="${user}" field="twitterAccount.username"/>
+              </a>
+            </g:if>
+            <g:else>
+              <a href="${twitter.loginLink(merge: true)}">Merge my Twitter account</a>
+            </g:else>
+          </span>
         </td>
       </tr>
       <tr>
         <td>
-          <img src="${resource(dir: 'img', file: 'emailbutton.png')}"></img>
+          <img src="${resource(dir: 'img', file: 'fbbutton.png')}"/>
+          <span class="grey bold">
+            <g:if test="${user.facebookAccount}">
+              <a href="${facebook.linkToProfile(user: user)}" target="_blank">Facebook profile</a>
+            </g:if>
+            <g:else>
+              <a href="${facebook.loginLink(merge: true)}">Merge my Facebook account</a>
+            </g:else>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="${resource(dir: 'img', file: 'emailbutton.png')}"/>
           <g:textField class="profileinput clear" type="text" title="What's your email address?" name="email" value="${user.email}" />
         </td>
       </tr>
       <tr>
         <td>
-          <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"></img>
+          <img src="${resource(dir: 'img', file: 'linkedinbutton.png')}"/>
           <g:textField class="profileinput clear" type="text" title="What's your profile link?" name="linkedInProfile" value="${user.linkedInProfile}" />
         </td>
       </tr>
