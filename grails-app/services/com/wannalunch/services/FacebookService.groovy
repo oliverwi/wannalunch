@@ -13,8 +13,8 @@ class FacebookService implements Serializable {
 
   boolean transactional = false
 
-  FacebookJsonRestClient client = [ConfigurationHolder.config.facebook.oauth.apiKey,
-                                   ConfigurationHolder.config.facebook.oauth.apiSecret]
+  FacebookJsonRestClient client = [ConfigurationHolder.config.facebook.oauth.apiKey.toString(),
+                                   ConfigurationHolder.config.facebook.oauth.apiSecret.toString()]
 
   def getUserId() {
     client.users_getLoggedInUser()
