@@ -21,7 +21,7 @@ class BootStrap {
       moveAllCitylessLunchesToTallinn()
     }
 
-    if (Environment.current.name in ["development", "timur"]) {
+    if (Environment.current.name in ["development"]) {
       addFakeData()
     }
   }

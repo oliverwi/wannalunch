@@ -37,7 +37,7 @@ environments {
 	}
 	timur {
 	  dataSource {
-        dbCreate = "create-drop"
+        dbCreate = "update"
         url = "jdbc:postgresql://localhost/wannalunch"
         driverClassName = "org.postgresql.Driver"
         dialect = org.hibernate.dialect.PostgreSQLDialect

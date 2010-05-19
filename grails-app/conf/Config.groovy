@@ -77,10 +77,10 @@ environments {
   }
 
   timur {
-//    grails.serverURL = "https://aqris.com/ams-timur"
-//    authController = "oauth"
-    grails.serverURL = "http://localhost:8080/${appName}"
-    authController = "fakeauth"
+    grails.serverURL = "https://aqris.com/ams-timur"
+    authController = "oauth"
+//    grails.serverURL = "http://localhost:8080/${appName}"
+//    authController = "fakeauth"
 
     twitter.oauth.consumerKey = 'HQCgtBoVwFpnAnJO2DwQcA'
     twitter.oauth.consumerSecret = 'w1DhISNrommAU6ZDFhbW4y8mvpFqWZV1ddgtNGxHYs0'

@@ -18,7 +18,9 @@ class OauthController {
     def returnUrl = createLink(action: 'processLogin', absolute: true,
         params: params.merge ? [merge: params.merge] : [:]).toString()
     def requestToken = twitterService.generateRequestToken(returnUrl)
-    redirect url: requestToken.authorizationURL
+    def authUrl = requestToken.authorizationURL
+    log.debug "Redirecting to $authUrl"
+    redirect url: authUrl
   }
 
   def processLogin = {
