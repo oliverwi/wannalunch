@@ -48,6 +48,11 @@ class TwitterService implements Serializable {
       return
     }
 
+    if (!twitterUser) {
+      log.debug "User $user.username isn't logged in with twitter, not tweeting about lunch '$lunch.topic'"
+      return
+    }
+
     def status = constructStatus(kind, user, lunch)
 
     if (ConfigurationHolder.config.twitter.sendTweets) {
