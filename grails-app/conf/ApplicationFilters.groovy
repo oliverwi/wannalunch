@@ -26,7 +26,10 @@ class ApplicationFilters {
 
     initCity(controller: '*', action: '*') {
       before = {
-        applicationContext.userService.city = detectUserLocation(request)
+        def userService = applicationContext.userService
+        if (!userService.city) {
+          userService.city = detectUserLocation(request)
+        }
       }
     }
   }
