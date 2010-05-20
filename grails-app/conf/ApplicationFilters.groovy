@@ -1,5 +1,6 @@
 import org.codehaus.groovy.grails.commons.ApplicationHolder;
 import com.wannalunch.aop.AuthRequired;
+import com.wannalunch.domain.City;
 
 class ApplicationFilters {
 
@@ -20,6 +21,12 @@ class ApplicationFilters {
         }
 
         return true
+      }
+    }
+
+    initCity(controller: '*', action: '*') {
+      before = {
+        applicationContext.userService.city = detectUserLocation(request)
       }
     }
   }
@@ -47,6 +54,27 @@ class ApplicationFilters {
     }
 
     requireAuthentication
+  }
+
+  private static City detectUserLocation(request) {
+    def ip = request.remoteAddr
+    def conn = new URL("http://ipinfodb.com/ip_query.php?ip=${ip}&timezone=false").openConnection()
+    conn.doOutput = true
+
+    def writer = new OutputStreamWriter(conn.outputStream)
+    writer.flush()
+
+    def detectedCity = getCityFromXMLResponse(conn.inputStream.text)
+
+    return detectedCity ?: City.findByName("World")
+  }
+
+  private static City getCityFromXMLResponse(String xmlResponse) {
+    def matcher = xmlResponse =~ /<City>(.+)<\/City>/
+    if (matcher.find() && matcher[0].size() > 1) {
+      return City.findByName(matcher[0][1])
+    }
+    return null
   }
 
 }
