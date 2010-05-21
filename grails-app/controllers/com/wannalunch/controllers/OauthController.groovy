@@ -15,11 +15,16 @@ class OauthController {
   def apiSecret = ConfigurationHolder.config.facebook.oauth.apiSecret
 
   def authorize = {
+    log.debug "Trying to authorize with Twitter"
+    session.postAuthUrl = postAuthUrl
+
     def returnUrl = createLink(action: 'processLogin', absolute: true,
         params: params.merge ? [merge: params.merge] : [:]).toString()
     def requestToken = twitterService.generateRequestToken(returnUrl)
     def authUrl = requestToken.authorizationURL
+
     log.debug "Redirecting to $authUrl"
+
     redirect url: authUrl
   }
 
@@ -30,15 +35,19 @@ class OauthController {
       redirect action: 'authorize'
     } else {
       twitterService.validate(params.oauth_verifier, params.merge)
-      redirect controller: 'lunch'
+
+      def url = session.postAuthUrl
+      session.removeAttribute("postAuthUrl")
+      redirect url: url
     }
   }
 
   def facebookAuthorize = {
     log.debug "Trying to authorize with Facebook"
+    session.postAuthUrl = postAuthUrl
+
     def helper = new FacebookWebappHelper(request, response, apiKey, apiSecret, facebookService.client)
 
-    // TODO maybe get next url from referer
     def next = createLink(controller: 'lunch', absolute: true,
         params: params.merge ? [merge: params.merge] : [:]).toString()
     redirect url: helper.getLoginUrl(next, false)
@@ -48,20 +57,36 @@ class OauthController {
     log.debug "Processing login response from Facebook"
     facebookService.sessionId = params.auth_token
 
-    def nextUrl = params.next
-
-    def merge = nextUrl.contains('merge=true')
+    def merge = params.next.contains('merge=true')
 
     userService.maybeCreateFacebookAccount(facebookService.name, facebookService.userId,
         facebookService.profileImageUrl, merge)
 
-    redirect url: nextUrl.substring(0, merge ? nextUrl.indexOf('merge') : nextUrl.length())
+    def url = session.postAuthUrl
+    session.removeAttribute("postAuthUrl")
+    redirect url: url
   }
 
   def logout = {
     log.debug "Logging out"
     session.invalidate()
     redirect controller: 'lunch'
+  }
+
+  private String getPostAuthUrl() {
+    log.debug "Getting post-auth URL from referer"
+
+    def url = request.getHeader("referer")
+
+    if (!url) {
+      log.debug "Couldn't get URL from referer, redirecting to the default page instead"
+
+      url = createLink(controller: 'lunch', absolute: true)
+    }
+
+    log.debug "Post-auth URL is $url"
+
+    return url
   }
 
 }
