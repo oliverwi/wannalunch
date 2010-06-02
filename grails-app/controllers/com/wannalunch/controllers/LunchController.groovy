@@ -1,6 +1,9 @@
 package com.wannalunch.controllers
 
+import grails.converters.JSON;
+
 import com.wannalunch.aop.AuthRequired;
+import com.wannalunch.domain.City;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.User
 
@@ -149,5 +152,13 @@ class LunchController extends AbstractController {
     int offset = params.offset ? params.offset.toInteger() : 0
 
     [max: max, offset: offset]
+  }
+  
+  def info = {
+    Lunch l = Lunch.get(params.id)
+    boolean includeWannas = new Boolean(params.wannas)
+    boolean includeLunchers = new Boolean(params.lunchers)
+    
+    render(l.toJsonArray(includeWannas, includeLunchers) as JSON)
   }
 }

@@ -138,4 +138,8 @@ class User implements Serializable {
   public int hashCode() {
     username.hashCode()
   }
+  
+  def toJsonArray() {
+    [username: username, name: name, img: profileImageUrl]
+  }
 }

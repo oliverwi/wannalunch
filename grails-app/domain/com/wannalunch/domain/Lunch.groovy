@@ -55,6 +55,30 @@ class Lunch {
     comments.sort(new CommentComparator())
   }
   
+  def toJsonArray() {
+    return toJsonArray(false, false)
+  }
+  
+  def toJsonArray(boolean includeWannas, boolean includeLunchers) {
+    def jsonArray = [topic: topic, 
+     desc: description, 
+     place: location,
+     city: city.name,
+     date: "$date.dayOfMonth/$date.monthOfYear/$date.year",
+     time: "$time.hourOfDay:$time.minuteOfHour",
+     creator: creator.toJsonArray()]
+    
+    if (includeWannas) {
+      jsonArray.wannas = applicants.toJsonArray()
+    }
+    
+    if (includeLunchers) {
+      jsonArray.lunchers = participants.toJsonArray()
+    }
+    
+    return jsonArray
+  }
+  
   enum PaymentOption {
     WE_SPLIT("We split"), I_PAY("I pay"), YOU_PAY("You pay");
 

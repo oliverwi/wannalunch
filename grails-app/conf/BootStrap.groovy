@@ -16,6 +16,8 @@ import com.wannalunch.domain.User;
 class BootStrap {
 
   def init = { servletContext ->
+    addExtensions()
+    
     if (Environment.current.name != "test") {
       addCitiesIfNeeded()
       moveAllCitylessLunchesToTallinn()
@@ -23,6 +25,16 @@ class BootStrap {
 
     if (Environment.current.name in ["development"]) {
       addFakeData()
+    }
+  }
+  
+  private void addExtensions() {
+    Collection.metaClass.toJsonArray = {
+      def array = []
+      delegate.each { element ->
+        array << element.toJsonArray()
+      }
+      array
     }
   }
 
