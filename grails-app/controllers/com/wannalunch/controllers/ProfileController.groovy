@@ -1,6 +1,9 @@
 package com.wannalunch.controllers
 
 import com.wannalunch.aop.AuthRequired;
+
+import grails.converters.JSON;
+
 import java.io.File;
 
 import com.wannalunch.domain.Lunch;
@@ -57,6 +60,11 @@ class ProfileController extends AbstractController {
     flash.message = "Profile updated!"
 
     redirect action: "edit"
+  }
+  
+  def info = {
+    User user = User.findByUsername(params.id)
+    render(user.toJsonArray(true) as JSON)
   }
 
   private def isValid(uploadedImage) {

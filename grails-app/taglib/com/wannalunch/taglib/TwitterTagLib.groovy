@@ -23,7 +23,7 @@ class TwitterTagLib implements ApplicationContextAware {
 
   def linkToProfile = { attrs ->
     def user = attrs.remove("user")
-    out << "http://twitter.com/${user.twitterAccount.username}"
+    out << user.twitterAccount.profileUrl
   }
 
   private def getTwitterService() {

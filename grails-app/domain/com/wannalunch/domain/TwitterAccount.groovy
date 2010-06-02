@@ -9,5 +9,9 @@ class TwitterAccount {
   static constraints = {
     username blank: false, unique: true
   }
+  
+  def getProfileUrl() {
+    return "http://twitter.com/${username}"
+  }
 
 }

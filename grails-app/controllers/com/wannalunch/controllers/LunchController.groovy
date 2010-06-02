@@ -136,6 +136,35 @@ class LunchController extends AbstractController {
       render(view: "create", model: [lunch: lunch])
     }
   }
+  
+  def info = {
+    Lunch l = Lunch.get(params.id)
+    boolean includeWannas = new Boolean(params.wannas)
+    boolean includeLunchers = new Boolean(params.lunchers)
+    
+    render(l.toJsonArray(includeWannas, includeLunchers) as JSON)
+  }
+  
+  def query = {
+    def lunches = []
+    if (params.user) {
+      User user = User.findByUsername(params.user)
+      user.findUpcomingLunches().each {
+        lunches << it.toJsonArray()
+      }
+      render(lunches as JSON)
+      return
+    }
+    
+    if (params.city) {
+      City city = City.findByName(params.city)
+      Lunch.findUpcomingLunchesInCity(city).each {
+        lunches << it.toJsonArray()
+      }
+      render(lunches as JSON)
+      return
+    }
+  }
 
   private def getFirstLunchId() {
     Lunch.find("from Lunch where date >= :today order by date, time",
@@ -152,13 +181,5 @@ class LunchController extends AbstractController {
     int offset = params.offset ? params.offset.toInteger() : 0
 
     [max: max, offset: offset]
-  }
-  
-  def info = {
-    Lunch l = Lunch.get(params.id)
-    boolean includeWannas = new Boolean(params.wannas)
-    boolean includeLunchers = new Boolean(params.lunchers)
-    
-    render(l.toJsonArray(includeWannas, includeLunchers) as JSON)
   }
 }

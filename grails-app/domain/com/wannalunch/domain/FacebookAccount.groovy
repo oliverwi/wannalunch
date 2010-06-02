@@ -9,5 +9,8 @@ class FacebookAccount {
   static constraints = {
     userId unique: true
   }
-
+  
+  def getProfileUrl() {
+    return "http://www.facebook.com/profile.php?id=${userId}"
+  }
 }

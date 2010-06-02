@@ -24,7 +24,7 @@ class FacebookTagLib implements ApplicationContextAware {
 
   def linkToProfile = { attrs ->
     def user = attrs.remove("user")
-    out << "http://www.facebook.com/profile.php?id=$user.facebookAccount.userId"
+    out << user.facebookAccount.profileUrl
   }
 
   private def getFacebookService() {

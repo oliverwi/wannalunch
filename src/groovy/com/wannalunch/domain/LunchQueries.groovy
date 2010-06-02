@@ -56,12 +56,12 @@ class LunchQueries {
     return previousLunch
   }
 
-  static def findUpcomingLunchesInCity(City city, paginateParams) {
+  static def findUpcomingLunchesInCity(City city, paginateParams = [max: 10, offset: 0]) {
     Lunch.executeQuery("select l from Lunch l where city = :city and l.date >= :today order by date, time",
         [city: city, today: new LocalDate(), max: paginateParams.max, offset: paginateParams.offset])
   }
 
-  static def findFreshlyAddedLunchesInCity(City city, paginateParams) {
+  static def findFreshlyAddedLunchesInCity(City city, paginateParams = [max: 10, offset: 0]) {
     Lunch.executeQuery("select l from Lunch l where city = :city and l.date >= :today order by l.createDateTime desc",
         [city: city, today: new LocalDate(), max: paginateParams.max, offset: paginateParams.offset])
   }

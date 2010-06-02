@@ -140,6 +140,23 @@ class User implements Serializable {
   }
   
   def toJsonArray() {
-    [username: username, name: name, img: profileImageUrl]
+    return toJsonArray(false)
+  }
+  
+  def toJsonArray(boolean full) {
+    def jsonArray = [username: username, name: name, img: profileImageUrl]
+    if (full) {
+      jsonArray.email = email
+      if (linkedInProfile) {
+        jsonArray.linkedInProfile = linkedInProfile
+      }
+      if (twitterAccount) {
+        jsonArray.twitter = twitterAccount.username
+      }
+      if (facebookAccount) {
+        jsonArray.facebook = facebookAccount.profileUrl
+      }
+    }
+    return jsonArray
   }
 }
