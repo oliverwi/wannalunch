@@ -2,6 +2,8 @@ package com.wannalunch.services
 
 import com.facebook.api.FacebookJsonRestClient
 import com.facebook.api.ProfileField;
+import com.wannalunch.domain.FacebookAccount;
+import com.wannalunch.domain.User;
 
 import java.io.Serializable;
 
@@ -12,9 +14,11 @@ class FacebookService implements Serializable {
   static scope = "session"
 
   boolean transactional = false
-
-  FacebookJsonRestClient client = [ConfigurationHolder.config.facebook.oauth.apiKey.toString(),
-                                   ConfigurationHolder.config.facebook.oauth.apiSecret.toString()]
+  
+  String apiKey = ConfigurationHolder.config.facebook.oauth.apiKey.toString()
+  String apiSecret = ConfigurationHolder.config.facebook.oauth.apiSecret.toString()
+  
+  FacebookJsonRestClient client = new FacebookJsonRestClient(apiKey, apiSecret)
 
   def getUserId() {
     client.users_getLoggedInUser()
@@ -34,6 +38,16 @@ class FacebookService implements Serializable {
 
   void setSessionId(authToken) {
     client.auth_getSession authToken
+    log.info "RETURNING FROM FACEBOOK AUTH TOKEN IS " + authToken 
+  }
+  
+  User getUserFromOauthToken(String accessToken) {
+    client.auth_getSession(accessToken)
+    FacebookAccount account = FacebookAccount.findByUserId(client.users_getLoggedInUser())
+    if (account) {
+      return account.user
+    }
+    return null
   }
 
 }

@@ -7,9 +7,11 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import com.wannalunch.aop.Tweet;
 import com.wannalunch.aop.Tweet.Kind;
 import com.wannalunch.domain.Lunch;
+import com.wannalunch.domain.TwitterAccount;
 import com.wannalunch.domain.User;
 
 import twitter4j.Twitter
+import twitter4j.http.AccessToken;
 
 class TwitterService implements Serializable {
 
@@ -40,6 +42,27 @@ class TwitterService implements Serializable {
     twitterUser = client.verifyCredentials()
     log.debug "Validate successful for ${twitterUser.screenName}"
     userService.maybeCreateTwitterAccount(twitterUser, merge)
+  }
+  
+  def getTwitterUserFromOauthToken(String token, String tokenSecret) {
+    client.setOAuthConsumer(consumerKey, consumerSecret)
+    
+    AccessToken accessToken = new AccessToken(token, tokenSecret)
+    client.setOAuthAccessToken(accessToken)
+    
+    return client.verifyCredentials()
+  }
+  
+  User getUserFromOauthToken(String token, String tokenSecret) {
+    def twitterUser = getTwitterUserFromOauthToken(token, tokenSecret)
+    if (twitterUser?.screenName) {
+      TwitterAccount account = TwitterAccount.findByUsername(twitterUser.screenName)
+      if (account) {
+        return account.user
+      }
+    }
+    
+    return null
   }
 
   def tweet(Kind kind, User user, Lunch lunch) {
