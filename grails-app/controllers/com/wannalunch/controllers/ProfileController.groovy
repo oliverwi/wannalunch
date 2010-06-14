@@ -2,10 +2,9 @@ package com.wannalunch.controllers
 
 import com.wannalunch.aop.AuthRequired;
 
-import grails.converters.JSON;
-
 import java.io.File;
 
+import com.wannalunch.converters.JSONP;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 
@@ -61,10 +60,10 @@ class ProfileController extends AbstractController {
 
     redirect action: "edit"
   }
-  
+
   def info = {
     User user = User.findByUsername(params.id)
-    render(user.toJsonArray(true) as JSON)
+    render(user.toJsonArray(true) as JSONP)
   }
 
   private def isValid(uploadedImage) {

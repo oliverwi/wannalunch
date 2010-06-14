@@ -3,6 +3,7 @@ package com.wannalunch.controllers
 import grails.converters.JSON;
 
 import com.wannalunch.aop.AuthRequired;
+import com.wannalunch.converters.JSONP;
 import com.wannalunch.domain.City;
 import com.wannalunch.domain.Lunch
 import com.wannalunch.domain.User
@@ -136,15 +137,15 @@ class LunchController extends AbstractController {
       render(view: "create", model: [lunch: lunch])
     }
   }
-  
+
   def info = {
     Lunch l = Lunch.get(params.id)
     boolean includeWannas = new Boolean(params.wannas)
     boolean includeLunchers = new Boolean(params.lunchers)
-    
-    render(l.toJsonArray(includeWannas, includeLunchers) as JSON)
+
+    render(l.toJsonArray(includeWannas, includeLunchers) as JSONP)
   }
-  
+
   def query = {
     def lunches = []
     if (params.user) {
@@ -152,16 +153,16 @@ class LunchController extends AbstractController {
       user.findUpcomingLunches().each {
         lunches << it.toJsonArray()
       }
-      render(lunches as JSON)
+      render(lunches as JSONP)
       return
     }
-    
+
     if (params.city) {
       City city = City.findByName(params.city)
       Lunch.findUpcomingLunchesInCity(city).each {
         lunches << it.toJsonArray()
       }
-      render(lunches as JSON)
+      render(lunches as JSONP)
       return
     }
   }
