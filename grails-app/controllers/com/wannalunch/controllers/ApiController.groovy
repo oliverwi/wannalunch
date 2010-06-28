@@ -8,6 +8,7 @@ import com.wannalunch.domain.Comment;
 import com.wannalunch.domain.Lunch;
 import com.wannalunch.domain.User;
 import com.wannalunch.domain.TwitterAccount;
+import com.wannalunch.domain.Lunch.PaymentOption;
 
 class ApiController {
 
@@ -35,6 +36,7 @@ class ApiController {
     Lunch lunch = new Lunch()
     lunch.properties = params
     lunch.city = City.findByName(params.cityName)
+    lunch.paymentOption = parsePaymentOption(params.whoPays)
 
     lunch.creatorWantsNotifications = true
     lunch.createDateTime = new LocalDateTime()
@@ -94,5 +96,19 @@ class ApiController {
     }
 
     throw new RuntimeException("parameter 'authType' invalid")
+  }
+
+  
+  private PaymentOption parsePaymentOption(String string) {
+    switch (string.toUpperCase()) {
+      case "I":
+        return PaymentOption.I_PAY
+        
+      case "YOU":
+        return PaymentOption.YOU_PAY
+        
+      default:
+        return PaymentOption.WE_SPLIT
+    }
   }
 }

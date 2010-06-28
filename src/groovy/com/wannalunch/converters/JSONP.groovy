@@ -23,13 +23,13 @@ public class JSONP extends JSON {
   void render(Writer out) {
     def callback = RequestContextHolder.requestAttributes.params.callback
 
-    if (!callback) {
-      throw new IllegalArgumentException("param 'callback' is not present")
+    if (callback) {
+      out.append(callback).append("(")
+      super.render(out)
+      out.append(")")
+    } else {
+      super.render(out)
     }
-
-    out.append(callback).append("(")
-    super.render(out)
-    out.append(")")
   }
 
 }
