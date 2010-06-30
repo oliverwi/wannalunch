@@ -1,5 +1,6 @@
 package com.wannalunch.converters;
 
+import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,9 +25,13 @@ public class JSONP extends JSON {
     def callback = RequestContextHolder.requestAttributes.params.callback
 
     if (callback) {
+      def writer = new StringWriter()
+      super.render(writer)
+      writer.flush()
+      
       out.append(callback).append("(")
-      super.render(out)
-      out.append(")")
+      out.append(writer.toString())
+      out.append(");")
     } else {
       super.render(out)
     }

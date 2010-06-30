@@ -66,6 +66,7 @@ class Lunch {
      city: city.name,
      date: "$date.dayOfMonth/$date.monthOfYear/$date.year",
      time: "$time.hourOfDay:$time.minuteOfHour",
+     whoPays: paymentOption.code,
      creator: creator.toJsonArray()]
     
     if (includeWannas) {
@@ -80,12 +81,28 @@ class Lunch {
   }
   
   enum PaymentOption {
-    WE_SPLIT("We split"), I_PAY("I pay"), YOU_PAY("You pay");
+    WE_SPLIT("We split", "SPLIT"), I_PAY("I pay", "I"), YOU_PAY("You pay", "YOU");
 
     String text
+    
+    String code
 
-    PaymentOption(String text) {
+    PaymentOption(String text, String code) {
       this.text = text
+      this.code = code
+    }
+    
+    static Lunch.PaymentOption fromCode(String code) {
+      switch (code.toUpperCase()) {
+        case "I":
+          return I_PAY
+          
+        case "YOU":
+          return YOU_PAY
+          
+        default:
+          return WE_SPLIT
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
 import com.wannalunch.domain.City;
+import com.wannalunch.domain.Lunch;
 import com.wannalunch.test.TestDataCreator;
 
 import grails.converters.JSON;
@@ -49,6 +50,7 @@ class LunchControllerIntegrationTest extends GrailsUnitTestCase {
     
     lunches[0].addToApplicants wanna1
     lunches[0].addToParticipants luncher1
+    lunches[0].paymentOption = Lunch.PaymentOption.YOU_PAY
     assert lunches[0].save()
     
     controller = new LunchController()
@@ -63,6 +65,26 @@ class LunchControllerIntegrationTest extends GrailsUnitTestCase {
     
     assertLunchInfo lunch, jsonArray
     assertLunchCreatorInfo lunch, jsonArray
+    assertEquals Lunch.PaymentOption.YOU_PAY.code, jsonArray.whoPays
+    assertNull jsonArray.wannas
+    assertNull jsonArray.lunchers
+  }
+  
+  void testInfoWithJsonp() {
+    def lunch = lunches[0]
+    controller.params.id = lunch.id
+    controller.params.callback = "someFunction"
+    controller.info()
+    
+    String response = controller.response.contentAsString
+    assertTrue response.startsWith("(")
+    assertTrue response.endsWith(")");
+    
+    def jsonArray = JSON.parse(response.substring(13, response.length() - 2))
+    
+    assertLunchInfo lunch, jsonArray
+    assertLunchCreatorInfo lunch, jsonArray
+    assertEquals Lunch.PaymentOption.YOU_PAY.code, jsonArray.whoPays
     assertNull jsonArray.wannas
     assertNull jsonArray.lunchers
   }
